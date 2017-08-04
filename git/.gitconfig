@@ -1,0 +1,21 @@
+[alias]
+	a = add
+	b = branch
+	c = commit
+	co = checkout
+	d = diff
+	ds = diff --staged
+	l = log --graph --pretty=format:'%C(blue)%h%d %C(reset)%s %C(white dim)(%cr, %an)'
+	pl = pull
+	ps = push
+	r = rebase
+	s = status --short --branch
+[branch]
+	autosetuprebase = always
+[color]
+	ui = auto
+[core]
+	excludesfile = $HOME/.gitignore
+[user]
+	email = emil@lndmrk.se
+	name = Emil Lundmark
