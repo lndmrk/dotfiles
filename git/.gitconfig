@@ -3,12 +3,17 @@
 	b = branch
 	c = commit
 	co = checkout
+	cp = cherry-pick
 	d = diff
 	ds = diff --staged
-	l = log --graph --pretty=format:'%C(blue)%h%d %C(reset)%s %C(white dim)(%cr, %an)'
+	l = log --pretty=oneline-short
+	la = log --pretty=fuller
+	lf = log --pretty=fixes --abbrev=12
+	lg = log --pretty=oneline-short --graph
 	pl = pull
 	ps = push
-	r = rebase
+	rb = rebase
+	rs = reset
 	s = status --short --branch
 [branch]
 	autosetuprebase = always
@@ -16,6 +21,9 @@
 	ui = auto
 [core]
 	excludesfile = $HOME/.gitignore
+[pretty]
+	fixes = Fixes: %h (\"%s\")
+	oneline-short = format:%C(blue)%h%d %C(reset)%s %C(white dim)(%cr, %an)
 [user]
 	email = emil@lndmrk.se
 	name = Emil Lundmark
