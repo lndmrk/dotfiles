@@ -24,3 +24,5 @@ for dir in Public Templates; do
     mkdir --parents "${hidden_dir}"
   fi
 done
+
+echo "Setup completed successfully"
