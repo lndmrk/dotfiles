@@ -3,6 +3,6 @@
 ```bash
 $ git clone <repository> ~/.dotfiles/
 $ cd ~/.dotfiles/
-$ ./setup.sh
+$ ./setup
 $ stow */
 ```
