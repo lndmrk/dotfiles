@@ -20,7 +20,7 @@
 [color]
 	ui = auto
 [core]
-	excludesfile = $HOME/.gitignore
+	excludesfile = ~/.gitignore
 [pretty]
 	fixes = Fixes: %h (\"%s\")
 	oneline-short = format:%C(blue)%h%d %C(reset)%s %C(white dim)(%cr, %an)
