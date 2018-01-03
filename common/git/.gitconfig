@@ -27,3 +27,6 @@
 [user]
 	email = emil@lndmrk.se
 	name = Emil Lundmark
+
+[include]
+	path = ~/.gitconfig-local
