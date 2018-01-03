@@ -51,3 +51,6 @@
   :ensure t
   :mode "\\.md\\'"
   :init (setq markdown-command "pandoc"))
+
+(setq local-file (expand-file-name "local.el" user-emacs-directory))
+(load local-file 'noerror)
