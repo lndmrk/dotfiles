@@ -1,8 +1,7 @@
 # dotfiles
 
 ```bash
-$ git clone <repository> ~/.dotfiles/
-$ cd ~/.dotfiles/
 $ ./setup
-$ stow */
+$ cd common/
+$ stow -t ~ */
 ```
