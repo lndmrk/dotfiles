@@ -16,5 +16,11 @@ get_distro() {
 . "setup-$(get_distro).sh" || true
 
 # xdg
-mv "$HOME/Public" "$HOME/.public/" || mkdir --parents "$HOME/.public"
-mv "$HOME/Templates" "$HOME/.templates/" || mkdir --parents "$HOME/.templates"
+for dir in Public Templates; do
+  hidden_dir="${HOME}/.${dir,,}"
+  if [[ -d "${HOME}/${dir}" ]]; then
+    mv "${HOME}/${dir}" "${hidden_dir}"
+  else
+    mkdir --parents "${hidden_dir}"
+  fi
+done
