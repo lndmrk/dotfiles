@@ -47,6 +47,10 @@
   :ensure t
   :config (global-hl-todo-mode))
 
+(use-package magit
+  :ensure t
+  :config (global-magit-file-mode))
+
 (use-package markdown-mode
   :ensure t
   :mode "\\.md\\'"
