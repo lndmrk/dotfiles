@@ -32,10 +32,6 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-(use-package tango-plus-theme
-  :ensure t
-  :config (load-theme 'tango-plus t))
-
 (use-package fill-column-indicator
   :ensure t
   :init (setq fci-rule-column 80)
@@ -55,6 +51,10 @@
   :ensure t
   :mode "\\.md\\'"
   :init (setq markdown-command "pandoc"))
+
+(use-package tango-plus-theme
+  :ensure t
+  :config (load-theme 'tango-plus t))
 
 (setq local-file (expand-file-name "local.el" user-emacs-directory))
 (load local-file 'noerror)
