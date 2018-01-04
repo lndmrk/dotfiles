@@ -21,6 +21,8 @@
 	ui = auto
 [core]
 	excludesfile = ~/.gitignore
+[merge]
+	conflictstyle = diff3
 [pretty]
 	fixes = Fixes: %h (\"%s\")
 	oneline-short = format:%C(blue)%h%d %C(reset)%s %C(white dim)(%cr, %an)
