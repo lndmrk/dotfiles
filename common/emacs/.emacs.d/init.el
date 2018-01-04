@@ -21,6 +21,8 @@
 (require 'hl-line)
 (global-hl-line-mode)
 
+(add-hook 'text-mode-hook 'flyspell-mode)
+
 (require 'package)
 (setq package-enable-at-startup nil)
 ;; By default, HTTPS is not used for ELPA
