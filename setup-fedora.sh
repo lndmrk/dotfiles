@@ -4,5 +4,6 @@ sudo dnf install --assumeyes \
   glibc-langpack-en \
   glibc-langpack-sv \
   pandoc \
+  python3 \
   ShellCheck \
   stow
