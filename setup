@@ -29,6 +29,13 @@ cat <<EOF > ~/.stowrc
 --target=${HOME}
 EOF
 
+# Remove skeleton dotfiles
+for file in ~/.bash{_logout,_profile,rc} ~/.profile; do
+  if [[ -f "${file}" && ! -L "${file}" ]]; then
+    mv "${file}" "${file}".bak
+  fi
+done
+
 # XDG
 if [[ ! -f ~/.config/user-dirs.dirs ]]; then
   xdg-user-dirs-update --force
