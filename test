@@ -1,0 +1,26 @@
+#!/bin/bash
+
+cd "$(dirname "$(realpath "$0")")" || exit 1
+
+shellcheck --version > /dev/null
+
+shellcheck test
+shellcheck test-sandbox
+
+shellcheck setup
+shellcheck -s bash setup-*.sh
+
+bash --version > /dev/null
+shellcheck -s bash -x common/environment/.profile common/bash/.bash*
+
+emacs --version > /dev/null
+
+gio --version > /dev/null
+
+git --version > /dev/null
+
+pandoc --version > /dev/null
+
+stow --version > /dev/null
+
+echo -e "\e[1m\e[32mAll tests succeeded\e[39m\e[0m"
