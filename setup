@@ -23,13 +23,17 @@ for file in "setup-$(get_distro).sh" "local/setup-local.sh"; do
   fi
 done
 
-# xdg
-for dir in Public Templates; do
-  hidden_dir="${HOME}/.${dir,,}"
-  if [[ -d "${HOME}/${dir}" ]]; then
-    mv "${HOME}/${dir}" "${hidden_dir}"
-  else
-    mkdir --parents "${hidden_dir}"
+# XDG
+if [[ ! -f ~/.config/user-dirs.dirs ]]; then
+  xdg-user-dirs-update --force
+fi
+for dir in TEMPLATES PUBLICSHARE; do
+  old_dir=$(xdg-user-dir "${dir}")
+  target_dir="${HOME}/.${dir,,}"
+  xdg-user-dirs-update --set "${dir}" "${target_dir}"
+  new_dir=$(xdg-user-dir "${dir}")
+  if [[ "${old_dir}" != "${new_dir}" ]]; then
+    mv "${old_dir}" "${new_dir}"
   fi
 done
 
