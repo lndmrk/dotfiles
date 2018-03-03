@@ -1,0 +1,39 @@
+* lndmrk's dotfiles
+
+This is the public part of my dotfiles. Private configurations can be put in the
+directory =local/=. You can also have a =local/setup-local.sh= that is run as
+part of the setup.
+
+** Install
+
+Install by running the following.
+
+#+BEGIN_EXAMPLE
+$ ./setup
+$ cd common/
+$ stow */
+#+END_EXAMPLE
+
+Also install local packages, if any.
+
+#+BEGIN_EXAMPLE
+$ cd local/
+$ stow */
+#+END_EXAMPLE
+
+** Test
+
+Some sanity tests can be preformed. They can either be run directly on your
+machine with
+
+#+BEGIN_EXAMPLE
+$ ./test
+#+END_EXAMPLE
+
+or inside a sandbox with
+
+#+BEGIN_EXAMPLE
+$ ./test-sandbox
+#+END_EXAMPLE
+
+The sandbox tests require that [[https://www.vagrantup.com/][Vagrant]] and a supported provider is available.
