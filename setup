@@ -23,6 +23,12 @@ for file in "setup-$(get_distro).sh" "local/setup-local.sh"; do
   fi
 done
 
+# Stow
+cat <<EOF > ~/.stowrc
+--no-folding
+--target=${HOME}
+EOF
+
 # XDG
 if [[ ! -f ~/.config/user-dirs.dirs ]]; then
   xdg-user-dirs-update --force

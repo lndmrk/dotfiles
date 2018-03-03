@@ -4,11 +4,11 @@ Install by running the following.
 ```bash
 $ ./setup
 $ cd common/
-$ stow -t ~ */
+$ stow */
 ```
 
 Optionally also install local packages.
 ```bash
 $ cd local/
-$ stow -t ~ */
+$ stow */
 ```
