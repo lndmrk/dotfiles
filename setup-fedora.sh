@@ -1,6 +1,6 @@
 sudo dnf install --assumeyes \
-  git \
   emacs \
+  git \
   pandoc \
   ShellCheck \
   stow

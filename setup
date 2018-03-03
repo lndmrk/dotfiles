@@ -2,20 +2,26 @@
 
 set -euo pipefail
 
+cd "$(dirname "$(realpath "$0")")"
+
 get_distro() {
   (if [[ -f /etc/lsb-release ]]; then
+     # shellcheck disable=SC1091
      (. /etc/lsb-release && echo "${DISTRIB_ID}")
    elif [[ -f /etc/os-release ]]; then
+     # shellcheck disable=SC1091
      (. /etc/os-release && echo "${ID}")
    else
-     uname -s
+     uname --kernel-name
    fi) | tr '[:upper:]' '[:lower:]'
 }
 
-# shellcheck source=/dev/null
-. "setup-$(get_distro).sh" || true
-# shellcheck source=/dev/null
-. "local/setup-local.sh" || true
+for file in "setup-$(get_distro).sh" "local/setup-local.sh"; do
+  if [[ -f "${file}" ]]; then
+    # shellcheck source=/dev/null
+    . "${file}"
+  fi
+done
 
 # xdg
 for dir in Public Templates; do
@@ -27,4 +33,4 @@ for dir in Public Templates; do
   fi
 done
 
-echo "Setup completed successfully"
+echo -e "\e[1m\e[32mSetup completed successfully\e[39m\e[0m"
