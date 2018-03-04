@@ -23,4 +23,9 @@ pandoc --version > /dev/null
 
 stow --version > /dev/null
 
+if [[ -f local/test-local.sh ]]; then
+  # shellcheck source=/dev/null
+  . local/test-local.sh
+fi
+
 echo -e "\e[1m\e[32mAll tests succeeded\e[39m\e[0m"
