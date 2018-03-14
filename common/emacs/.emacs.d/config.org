@@ -90,3 +90,11 @@ Place backup files in its own directory.
     :mode "\\.md\\'"
     :init (setq markdown-command "pandoc"))
 #+END_SRC
+
+** which-key
+
+#+BEGIN_SRC emacs-lisp
+  (use-package which-key
+    :ensure t
+    :init (which-key-mode))
+#+END_SRC
