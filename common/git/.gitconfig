@@ -26,9 +26,6 @@
 [pretty]
 	fixes = Fixes: %h (\"%s\")
 	oneline-short = format:%C(blue)%h%d %C(reset)%s %C(white dim)(%cr, %an)
-[user]
-	email = emil@lndmrk.se
-	name = Emil Lundmark
 
 [include]
 	path = ~/.gitconfig-local
