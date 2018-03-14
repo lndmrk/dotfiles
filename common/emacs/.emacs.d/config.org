@@ -1,0 +1,92 @@
+* Sane defaults
+
+** Customizations
+
+Don't save customizations in =init.el=.
+
+#+BEGIN_SRC emacs-lisp
+  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+  (load custom-file 'noerror)
+#+END_SRC
+
+** Backups
+
+Place backup files in its own directory.
+
+#+BEGIN_SRC emacs-lisp
+  (defconst backup-directory (concat user-emacs-directory "backups"))
+  (setq backup-directory-alist `((".*" . ,backup-directory)))
+  (setq auto-save-file-name-transforms `((".*" ,backup-directory t)))
+#+END_SRC
+
+** Mode line
+
+#+BEGIN_SRC emacs-lisp
+  (setq column-number-mode t)
+#+END_SRC
+
+** Buffer
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'find-file-hook 'linum-mode)
+
+  (require 'hl-line)
+  (global-hl-line-mode)
+
+  (show-paren-mode t)
+  (setq show-paren-delay 0)
+
+  (setq show-trailing-whitespace t)
+#+END_SRC
+
+** Spell checking
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'text-mode-hook 'flyspell-mode)
+#+END_SRC
+
+* Theme
+
+#+BEGIN_SRC emacs-lisp
+  (use-package tango-plus-theme
+    :ensure t
+    :config (load-theme 'tango-plus t))
+#+END_SRC
+
+* Packages
+
+** fill-column-indicator
+
+#+BEGIN_SRC emacs-lisp
+  (use-package fill-column-indicator
+    :ensure t
+    :init (setq fci-rule-column 80)
+          (define-globalized-minor-mode global-fci-mode
+                                        fci-mode (lambda () (fci-mode)))
+    :config (global-fci-mode))
+#+END_SRC
+
+** hl-todo
+
+#+BEGIN_SRC emacs-lisp
+  (use-package hl-todo
+    :ensure t
+    :config (global-hl-todo-mode))
+#+END_SRC
+
+** magit
+
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+    :ensure t
+    :config (global-magit-file-mode))
+#+END_SRC
+
+** markdown-mode
+
+#+BEGIN_SRC emacs-lisp
+  (use-package markdown-mode
+    :ensure t
+    :mode "\\.md\\'"
+    :init (setq markdown-command "pandoc"))
+#+END_SRC
