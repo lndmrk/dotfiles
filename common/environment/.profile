@@ -18,5 +18,4 @@ export PATH="$PATH:$HOME/.local/bin"
 export PAGER="less"
 export LESS="-FMR"
 
-export EDITOR="emacs -nw"
 export VISUAL="emacs"
