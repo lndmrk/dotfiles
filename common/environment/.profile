@@ -16,7 +16,7 @@ export LC_TIME="sv_SE.UTF-8"
 export PATH="$PATH:$HOME/.local/bin"
 
 export PAGER="less"
-export LESS="FMRX"
+export LESS="-FMR"
 
 export EDITOR="emacs -nw"
 export VISUAL="emacs"
