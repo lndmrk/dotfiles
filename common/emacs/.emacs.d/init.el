@@ -18,4 +18,5 @@
 (require 'bind-key)
 
 ;; Tangle Elisp from Org files
+(setq vc-follow-symlinks t)
 (mapc #'org-babel-load-file (directory-files user-emacs-directory t "\\.org$"))
