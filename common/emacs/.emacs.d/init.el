@@ -13,5 +13,9 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+(eval-when-compile
+  (require 'use-package))
+(require 'bind-key)
+
 ;; Tangle Elisp from Org files
 (mapc #'org-babel-load-file (directory-files user-emacs-directory t "\\.org$"))
