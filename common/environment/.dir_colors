@@ -1,3 +1,4 @@
+TERM eterm*
 TERM xterm*
 
 NORMAL 0

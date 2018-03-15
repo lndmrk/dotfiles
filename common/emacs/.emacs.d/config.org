@@ -45,12 +45,68 @@ Place backup files in its own directory.
   (add-hook 'text-mode-hook 'flyspell-mode)
 #+END_SRC
 
+** Shell
+
+#+BEGIN_SRC emacs-lisp
+  (defvar my-term-shell "/bin/bash")
+  (defadvice ansi-term (before force-bash)
+    (interactive (list my-term-shell)))
+  (ad-activate 'ansi-term)
+
+  (global-set-key (kbd "<M-RET>") 'ansi-term)
+#+END_SRC
+
 * Theme
 
 #+BEGIN_SRC emacs-lisp
   (use-package color-theme-sanityinc-tomorrow
     :ensure t
     :config (load-theme 'sanityinc-tomorrow-eighties t))
+
+  (use-package eterm-256color
+    :ensure t
+    :config
+    (add-hook 'term-mode-hook #'eterm-256color-mode)
+    (setq eterm-256color-disable-bold nil)
+    ;; TODO: Would it be possible to set xterm-color-names and
+    ;; xterm-color-names-bright using the variables from the theme context?
+    (color-theme-sanityinc-tomorrow--with-colors
+     'eighties
+     (custom-theme-set-faces
+      'sanityinc-tomorrow-eighties
+      `(eterm-256color-black
+        ((t (:foreground "#030202" :background "#030202"))))
+      `(eterm-256color-red
+        ((t (:foreground "#AC282B" :background "#AC282B"))))
+      `(eterm-256color-green
+        ((t (:foreground "#3F8F3F" :background "#3F8F3F"))))
+      `(eterm-256color-yellow
+        ((t (:foreground "#C18A1C" :background "#C18A1C"))))
+      `(eterm-256color-blue
+        ((t (:foreground "#29649D" :background "#29649D"))))
+      `(eterm-256color-magenta
+        ((t (:foreground "#8D3F8D" :background "#8D3F8D"))))
+      `(eterm-256color-cyan
+        ((t (:foreground "#249393" :background "#249393"))))
+      `(eterm-256color-white
+        ((t (:foreground "#999898" :background "#999898"))))
+      `(eterm-256color-bright-black
+        ((t (:foreground "#666666" :background "#666666"))))
+      `(eterm-256color-bright-red
+        ((t (:foreground ,red :background ,red))))
+      `(eterm-256color-bright-green
+        ((t (:foreground ,green :background ,green))))
+      `(eterm-256color-bright-yellow
+        ((t (:foreground ,yellow :background ,yellow))))
+      `(eterm-256color-bright-blue
+        ((t (:foreground ,blue :background ,blue))))
+      `(eterm-256color-bright-magenta
+        ((t (:foreground ,purple :background ,purple))))
+      `(eterm-256color-bright-cyan
+        ((t (:foreground ,aqua :background ,aqua))))
+      `(eterm-256color-bright-white
+        ((t (:foreground ,foreground :background ,foreground))))
+      )))
 #+END_SRC
 
 * Packages
