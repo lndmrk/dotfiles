@@ -135,6 +135,7 @@ Don't save customizations in =init.el=.
 #+BEGIN_SRC emacs-lisp
   (use-package magit
     :ensure t
+    :bind (("C-x g" . magit-status))
     :config (global-magit-file-mode))
 #+END_SRC
 
