@@ -1,14 +1,5 @@
 * Sane defaults
 
-** Customizations
-
-Don't save customizations in =init.el=.
-
-#+BEGIN_SRC emacs-lisp
-  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-  (load custom-file 'noerror)
-#+END_SRC
-
 ** Backups
 
 Place backup files in its own directory.
@@ -17,12 +8,6 @@ Place backup files in its own directory.
   (defconst backup-directory (concat user-emacs-directory "backups"))
   (setq backup-directory-alist `((".*" . ,backup-directory)))
   (setq auto-save-file-name-transforms `((".*" ,backup-directory t)))
-#+END_SRC
-
-** Mode line
-
-#+BEGIN_SRC emacs-lisp
-  (setq column-number-mode t)
 #+END_SRC
 
 ** Buffer
@@ -39,10 +24,19 @@ Place backup files in its own directory.
   (setq show-trailing-whitespace t)
 #+END_SRC
 
-** Spell checking
+** Customizations
+
+Don't save customizations in =init.el=.
 
 #+BEGIN_SRC emacs-lisp
-  (add-hook 'text-mode-hook 'flyspell-mode)
+  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+  (load custom-file 'noerror)
+#+END_SRC
+
+** Mode line
+
+#+BEGIN_SRC emacs-lisp
+  (setq column-number-mode t)
 #+END_SRC
 
 ** Shell
@@ -54,6 +48,12 @@ Place backup files in its own directory.
   (ad-activate 'ansi-term)
 
   (global-set-key (kbd "<M-RET>") 'ansi-term)
+#+END_SRC
+
+** Spell checking
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'text-mode-hook 'flyspell-mode)
 #+END_SRC
 
 * Theme
