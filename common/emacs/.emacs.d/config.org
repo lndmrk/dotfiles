@@ -48,9 +48,9 @@ Place backup files in its own directory.
 * Theme
 
 #+BEGIN_SRC emacs-lisp
-  (use-package tango-plus-theme
+  (use-package color-theme-sanityinc-tomorrow
     :ensure t
-    :config (load-theme 'tango-plus t))
+    :config (load-theme 'sanityinc-tomorrow-eighties t))
 #+END_SRC
 
 * Packages
