@@ -10,6 +10,12 @@ shellcheck test-sandbox
 shellcheck setup
 shellcheck -s bash setup-*.sh
 
+while read -r file; do
+  if [[ "$(file --brief "${file}")" == "Bourne-Again shell script"* ]]; then
+    shellcheck "${file}"
+  fi
+done < <(find common/bin/.local/bin/* -type f)
+
 bash --version > /dev/null
 shellcheck -s bash -x common/environment/.profile common/bash/.bash*
 
