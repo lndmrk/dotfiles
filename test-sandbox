@@ -5,7 +5,7 @@ set -euo pipefail
 cd "$(dirname "$(realpath "$0")")/sandbox/"
 
 for distro in debian fedora; do
-  echo -e "Sandbox test for \e[1m\e[34m${distro}\e[39m\e[0m"
+  echo -e "Sandbox test for \\e[1;34m${distro}\\e[0m"
   (cd "${distro}" || exit 1
    vagrant up
    vagrant provision
@@ -13,4 +13,4 @@ for distro in debian fedora; do
    vagrant halt)
 done
 
-echo -e "\e[1m\e[32mSandbox test succeeded\e[39m\e[0m"
+echo -e "\\e[1;32mSandbox test succeeded\\e[0m"
