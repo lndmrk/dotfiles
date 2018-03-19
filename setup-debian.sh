@@ -1,6 +1,6 @@
 sudo apt-get update && sudo apt-get install --yes \
   git \
-  emacs \
+  emacs25 \
   pandoc \
   python3 \
   shellcheck \
