@@ -19,7 +19,11 @@ done < <(find common/bin/.local/bin/* -type f)
 bash --version > /dev/null
 shellcheck -s bash -x common/environment/.profile common/bash/.bash*
 
-emacs --version > /dev/null
+if ! emacs --version | grep --quiet "^GNU Emacs 25"; then
+  echo -n -e "\\e[33m"
+  emacs --version
+  echo -n -e "\\e[0m"
+fi
 
 gio --version > /dev/null
 
