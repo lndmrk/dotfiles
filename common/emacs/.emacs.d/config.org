@@ -33,10 +33,22 @@ Don't save customizations in =init.el=.
   (load custom-file 'noerror)
 #+END_SRC
 
+** Minibuffer
+
+#+BEGIN_SRC emacs-lisp
+  (defalias 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+
 ** Mode line
 
 #+BEGIN_SRC emacs-lisp
   (setq column-number-mode t)
+#+END_SRC
+
+** Notifications
+
+#+BEGIN_SRC emacs-lisp
+  (setq ring-bell-function 'ignore)
 #+END_SRC
 
 ** Shell

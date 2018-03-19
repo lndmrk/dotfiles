@@ -1,5 +1,7 @@
 ;; Load these settings a.s.a.p.
+(tool-bar-mode -1)
 (setq inhibit-splash-screen t)
+(setq initial-scratch-message nil)
 
 ;; Initialize packages
 (require 'package)
