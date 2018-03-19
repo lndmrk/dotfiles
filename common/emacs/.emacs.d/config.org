@@ -24,6 +24,20 @@ Place backup files in its own directory.
   (setq show-trailing-whitespace t)
 #+END_SRC
 
+r** Configuration management
+
+#+BEGIN_SRC emacs-lisp
+  (setq user-emacs-config
+        (concat (file-name-as-directory user-emacs-directory) "config.org"))
+
+  (global-set-key
+   (kbd "C-c e" ) (lambda () (interactive) (find-file user-emacs-config)))
+
+  (global-set-key
+   (kbd "C-c r" ) (lambda () (interactive)
+                    (org-babel-load-file user-emacs-config)))
+#+END_SRC
+
 ** Customizations
 
 Don't save customizations in =init.el=.
