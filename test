@@ -41,4 +41,4 @@ if [[ -f local/test-local.sh ]]; then
   . local/test-local.sh
 fi
 
-echo -e "\\e[1;32mAll tests succeeded\\e[0m"
+echo -e "\\e[1;32mAll tests completed\\e[0m"
