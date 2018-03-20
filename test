@@ -7,8 +7,7 @@ shellcheck --version > /dev/null
 shellcheck test
 shellcheck test-sandbox
 
-shellcheck setup
-shellcheck -s bash setup-*.sh
+shellcheck --shell=bash setup setup-*.sh
 
 while read -r file; do
   if [[ "$(file --brief "${file}")" == "Bourne-Again shell script"* ]]; then
@@ -17,7 +16,9 @@ while read -r file; do
 done < <(find common/bin/.local/bin/* -type f)
 
 bash --version > /dev/null
-shellcheck -s bash -x common/environment/.profile common/bash/.bash*
+shellcheck --shell=bash \
+  common/environment/.profile \
+  common/bash/.bash*
 
 if ! emacs --version | grep --quiet "^GNU Emacs 25"; then
   echo -n -e "\\e[33m"
