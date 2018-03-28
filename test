@@ -32,6 +32,8 @@ gio --version > /dev/null
 
 git --version > /dev/null
 
+gpg2 --version > /dev/null
+
 pandoc --version > /dev/null
 
 stow --version > /dev/null
