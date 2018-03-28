@@ -1,5 +1,6 @@
 sudo apt-get update && sudo apt-get install --yes \
   git \
+  gnupg2 \
   emacs25 \
   pandoc \
   python3 \
