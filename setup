@@ -50,4 +50,8 @@ for dir in TEMPLATES PUBLICSHARE; do
   fi
 done
 
+# Fix file permissions
+(cd common/ && stow --restow gpg)
+chmod 0700 ~/.gnupg/
+
 echo -e "\\e[1;32mSetup completed successfully\\e[0m"
