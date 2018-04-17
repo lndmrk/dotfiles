@@ -21,6 +21,9 @@
 	ui = auto
 [core]
 	excludesfile = ~/.gitignore
+[diff]
+	algorithm = histogram
+	indentHeuristic = true
 [merge]
 	conflictstyle = diff3
 [pretty]
