@@ -1,8 +1,8 @@
 sudo dnf install --assumeyes \
   emacs \
   git \
-  glibc-langpack-en \
-  glibc-langpack-sv \
+  langpacks-en \
+  langpacks-sv \
   gnupg2 \
   pandoc \
   python3 \
