@@ -11,3 +11,8 @@ alias grep='grep --color=auto'
 alias ll='ls -l --color=auto'
 alias ls='ls --color=auto'
 alias r='gio trash'
+
+if [[ -f ~/.local/etc/bash/bashrc ]]; then
+  # shellcheck source=/dev/null
+  . ~/.local/etc/bash/bashrc
+fi
