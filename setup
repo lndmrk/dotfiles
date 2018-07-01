@@ -16,18 +16,18 @@ get_distro() {
    fi) | tr '[:upper:]' '[:lower:]'
 }
 
+# Stow
+cat <<EOF > ~/.stowrc
+--no-folding
+--target=${HOME}
+EOF
+
 for file in "setup-$(get_distro).sh" "local/setup-local.sh"; do
   if [[ -f "${file}" ]]; then
     # shellcheck source=/dev/null
     . "${file}"
   fi
 done
-
-# Stow
-cat <<EOF > ~/.stowrc
---no-folding
---target=${HOME}
-EOF
 
 # Remove skeleton dotfiles
 for file in ~/.bash{_logout,_profile,rc} ~/.profile; do
