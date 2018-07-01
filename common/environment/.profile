@@ -13,7 +13,7 @@ export LC_PAPER="sv_SE.UTF-8"
 export LC_TELEPHONE="sv_SE.UTF-8"
 export LC_TIME="sv_SE.UTF-8"
 
-export PATH="$PATH:$HOME/.local/bin"
+export PATH="$HOME/.local/bin:$PATH"
 
 export PAGER="less"
 export LESS="-FMR"
