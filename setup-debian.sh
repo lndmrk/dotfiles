@@ -1,8 +1,8 @@
 sudo apt-get update && sudo apt-get install --yes \
   dirmngr \
+  emacs \
   git \
   gnupg2 \
-  emacs \
   pandoc \
   python3 \
   shellcheck \
