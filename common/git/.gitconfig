@@ -34,4 +34,4 @@
 	email = emil@lndmrk.se
 
 [include]
-	path = ~/.gitconfig-local
+	path = ~/.local/etc/git/config
