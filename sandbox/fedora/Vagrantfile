@@ -6,7 +6,7 @@ systemctl start gdm.service
 EOF
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "fedora/27-cloud-base"
+  config.vm.box = "fedora/28-cloud-base"
   config.vm.provision "shell", inline: $provision_base
   config.vm.provision "shell",
                       path: "../provision-dotfiles.sh",
