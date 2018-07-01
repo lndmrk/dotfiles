@@ -20,7 +20,7 @@ export LESS="-FMR"
 
 export VISUAL="emacs"
 
-if [ -f ~/.profile-local ]; then
+if [ -f ~/.local/etc/profile/profile ]; then
   # shellcheck source=/dev/null
-  . ~/.profile-local
+  . ~/.local/etc/profile/profile
 fi
