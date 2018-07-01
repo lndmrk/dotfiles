@@ -20,7 +20,7 @@ shellcheck --shell=bash \
   common/environment/.profile \
   common/bash/.bash*
 
-if ! emacs --version | grep --quiet "^GNU Emacs 25"; then
+if ! emacs --version | grep --quiet "^GNU Emacs 26" ; then
   echo -n -e "\\e[33m"
   emacs --version
   echo -n -e "\\e[0m"
