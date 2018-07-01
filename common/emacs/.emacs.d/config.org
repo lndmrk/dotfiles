@@ -24,7 +24,7 @@ Place backup files in its own directory.
   (setq show-trailing-whitespace t)
 #+END_SRC
 
-r** Configuration management
+** Configuration management
 
 #+BEGIN_SRC emacs-lisp
   (setq user-emacs-config
