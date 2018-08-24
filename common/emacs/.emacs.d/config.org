@@ -156,6 +156,28 @@ Don't save customizations in =init.el=.
     :config (global-hl-todo-mode))
 #+END_SRC
 
+** ivy, counsel, swiper
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ivy
+    :ensure t
+    :init (ivy-mode 1))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (use-package counsel
+    :ensure t
+    :init (counsel-mode 1))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (use-package swiper
+    :ensure t
+    :bind
+    ([remap isearch-forward]  . swiper)
+    ([remap isearch-backward] . swiper))
+#+END_SRC
+
 ** magit
 
 #+BEGIN_SRC emacs-lisp
