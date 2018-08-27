@@ -30,12 +30,17 @@ Place backup files in its own directory.
   (setq user-emacs-config
         (concat (file-name-as-directory user-emacs-directory) "config.org"))
 
-  (global-set-key
-   (kbd "C-c e" ) (lambda () (interactive) (find-file user-emacs-config)))
+  (setq user-emacs-local-config
+        (concat (file-name-as-directory user-emacs-directory) "local.org"))
 
-  (global-set-key
-   (kbd "C-c r" ) (lambda () (interactive)
-                    (org-babel-load-file user-emacs-config)))
+  (defun user-open-config () (interactive) (find-file user-emacs-config))
+
+  (defun user-open-local-config () (interactive)
+         (find-file user-emacs-local-config))
+
+  (defun user-reload-config () (interactive)
+         (mapc #'org-babel-load-file
+               (directory-files user-emacs-directory t "\\.org$")))
 #+END_SRC
 
 ** Customizations
