@@ -23,8 +23,9 @@ Place backup files in its own directory.
 (use-package hl-line
   :hook ((find-file prog-mode text-mode) . hl-line-mode))
 
-(show-paren-mode t)
-(setq show-paren-delay 0)
+(use-package paren
+  :hook (prog-mode . show-paren-mode)
+  :init (setq show-paren-delay 0))
 
 (setq show-trailing-whitespace t)
 #+END_SRC
