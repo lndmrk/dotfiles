@@ -5,42 +5,42 @@
 Place backup files in its own directory.
 
 #+BEGIN_SRC emacs-lisp
-  (defconst backup-directory (concat user-emacs-directory "backups"))
-  (setq backup-directory-alist `((".*" . ,backup-directory)))
-  (setq auto-save-file-name-transforms `((".*" ,backup-directory t)))
+(defconst backup-directory (concat user-emacs-directory "backups"))
+(setq backup-directory-alist `((".*" . ,backup-directory)))
+(setq auto-save-file-name-transforms `((".*" ,backup-directory t)))
 #+END_SRC
 
 ** Buffer
 
 #+BEGIN_SRC emacs-lisp
-  (add-hook 'find-file-hook 'linum-mode)
+(add-hook 'find-file-hook 'linum-mode)
 
-  (require 'hl-line)
-  (global-hl-line-mode)
+(require 'hl-line)
+(global-hl-line-mode)
 
-  (show-paren-mode t)
-  (setq show-paren-delay 0)
+(show-paren-mode t)
+(setq show-paren-delay 0)
 
-  (setq show-trailing-whitespace t)
+(setq show-trailing-whitespace t)
 #+END_SRC
 
 ** Configuration management
 
 #+BEGIN_SRC emacs-lisp
-  (setq user-emacs-config
-        (concat (file-name-as-directory user-emacs-directory) "config.org"))
+(setq user-emacs-config
+      (concat (file-name-as-directory user-emacs-directory) "config.org"))
 
-  (setq user-emacs-local-config
-        (concat (file-name-as-directory user-emacs-directory) "local.org"))
+(setq user-emacs-local-config
+      (concat (file-name-as-directory user-emacs-directory) "local.org"))
 
-  (defun user-open-config () (interactive) (find-file user-emacs-config))
+(defun user-open-config () (interactive) (find-file user-emacs-config))
 
-  (defun user-open-local-config () (interactive)
-         (find-file user-emacs-local-config))
+(defun user-open-local-config () (interactive)
+       (find-file user-emacs-local-config))
 
-  (defun user-reload-config () (interactive)
-         (mapc #'org-babel-load-file
-               (directory-files user-emacs-directory t "\\.org$")))
+(defun user-reload-config () (interactive)
+       (mapc #'org-babel-load-file
+             (directory-files user-emacs-directory t "\\.org$")))
 #+END_SRC
 
 ** Customizations
@@ -48,96 +48,102 @@ Place backup files in its own directory.
 Don't save customizations in =init.el=.
 
 #+BEGIN_SRC emacs-lisp
-  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-  (load custom-file 'noerror)
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(load custom-file 'noerror)
 #+END_SRC
 
 ** Minibuffer
 
 #+BEGIN_SRC emacs-lisp
-  (defalias 'yes-or-no-p 'y-or-n-p)
+(defalias 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
 
 ** Mode line
 
 #+BEGIN_SRC emacs-lisp
-  (setq column-number-mode t)
+(setq column-number-mode t)
 #+END_SRC
 
 ** Notifications
 
 #+BEGIN_SRC emacs-lisp
-  (setq ring-bell-function 'ignore)
+(setq ring-bell-function 'ignore)
+#+END_SRC
+
+** Org
+
+#+BEGIN_SRC emacs-lisp
+(setq org-src-preserve-indentation t)
 #+END_SRC
 
 ** Shell
 
 #+BEGIN_SRC emacs-lisp
-  (defvar my-term-shell "/bin/bash")
-  (defadvice ansi-term (before force-bash)
-    (interactive (list my-term-shell)))
-  (ad-activate 'ansi-term)
+(defvar my-term-shell "/bin/bash")
+(defadvice ansi-term (before force-bash)
+  (interactive (list my-term-shell)))
+(ad-activate 'ansi-term)
 
-  (global-set-key (kbd "<M-RET>") 'ansi-term)
+(global-set-key (kbd "<M-RET>") 'ansi-term)
 #+END_SRC
 
 ** Spell checking
 
 #+BEGIN_SRC emacs-lisp
-  (add-hook 'text-mode-hook 'flyspell-mode)
+(add-hook 'text-mode-hook 'flyspell-mode)
 #+END_SRC
 
 * Theme
 
 #+BEGIN_SRC emacs-lisp
-  (use-package color-theme-sanityinc-tomorrow
-    :ensure t
-    :config (load-theme 'sanityinc-tomorrow-eighties t))
+(use-package color-theme-sanityinc-tomorrow
+  :ensure t
+  :config (load-theme 'sanityinc-tomorrow-eighties t))
 
-  (use-package eterm-256color
-    :ensure t
-    :config
-    (add-hook 'term-mode-hook #'eterm-256color-mode)
-    (setq eterm-256color-disable-bold nil)
-    ;; TODO: Would it be possible to set xterm-color-names and
-    ;; xterm-color-names-bright using the variables from the theme context?
-    (color-theme-sanityinc-tomorrow--with-colors
-     'eighties
-     (custom-theme-set-faces
-      'sanityinc-tomorrow-eighties
-      `(eterm-256color-black
-        ((t (:foreground "#030202" :background "#030202"))))
-      `(eterm-256color-red
-        ((t (:foreground "#AC282B" :background "#AC282B"))))
-      `(eterm-256color-green
-        ((t (:foreground "#3F8F3F" :background "#3F8F3F"))))
-      `(eterm-256color-yellow
-        ((t (:foreground "#C18A1C" :background "#C18A1C"))))
-      `(eterm-256color-blue
-        ((t (:foreground "#29649D" :background "#29649D"))))
-      `(eterm-256color-magenta
-        ((t (:foreground "#8D3F8D" :background "#8D3F8D"))))
-      `(eterm-256color-cyan
-        ((t (:foreground "#249393" :background "#249393"))))
-      `(eterm-256color-white
-        ((t (:foreground "#999898" :background "#999898"))))
-      `(eterm-256color-bright-black
-        ((t (:foreground "#666666" :background "#666666"))))
-      `(eterm-256color-bright-red
-        ((t (:foreground ,red :background ,red))))
-      `(eterm-256color-bright-green
-        ((t (:foreground ,green :background ,green))))
-      `(eterm-256color-bright-yellow
-        ((t (:foreground ,yellow :background ,yellow))))
-      `(eterm-256color-bright-blue
-        ((t (:foreground ,blue :background ,blue))))
-      `(eterm-256color-bright-magenta
-        ((t (:foreground ,purple :background ,purple))))
-      `(eterm-256color-bright-cyan
-        ((t (:foreground ,aqua :background ,aqua))))
-      `(eterm-256color-bright-white
-        ((t (:foreground ,foreground :background ,foreground))))
-      )))
+(use-package eterm-256color
+  :ensure t
+  :config
+  (add-hook 'term-mode-hook #'eterm-256color-mode)
+  (setq eterm-256color-disable-bold nil)
+  ;; TODO: Would it be possible to set xterm-color-names and
+  ;; xterm-color-names-bright using the variables from the theme context?
+  (color-theme-sanityinc-tomorrow--with-colors
+   'eighties
+   (custom-theme-set-faces
+    'sanityinc-tomorrow-eighties
+    `(eterm-256color-black
+      ((t (:foreground "#030202" :background "#030202"))))
+    `(eterm-256color-red
+      ((t (:foreground "#AC282B" :background "#AC282B"))))
+    `(eterm-256color-green
+      ((t (:foreground "#3F8F3F" :background "#3F8F3F"))))
+    `(eterm-256color-yellow
+      ((t (:foreground "#C18A1C" :background "#C18A1C"))))
+    `(eterm-256color-blue
+      ((t (:foreground "#29649D" :background "#29649D"))))
+    `(eterm-256color-magenta
+      ((t (:foreground "#8D3F8D" :background "#8D3F8D"))))
+    `(eterm-256color-cyan
+      ((t (:foreground "#249393" :background "#249393"))))
+    `(eterm-256color-white
+      ((t (:foreground "#999898" :background "#999898"))))
+    `(eterm-256color-bright-black
+      ((t (:foreground "#666666" :background "#666666"))))
+    `(eterm-256color-bright-red
+      ((t (:foreground ,red :background ,red))))
+    `(eterm-256color-bright-green
+      ((t (:foreground ,green :background ,green))))
+    `(eterm-256color-bright-yellow
+      ((t (:foreground ,yellow :background ,yellow))))
+    `(eterm-256color-bright-blue
+      ((t (:foreground ,blue :background ,blue))))
+    `(eterm-256color-bright-magenta
+      ((t (:foreground ,purple :background ,purple))))
+    `(eterm-256color-bright-cyan
+      ((t (:foreground ,aqua :background ,aqua))))
+    `(eterm-256color-bright-white
+      ((t (:foreground ,foreground :background ,foreground))))
+    )))
 #+END_SRC
 
 * Packages
@@ -145,66 +151,66 @@ Don't save customizations in =init.el=.
 ** fill-column-indicator
 
 #+BEGIN_SRC emacs-lisp
-  (use-package fill-column-indicator
-    :ensure t
-    :init (setq fci-rule-column 80)
-          (define-globalized-minor-mode global-fci-mode
-                                        fci-mode (lambda () (fci-mode)))
-    :config (global-fci-mode))
+(use-package fill-column-indicator
+  :ensure t
+  :init (setq fci-rule-column 80)
+        (define-globalized-minor-mode global-fci-mode
+                                      fci-mode (lambda () (fci-mode)))
+  :config (global-fci-mode))
 #+END_SRC
 
 ** hl-todo
 
 #+BEGIN_SRC emacs-lisp
-  (use-package hl-todo
-    :ensure t
-    :config (global-hl-todo-mode))
+(use-package hl-todo
+  :ensure t
+  :config (global-hl-todo-mode))
 #+END_SRC
 
 ** ivy, counsel, swiper
 
 #+BEGIN_SRC emacs-lisp
-  (use-package ivy
-    :ensure t
-    :init (ivy-mode 1))
+(use-package ivy
+  :ensure t
+  :init (ivy-mode 1))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (use-package counsel
-    :ensure t
-    :init (counsel-mode 1))
+(use-package counsel
+  :ensure t
+  :init (counsel-mode 1))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (use-package swiper
-    :ensure t
-    :bind
-    ([remap isearch-forward]  . swiper)
-    ([remap isearch-backward] . swiper))
+(use-package swiper
+  :ensure t
+  :bind
+  ([remap isearch-forward]  . swiper)
+  ([remap isearch-backward] . swiper))
 #+END_SRC
 
 ** magit
 
 #+BEGIN_SRC emacs-lisp
-  (use-package magit
-    :ensure t
-    :bind (("C-x g" . magit-status))
-    :config (global-magit-file-mode))
+(use-package magit
+  :ensure t
+  :bind (("C-x g" . magit-status))
+  :config (global-magit-file-mode))
 #+END_SRC
 
 ** markdown-mode
 
 #+BEGIN_SRC emacs-lisp
-  (use-package markdown-mode
-    :ensure t
-    :mode "\\.md\\'"
-    :init (setq markdown-command "pandoc"))
+(use-package markdown-mode
+  :ensure t
+  :mode "\\.md\\'"
+  :init (setq markdown-command "pandoc"))
 #+END_SRC
 
 ** which-key
 
 #+BEGIN_SRC emacs-lisp
-  (use-package which-key
-    :ensure t
-    :init (which-key-mode))
+(use-package which-key
+  :ensure t
+  :init (which-key-mode))
 #+END_SRC
