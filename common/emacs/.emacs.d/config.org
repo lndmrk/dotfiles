@@ -28,25 +28,6 @@ Place backup files in its own directory.
 (setq show-trailing-whitespace t)
 #+END_SRC
 
-** Configuration management
-
-#+BEGIN_SRC emacs-lisp
-(setq user-emacs-config
-      (concat (file-name-as-directory user-emacs-directory) "config.org"))
-
-(setq user-emacs-local-config
-      (concat (file-name-as-directory user-emacs-directory) "local.org"))
-
-(defun user-open-config () (interactive) (find-file user-emacs-config))
-
-(defun user-open-local-config () (interactive)
-       (find-file user-emacs-local-config))
-
-(defun user-reload-config () (interactive)
-       (mapc #'org-babel-load-file
-             (directory-files user-emacs-directory t "\\.org$")))
-#+END_SRC
-
 ** Customizations
 
 Don't save customizations in =init.el=.

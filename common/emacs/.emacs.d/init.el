@@ -18,5 +18,21 @@
   (require 'use-package))
 (require 'bind-key)
 
-;; Tangle Elisp from Org files
-(mapc #'org-babel-load-file (directory-files user-emacs-directory t "\\.org$"))
+;; Configuration management
+(defconst my-config--init-file load-file-name)
+(defconst my-config--org-files
+  (directory-files user-emacs-directory t "\\.org$"))
+
+(defun my-config-open (filename)
+  (interactive
+   (list
+    (completing-read
+     "Open config: "
+     (add-to-list 'my-config--org-files my-config--init-file))))
+  (find-file filename))
+
+(defun my-config-reload ()
+  (interactive)
+  (load-file my-config--init-file))
+
+(mapc #'org-babel-load-file my-config--org-files)
