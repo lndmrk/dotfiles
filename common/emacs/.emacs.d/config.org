@@ -13,6 +13,8 @@ Place backup files in its own directory.
 ** Buffer
 
 #+BEGIN_SRC emacs-lisp
+(setq-default fill-column 80)
+
 (add-hook 'find-file-hook 'linum-mode)
 
 (require 'hl-line)
@@ -127,11 +129,9 @@ Don't save customizations in =init.el=.
 #+BEGIN_SRC emacs-lisp
 (use-package fill-column-indicator
   :ensure t
-  :init (setq fci-rule-column 80)
-        (define-globalized-minor-mode global-fci-mode
-                                      fci-mode (lambda () (fci-mode)))
-  :config (global-fci-mode))
+  :hook ((find-file prog-mode text-mode) . fci-mode))
 #+END_SRC
+
 ** hl-todo
 
 #+BEGIN_SRC emacs-lisp
