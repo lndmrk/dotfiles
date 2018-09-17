@@ -44,6 +44,14 @@ Don't save customizations in =init.el=.
  '(initial-frame-alist '((fullscreen . maximized))))
 #+END_SRC
 
+** Mail
+
+#+BEGIN_SRC emacs-lisp
+(defun my-message-compose ()
+  (setq fill-column 72)
+  (auto-fill-mode))
+#+END_SRC
+
 ** Minibuffer
 
 #+BEGIN_SRC emacs-lisp
@@ -167,6 +175,7 @@ Don't save customizations in =init.el=.
 #+BEGIN_SRC emacs-lisp
 (use-package magit
   :ensure t
+  :hook (git-commit-mode . my-message-compose)
   :bind ("C-x g" . magit-status)
   :config (global-magit-file-mode))
 #+END_SRC
