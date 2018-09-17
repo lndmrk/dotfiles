@@ -17,7 +17,8 @@ Place backup files in its own directory.
 #+BEGIN_SRC emacs-lisp
 (setq-default fill-column 80)
 
-(add-hook 'find-file-hook 'linum-mode)
+(use-package display-line-numbers
+  :hook (find-file . display-line-numbers-mode))
 
 (use-package hl-line
   :config (global-hl-line-mode))
