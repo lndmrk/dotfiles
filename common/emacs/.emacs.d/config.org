@@ -5,7 +5,9 @@
 Place backup files in its own directory.
 
 #+BEGIN_SRC emacs-lisp
-(defconst backup-directory (concat user-emacs-directory "backups"))
+(defconst backup-directory
+  (file-name-as-directory (concat user-emacs-directory "backups")))
+(make-directory backup-directory t)
 (setq backup-directory-alist `((".*" . ,backup-directory)))
 (setq auto-save-file-name-transforms `((".*" ,backup-directory t)))
 #+END_SRC
