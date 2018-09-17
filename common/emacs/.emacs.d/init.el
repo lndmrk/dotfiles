@@ -16,7 +16,8 @@
 
 (eval-when-compile
   (require 'use-package))
-(require 'bind-key)
+(use-package bind-key
+  :ensure t)
 
 ;; Configuration management
 (defconst my-config--init-file load-file-name)
