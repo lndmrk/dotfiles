@@ -16,17 +16,25 @@ Place backup files in its own directory.
 
 #+BEGIN_SRC emacs-lisp
 (setq-default fill-column 80)
+#+END_SRC
 
+#+BEGIN_SRC emacs-lisp
 (use-package display-line-numbers
   :hook (find-file . display-line-numbers-mode))
+#+END_SRC
 
+#+BEGIN_SRC emacs-lisp
 (use-package hl-line
   :hook ((find-file prog-mode text-mode) . hl-line-mode))
+#+END_SRC
 
+#+BEGIN_SRC emacs-lisp
 (use-package paren
   :hook (prog-mode . show-paren-mode)
   :init (setq show-paren-delay 0))
+#+END_SRC
 
+#+BEGIN_SRC emacs-lisp
 (use-package whitespace
   :diminish
   :hook ((find-file prog-mode text-mode) . whitespace-mode)
