@@ -21,7 +21,7 @@ Place backup files in its own directory.
   :hook (find-file . display-line-numbers-mode))
 
 (use-package hl-line
-  :config (global-hl-line-mode))
+  :hook ((find-file prog-mode text-mode) . hl-line-mode))
 
 (show-paren-mode t)
 (setq show-paren-delay 0)
