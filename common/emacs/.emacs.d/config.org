@@ -129,12 +129,14 @@ Don't save customizations in =init.el=.
 #+BEGIN_SRC emacs-lisp
 (use-package ivy
   :ensure t
+  :diminish
   :config (ivy-mode))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
 (use-package counsel
   :ensure t
+  :diminish
   :config (counsel-mode))
 #+END_SRC
 
@@ -168,5 +170,6 @@ Don't save customizations in =init.el=.
 #+BEGIN_SRC emacs-lisp
 (use-package which-key
   :ensure t
+  :diminish
   :config (which-key-mode))
 #+END_SRC
