@@ -1,13 +1,12 @@
 ;; Load these settings a.s.a.p.
 (tool-bar-mode -1)
-(setq inhibit-splash-screen t)
 (setq initial-scratch-message nil)
+(setq inhibit-startup-screen t)
+(setq vc-follow-symlinks t)
 
 ;; Initialize packages
 (require 'package)
 (setq package-enable-at-startup nil)
-;; By default, HTTPS is not used for ELPA
-(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")))
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
@@ -20,5 +19,4 @@
 (require 'bind-key)
 
 ;; Tangle Elisp from Org files
-(setq vc-follow-symlinks t)
 (mapc #'org-babel-load-file (directory-files user-emacs-directory t "\\.org$"))

@@ -52,8 +52,8 @@ Place backup files in its own directory.
 Don't save customizations in =init.el=.
 
 #+BEGIN_SRC emacs-lisp
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(load custom-file 'noerror)
+(setq custom-file (concat user-emacs-directory "custom.el"))
+(when (file-exists-p custom-file) (load custom-file))
 #+END_SRC
 
 ** Minibuffer
@@ -65,7 +65,7 @@ Don't save customizations in =init.el=.
 ** Mode line
 
 #+BEGIN_SRC emacs-lisp
-(setq column-number-mode t)
+(column-number-mode)
 #+END_SRC
 
 ** Notifications
@@ -84,11 +84,12 @@ Don't save customizations in =init.el=.
 
 #+BEGIN_SRC emacs-lisp
 (defvar my-term-shell "/bin/bash")
+
 (defadvice ansi-term (before force-bash)
   (interactive (list my-term-shell)))
 (ad-activate 'ansi-term)
 
-(global-set-key (kbd "<M-RET>") 'ansi-term)
+(global-set-key (kbd "<M-return>") 'ansi-term)
 #+END_SRC
 
 ** Spell checking
@@ -147,20 +148,20 @@ Don't save customizations in =init.el=.
 #+BEGIN_SRC emacs-lisp
 (use-package ivy
   :ensure t
-  :init (ivy-mode 1))
+  :config (ivy-mode))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
 (use-package counsel
   :ensure t
-  :init (counsel-mode 1))
+  :config (counsel-mode))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
 (use-package swiper
   :ensure t
   :bind
-  ([remap isearch-forward]  . swiper)
+  ([remap isearch-forward] . swiper)
   ([remap isearch-backward] . swiper))
 #+END_SRC
 
@@ -169,7 +170,7 @@ Don't save customizations in =init.el=.
 #+BEGIN_SRC emacs-lisp
 (use-package magit
   :ensure t
-  :bind (("C-x g" . magit-status))
+  :bind ("C-x g" . magit-status)
   :config (global-magit-file-mode))
 #+END_SRC
 
@@ -178,7 +179,6 @@ Don't save customizations in =init.el=.
 #+BEGIN_SRC emacs-lisp
 (use-package markdown-mode
   :ensure t
-  :mode "\\.md\\'"
   :init (setq markdown-command "pandoc"))
 #+END_SRC
 
@@ -187,5 +187,5 @@ Don't save customizations in =init.el=.
 #+BEGIN_SRC emacs-lisp
 (use-package which-key
   :ensure t
-  :init (which-key-mode))
+  :config (which-key-mode))
 #+END_SRC
