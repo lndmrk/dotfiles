@@ -27,7 +27,17 @@ Place backup files in its own directory.
   :hook (prog-mode . show-paren-mode)
   :init (setq show-paren-delay 0))
 
-(setq show-trailing-whitespace t)
+(use-package whitespace
+  :diminish
+  :hook ((find-file prog-mode text-mode) . whitespace-mode)
+  :init
+  (setq whitespace-style
+      (quote (face
+              trailing
+              lines-tail
+              space-before-tab
+              space-after-tab
+              tab-mark))))
 #+END_SRC
 
 ** Customizations
