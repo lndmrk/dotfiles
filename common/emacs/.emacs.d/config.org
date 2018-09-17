@@ -134,6 +134,13 @@ Don't save customizations in =init.el=.
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
+(use-package ivy-rich
+  :ensure t
+  :requires (ivy counsel)
+  :config (ivy-rich-mode))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
 (use-package counsel
   :ensure t
   :diminish
