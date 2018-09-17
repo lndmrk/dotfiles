@@ -19,6 +19,11 @@ Place backup files in its own directory.
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
 (use-package display-line-numbers
   :hook (find-file . display-line-numbers-mode))
 #+END_SRC
