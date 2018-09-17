@@ -112,7 +112,8 @@ Don't save customizations in =init.el=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package flyspell
-  :hook (text-mode . flyspell-mode))
+  :hook ((text-mode . flyspell-mode)
+         (prog-mode . flyspell-prog-mode)))
 #+END_SRC
 
 * Theme
