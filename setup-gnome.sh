@@ -32,7 +32,7 @@ terminal() {
                  | tr --delete "'")
   schema=org.gnome.Terminal.Legacy.Profile
   path="/org/gnome/terminal/legacy/profiles:/:${profile_uuid}/"
-  gsettings set "${schema}:${path}" "$@"
+  gsettings set "${schema}:${path}" "${@}"
 }
 terminal use-theme-colors false
 terminal foreground-color 'rgb(204,204,204)'
