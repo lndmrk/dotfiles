@@ -1,0 +1,8 @@
+fragment_dir="${XDG_CONFIG_HOME:-${HOME}/.confg}/bash-completion/completion.d/"
+for file in "${fragment_dir}/"*; do
+    if [[ -f "${file}" ]]; then
+        # shellcheck disable=SC1090
+        . "${file}"
+    fi
+done
+unset fragment_dir
