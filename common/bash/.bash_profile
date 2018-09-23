@@ -1,9 +1,9 @@
 if [[ -f ~/.bashrc ]]; then
-    # shellcheck source=common/bash/.bashrc
+    # shellcheck disable=SC1090
     . ~/.bashrc
 fi
 
 if [[ -f ~/.profile ]]; then
-    # shellcheck source=common/environment/.profile
+    # shellcheck disable=SC1090
     . ~/.profile
 fi

@@ -13,6 +13,6 @@ alias ls='ls --color=auto'
 alias r='gio trash'
 
 if [[ -f ~/.local/etc/bash/bashrc ]]; then
-    # shellcheck source=/dev/null
+    # shellcheck disable=SC1090
     . ~/.local/etc/bash/bashrc
 fi
