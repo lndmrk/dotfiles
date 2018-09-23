@@ -151,8 +151,10 @@ dotfiles::enable_bundle() {
     bundle=$(_validate_bundle "${1}") || return 1
 
     dotfiles::log info "Enabling '${bundle}'"
+    _call_hook "${bundle}" pre_setup
     _call_hook "${bundle}" setup
     _stow_bundle "${bundle}" --restow
+    _call_hook "${bundle}" post_setup
 }
 
 dotfiles::disable_bundle() {
