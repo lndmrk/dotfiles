@@ -21,6 +21,6 @@ export LESS="-FMR"
 export VISUAL="emacs"
 
 if [ -f ~/.local/etc/profile/profile ]; then
-    # shellcheck source=/dev/null
+    # shellcheck disable=SC1090
     . ~/.local/etc/profile/profile
 fi
