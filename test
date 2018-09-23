@@ -8,10 +8,6 @@ if ! emacs --version | grep --quiet "^GNU Emacs 26" ; then
   echo -n -e "\\e[0m"
 fi
 
-dircolors --version > /dev/null
-
-gio --version > /dev/null
-
 git --version > /dev/null
 
 gpg2 --version > /dev/null

@@ -29,27 +29,6 @@ for file in setup-"$(get_distro)".sh setup-gnome.sh local/setup-local.sh; do
   fi
 done
 
-# Remove skeleton dotfiles
-for file in ~/.bash{_logout,_profile,rc} ~/.profile; do
-  if [[ -f "${file}" && ! -L "${file}" ]]; then
-    mv "${file}" "${file}".bak
-  fi
-done
-
-# XDG
-if [[ ! -f ~/.config/user-dirs.dirs ]]; then
-  xdg-user-dirs-update --force
-fi
-for dir in TEMPLATES PUBLICSHARE; do
-  old_dir=$(xdg-user-dir "${dir}")
-  target_dir="${HOME}/.${dir,,}"
-  xdg-user-dirs-update --set "${dir}" "${target_dir}"
-  new_dir=$(xdg-user-dir "${dir}")
-  if [[ "${old_dir}" != "${new_dir}" ]]; then
-    mv "${old_dir}" "${new_dir}"
-  fi
-done
-
 # Fix file permissions
 (cd common/ && stow --restow gpg)
 chmod 0700 ~/.gnupg/
