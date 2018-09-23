@@ -1,39 +1,37 @@
-* lndmrk's dotfiles
+#+TITLE: lndmrk's dotfiles
+#+AUTHOR: Emil Lundmark
 
-This is the public part of my dotfiles. Private configurations can be put in the
-directory =local/=. You can also have a =local/setup-local.sh= that is run as
-part of the setup.
+This is the public part of my dotfiles. They are organized as separate /bundles/
+that can be enabled individually. Evetyhing is orchestrated by the /dotfiles/
+bundle; it contains the =dotfiles= tool which can be used to easily manage all
+bundles.
 
-** Install
+Additional private bundles should be collected in a subdirectory to this
+repository. The name should start with =private=, since that is ignored by Git.
+
+* Install
 
 Install by running the following.
 
 #+BEGIN_EXAMPLE
-$ ./setup
-$ cd common/
-$ stow */
+$ . bootstrap.sh
+$ dotfiles enable
 #+END_EXAMPLE
 
-Also install local packages, if any.
-
-#+BEGIN_EXAMPLE
-$ cd local/
-$ stow */
-#+END_EXAMPLE
-
-** Test
+* Test
 
 Some sanity tests can be preformed. They can either be run directly on your
 machine with
 
 #+BEGIN_EXAMPLE
-$ ./test
+$ dotfiles test
 #+END_EXAMPLE
 
 or inside a sandbox with
 
 #+BEGIN_EXAMPLE
-$ ./test-sandbox
+$ dotfiles test --sandbox
 #+END_EXAMPLE
 
-The sandbox tests require that [[https://www.vagrantup.com/][Vagrant]] and a supported provider is available.
+The sandbox tests require that [[https://www.vagrantup.com/][Vagrant]] and a
+supported provider is available.
