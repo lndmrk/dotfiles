@@ -13,14 +13,18 @@ export LC_PAPER="sv_SE.UTF-8"
 export LC_TELEPHONE="sv_SE.UTF-8"
 export LC_TIME="sv_SE.UTF-8"
 
-export PATH="$HOME/.local/bin:$PATH"
+export XDG_CONFIG_HOME="${HOME}/.config"
+export XDG_CACHE_HOME="${HOME}/.cache"
+export XDG_DATA_HOME="${HOME}/.local/share"
+
+export PATH="${HOME}/.local/bin:${PATH}"
 
 export PAGER="less"
 export LESS="-FMR"
 
 export VISUAL="emacs"
 
-if [ -f ~/.local/etc/profile/profile ]; then
+if [ -f "${XDG_CONFIG_HOME}/environment/profile" ]; then
     # shellcheck disable=SC1090
-    . ~/.local/etc/profile/profile
+    . "${XDG_CONFIG_HOME}/environment/profile"
 fi
