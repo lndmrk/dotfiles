@@ -12,7 +12,7 @@ alias ll='ls -l --color=auto'
 alias ls='ls --color=auto'
 alias r='gio trash'
 
-if [[ -f ~/.local/etc/bash/bashrc ]]; then
+if [[ -f "${XDG_CONFIG_HOME}/bash/bashrc" ]]; then
     # shellcheck disable=SC1090
-    . ~/.local/etc/bash/bashrc
+    . "${XDG_CONFIG_HOME}/bash/bashrc"
 fi
