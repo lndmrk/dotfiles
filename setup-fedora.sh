@@ -5,6 +5,4 @@ sudo dnf install --assumeyes \
   langpacks-sv \
   gnupg2 \
   pandoc \
-  python3 \
-  ShellCheck \
-  stow
+  python3

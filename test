@@ -2,24 +2,6 @@
 
 cd "$(dirname "$(realpath "$0")")" || exit 1
 
-shellcheck --version > /dev/null
-
-shellcheck test
-shellcheck test-sandbox
-
-shellcheck --shell=bash setup setup-*.sh
-
-while read -r file; do
-  if [[ "$(file --brief "${file}")" == "Bourne-Again shell script"* ]]; then
-    shellcheck "${file}"
-  fi
-done < <(find common/bin/.local/bin/* -type f)
-
-bash --version > /dev/null
-shellcheck --shell=bash \
-  common/environment/.profile \
-  common/bash/.bash*
-
 if ! emacs --version | grep --quiet "^GNU Emacs 26" ; then
   echo -n -e "\\e[33m"
   emacs --version
@@ -35,8 +17,6 @@ git --version > /dev/null
 gpg2 --version > /dev/null
 
 pandoc --version > /dev/null
-
-stow --version > /dev/null
 
 if [[ -f local/test-local.sh ]]; then
   # shellcheck source=/dev/null

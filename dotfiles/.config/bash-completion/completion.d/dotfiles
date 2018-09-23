@@ -1,0 +1,35 @@
+__dotfiles_subcmds="
+    disable
+    enable
+    sync
+    test
+"
+
+_dotfiles_get_bundles() {
+    # shellcheck disable=SC1090
+    . "${XDG_DATA_HOME:-${HOME}/.local/share}/dotfiles/libdotfiles.sh"
+    dotfiles::get_bundles
+}
+
+_dotfiles() {
+    local cur prev
+    cur=${COMP_WORDS[COMP_CWORD]}
+    prev=${COMP_WORDS[COMP_CWORD-1]}
+
+    case ${COMP_CWORD} in
+        1)
+            mapfile -t COMPREPLY < \
+                    <(compgen -W "${__dotfiles_subcmds}" -- "${cur}")
+            ;;
+        2)
+            case ${prev} in
+                disable|enable|test)
+                    mapfile -t COMPREPLY < \
+                            <(compgen -W "$(_dotfiles_get_bundles)" -- "${cur}")
+                    ;;
+            esac
+            ;;
+    esac
+}
+
+complete -F _dotfiles dotfiles
