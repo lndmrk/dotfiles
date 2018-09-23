@@ -20,7 +20,7 @@
 [color]
 	ui = auto
 [core]
-	excludesfile = ~/.gitignore
+	excludesfile = ~/.config/git/ignore
 [diff]
 	algorithm = histogram
 	indentHeuristic = true
@@ -34,4 +34,4 @@
 	email = emil@lndmrk.se
 
 [include]
-	path = ~/.local/etc/git/config
+	path = ~/.config/git/private
