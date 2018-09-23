@@ -29,8 +29,4 @@ for file in setup-"$(get_distro)".sh setup-gnome.sh local/setup-local.sh; do
   fi
 done
 
-# Fix file permissions
-(cd common/ && stow --restow gpg)
-chmod 0700 ~/.gnupg/
-
 echo -e "\\e[1;32mSetup completed successfully\\e[0m"

@@ -2,8 +2,6 @@
 
 cd "$(dirname "$(realpath "$0")")" || exit 1
 
-gpg2 --version > /dev/null
-
 if [[ -f local/test-local.sh ]]; then
   # shellcheck source=/dev/null
   . local/test-local.sh
