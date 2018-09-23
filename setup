@@ -22,7 +22,7 @@ cat <<EOF > ~/.stowrc
 --target=${HOME}
 EOF
 
-for file in setup-"$(get_distro)".sh setup-gnome.sh local/setup-local.sh; do
+for file in setup-"$(get_distro)".sh local/setup-local.sh; do
   if [[ -f "${file}" ]]; then
     # shellcheck source=/dev/null
     . "${file}"
