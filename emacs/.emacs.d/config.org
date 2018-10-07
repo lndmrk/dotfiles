@@ -74,7 +74,7 @@ Don't save customizations in =init.el=.
 #+BEGIN_SRC emacs-lisp
 (defun my-message-compose ()
   (setq fill-column 72)
-  (auto-fill-mode))
+  (auto-fill-mode 1))
 #+END_SRC
 
 ** Minibuffer
@@ -86,7 +86,7 @@ Don't save customizations in =init.el=.
 ** Mode line
 
 #+BEGIN_SRC emacs-lisp
-(column-number-mode)
+(column-number-mode 1)
 #+END_SRC
 
 ** Notifications
@@ -163,7 +163,7 @@ Don't save customizations in =init.el=.
 #+BEGIN_SRC emacs-lisp
 (use-package hl-todo
   :ensure t
-  :config (global-hl-todo-mode))
+  :config (global-hl-todo-mode 1))
 #+END_SRC
 
 ** ivy, counsel, swiper
@@ -172,21 +172,21 @@ Don't save customizations in =init.el=.
 (use-package ivy
   :ensure t
   :diminish
-  :config (ivy-mode))
+  :config (ivy-mode 1))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
 (use-package ivy-rich
   :ensure t
   :requires (ivy counsel)
-  :config (ivy-rich-mode))
+  :config (ivy-rich-mode 1))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
 (use-package counsel
   :ensure t
   :diminish
-  :config (counsel-mode))
+  :config (counsel-mode 1))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -221,5 +221,5 @@ Don't save customizations in =init.el=.
 (use-package which-key
   :ensure t
   :diminish
-  :config (which-key-mode))
+  :config (which-key-mode 1))
 #+END_SRC
