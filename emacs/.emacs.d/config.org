@@ -158,6 +158,14 @@ Don't save customizations in =init.el=.
   :hook ((find-file prog-mode text-mode) . fci-mode))
 #+END_SRC
 
+** flycheck
+
+#+BEGIN_SRC emacs-lisp
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
+#+END_SRC
+
 ** hl-todo
 
 #+BEGIN_SRC emacs-lisp
