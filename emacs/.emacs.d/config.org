@@ -231,3 +231,10 @@ Don't save customizations in =init.el=.
   :diminish
   :config (which-key-mode 1))
 #+END_SRC
+
+** yaml-mode
+
+#+BEGIN_SRC emacs-lisp
+(use-package yaml-mode
+  :ensure t)
+#+END_SRC
