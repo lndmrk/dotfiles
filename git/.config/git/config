@@ -15,8 +15,6 @@
 	rb = rebase
 	rs = reset
 	s = status --short --branch
-[branch]
-	autosetuprebase = always
 [color]
 	ui = auto
 [core]
@@ -29,6 +27,8 @@
 [pretty]
 	fixes = Fixes: %h (\"%s\")
 	oneline-short = format:%C(blue)%h%d %C(reset)%s %C(white dim)(%cr, %an)
+[pull]
+	rebase = true
 [user]
 	name = Emil Lundmark
 	email = emil@lndmrk.se
