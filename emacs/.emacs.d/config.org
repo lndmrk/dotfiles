@@ -212,6 +212,13 @@ Don't save customizations in =init.el=.
   ([remap isearch-backward] . swiper))
 #+END_SRC
 
+** json-mode
+
+#+BEGIN_SRC emacs-lisp
+(use-package json-mode
+  :ensure t)
+#+END_SRC
+
 ** magit
 
 #+BEGIN_SRC emacs-lisp
