@@ -6,11 +6,11 @@ pre_setup_bash() {
     done
 }
 
-setup_environment_debian() {
+setup_bash_debian() {
     sudo apt-get install --yes bash shellcheck
 }
 
-setup_environment_fedora() {
+setup_bash_fedora() {
     sudo dnf install --assumeyes bash ShellCheck
 }
 
