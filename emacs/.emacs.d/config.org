@@ -145,7 +145,8 @@ Don't save customizations in =init.el=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package eglot
-  :ensure t)
+  :ensure t
+  :hook (rust-mode . eglot-ensure))
 #+END_SRC
 
 ** eterm-256color
