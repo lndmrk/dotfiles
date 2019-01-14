@@ -94,7 +94,8 @@ post_setup_gnome() {
               sleep-inactive-battery-type 'suspend'
 
     gsettings set org.gnome.shell favorite-apps "[]"
-    gsettings set org.gnome.shell.overrides workspaces-only-on-primary false
+
+    gsettings set org.gnome.mutter workspaces-only-on-primary false
 
     gsettings set org.gnome.system.locale region 'sv_SE.UTF-8'
 
