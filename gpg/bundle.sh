@@ -16,7 +16,7 @@ setup_gpg_fedora() {
 
     # This fragment file can't be a symlink
     # https://github.com/systemd/systemd/issues/4209
-    config_dir="${XDG_CONFIG_HOME:-${HOME}/.confg}/systemd/"
+    config_dir="${XDG_CONFIG_HOME:-${HOME}/.config}/systemd/"
     fragment_dir="${config_dir}/user/gpg-agent-ssh.socket.d/"
     mkdir --parents "${fragment_dir}"
     cat >"${fragment_dir}/environment.conf" <<-EOF
