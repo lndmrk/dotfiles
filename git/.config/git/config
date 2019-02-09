@@ -22,6 +22,9 @@
 [diff]
 	algorithm = histogram
 	indentHeuristic = true
+[diff "ansible-vault"]
+	textconv = ansible-vault view
+	cachetextconv = false
 [merge]
 	conflictstyle = diff3
 [pretty]
