@@ -1,5 +1,6 @@
 DOTFILES_BASE=$(realpath \
                     "$(dirname "$(realpath "${BASH_SOURCE[0]}")")/../../../../")
+DOTFILES_CONFIG_DIR="${XDG_CONFIG_HOME:-${HOME}/.config}/dotfiles/"
 DOTFILES_MACHINE=${DOTFILES_MACHINE:-$(hostname --short)}
 DOTFILES_TARGET=${DOTFILES_TARGET:-${HOME}}
 
@@ -132,9 +133,20 @@ dotfiles::sync() {
 }
 
 dotfiles::get_bundles() {
-    local bundle
+    local bundle ignore ignores
+
+    if [[ -f "${DOTFILES_CONFIG_DIR}/ignore" ]]; then
+        mapfile -t ignores < "${DOTFILES_CONFIG_DIR}/ignore"
+    fi
+
     while read -r bundle; do
-        dirname "${bundle/#${DOTFILES_BASE}\//}"
+        bundle=$(dirname "${bundle/#${DOTFILES_BASE}\//}")
+        for ignore in "${ignores[@]}"; do
+            if [[ "${ignore}" == "${bundle}" ]]; then
+                continue 2
+            fi
+        done
+        echo "${bundle}"
     done < <(find "${DOTFILES_BASE}/" -type f -name "${__bundle_script}" \
                   -printf '%d\t%P\n' \
                  | sort --numeric-sort --key=1 | cut --fields=2-)
