@@ -1,7 +1,7 @@
-DOTFILES_TARGET=${DOTFILES_TARGET:-${HOME}}
-DOTFILES_MACHINE=${DOTFILES_MACHINE:-$(hostname --short)}
 DOTFILES_BASE=$(realpath \
                     "$(dirname "$(realpath "${BASH_SOURCE[0]}")")/../../../../")
+DOTFILES_MACHINE=${DOTFILES_MACHINE:-$(hostname --short)}
+DOTFILES_TARGET=${DOTFILES_TARGET:-${HOME}}
 
 __bundle_script="bundle.sh"
 
