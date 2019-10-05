@@ -145,8 +145,7 @@ Don't save customizations in =init.el=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package eglot
-  :ensure t
-  :hook (rust-mode . eglot-ensure))
+  :ensure t)
 #+END_SRC
 
 ** eterm-256color
@@ -243,13 +242,6 @@ Don't save customizations in =init.el=.
 (use-package markdown-mode
   :ensure t
   :init (setq markdown-command "pandoc"))
-#+END_SRC
-
-** rust-mode
-
-#+BEGIN_SRC emacs-lisp
-(use-package rust-mode
-  :ensure t)
 #+END_SRC
 
 ** which-key
