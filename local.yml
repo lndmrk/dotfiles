@@ -10,3 +10,5 @@
       tags: bash
     - name: dotfiles
       tags: dotfiles
+    - name: emacs
+      tags: emacs

@@ -9,10 +9,8 @@ setup_environment_debian() {
     sudo DEBIAN_FRONTEND=noninteractive apt-get install --yes \
          coreutils \
          python3 \
-         shellcheck \
          task-desktop \
          xdg-user-dirs \
-         yamllint
 
     for locale in en_US sv_SE; do
         sudo sed -i "s/^# *\\(${locale}.UTF-8\\)/\\1/" /etc/locale.gen
@@ -27,9 +25,7 @@ setup_environment_fedora() {
          langpacks-en \
          langpacks-sv \
          python3 \
-         ShellCheck \
-         xdg-user-dirs \
-         yamllint
+         xdg-user-dirs
 }
 
 post_setup_environment() {
@@ -51,7 +47,4 @@ test_environment() {
     dircolors --version >/dev/null
     gio --version >/dev/null
     python3 --version >/dev/null
-    yamllint --version >/dev/null
-
-    shellcheck --shell=sh ./.profile
 }

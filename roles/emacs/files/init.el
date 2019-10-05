@@ -1,3 +1,6 @@
+;; SPDX-FileCopyrightText: 2019 Emil Lundmark <emil@lndmrk.se>
+;; SPDX-License-Identifier: GPL-3.0-or-later
+
 ;; Load these settings a.s.a.p.
 (tool-bar-mode -1)
 (setq initial-scratch-message nil)

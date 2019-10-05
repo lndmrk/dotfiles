@@ -1,0 +1,48 @@
+# SPDX-FileCopyrightText: 2019 Emil Lundmark <emil@lndmrk.se>
+# SPDX-License-Identifier: GPL-3.0-or-later
+---
+- name: Install
+  package:
+    name: emacs
+  become: true
+
+- name: Install companion tools
+  package:
+    name:
+      - pandoc
+      - >-
+        {{ 'shellcheck' if ansible_distribution_file_variety != 'RedHat' else
+           'ShellCheck' }}
+      - yamllint
+  become: true
+
+- name: Create Emacs config directory
+  file:
+    path: ~/.emacs.d/
+    state: directory
+
+- name: Install config files
+  file:
+    src: "{{ role_path }}/files/{{ item }}"
+    dest: "~/.emacs.d/{{ item }}"
+    state: link
+    force: true
+  loop:
+    - config.org
+    - init.el
+
+- name: Create application entries directory
+  file:
+    path: ~/.local/share/applications/
+    state: directory
+
+- name: Add Emacs Dark desktop entry
+  copy:
+    dest: ~/.local/share/applications/emacs-dark.desktop
+    content: |
+      [Desktop Entry]
+      Name=Emacs Dark
+      Exec=env GTK_THEME=Adwaita:dark emacs %f
+      Icon=emacs
+      Type=Application
+      Terminal=false

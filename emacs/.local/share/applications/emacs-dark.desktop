@@ -1,6 +1,0 @@
-[Desktop Entry]
-Name=Emacs Dark
-Exec=env GTK_THEME=Adwaita:dark emacs %f
-Icon=emacs
-Type=Application
-Terminal=false
