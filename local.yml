@@ -6,5 +6,7 @@
   pre_tasks:
     - import_tasks: sync.yml
   roles:
+    - name: bash
+      tags: bash
     - name: dotfiles
       tags: dotfiles
