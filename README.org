@@ -1,37 +1,98 @@
+# SPDX-FileCopyrightText: 2019 Emil Lundmark <emil@lndmrk.se>
+# SPDX-License-Identifier: CC-BY-SA-4.0
 #+TITLE: lndmrk's dotfiles
 #+AUTHOR: Emil Lundmark
 
-This is the public part of my dotfiles. They are organized as separate /bundles/
-that can be enabled individually. Evetyhing is orchestrated by the /dotfiles/
-bundle; it contains the =dotfiles= tool which can be used to easily manage all
-bundles.
+These are my personal dotfiles---in fact, this is how my entire environment is
+set up and configured. A machine is provisioned by running an
+[[https://www.ansible.com/][Ansible]] playbook. Components are organized into
+Ansible /roles/. For convenience, all roles are included in a single playbook,
+with each role defining a variable =${ROLE}_role= that determines if the role's
+tasks should be imported.
 
-Additional private bundles should be collected in a subdirectory to this
-repository. The name should start with =private=, since that is ignored by Git.
+Unfortunately I can not share everything, so there is also support for importing
+a private playbook that lives in a private repository.
 
 * Install
 
-Install by running the following.
+Install everything by running
 
 #+BEGIN_EXAMPLE
-$ . bootstrap.sh
-$ dotfiles enable
+$ ansible-pull --url="${REPO}" --directory="${DEST}" --ask-become-pass
 #+END_EXAMPLE
+
+or alternatively
+
+#+BEGIN_EXAMPLE
+$ git clone "${REPO}"
+$ cd "$(basename "${REPO}" .git)"
+$ bin/dotfiles deploy
+#+END_EXAMPLE
+
+Since =dotfiles deploy= uses Ansible under the hood, additional command line
+arguments that Ansible understands can be appended.
 
 * Test
 
-Some sanity tests can be preformed. They can either be run directly on your
-machine with
+To verify that everything has been set up correctly on the machine, run
+
+#+BEGIN_EXAMPLE
+$ pytest
+#+END_EXAMPLE
+
+This can be executed from a subdirectory to only run a subset of the tests.
+
+Tests can also be run in an isolated container with
+[[https://github.com/ansible/molecule][Molecule]]. By default, Podman will be
+used as the container engine, but Docker may also be used by setting the
+environment variable =DOTFILES_MOLECULE_DRIVER= accordingly.
+
+#+BEGIN_EXAMPLE
+$ cd roles/"${ROLE}"
+$ molecule test
+#+END_EXAMPLE
+
+To run all tests in isolation, the following convenience command can be used.
 
 #+BEGIN_EXAMPLE
 $ dotfiles test
 #+END_EXAMPLE
 
-or inside a sandbox with
+* Boilerplate
+
+** New Role
+
+Quickly create a new role with
 
 #+BEGIN_EXAMPLE
-$ dotfiles test --sandbox
+$ cookiecutter --output-dir=roles/ .templates/role/ role="${ROLE}"
+$ ln --symbolic \
+    ../../../../molecule/molecule.yml roles/"${ROLE}"/molecule/default/
+$ cat <<EOF >>local.yml
+    - name: ${ROLE}
+      tags: ${ROLE}
+EOF
 #+END_EXAMPLE
 
-The sandbox tests require that [[https://www.vagrantup.com/][Vagrant]] and a
-supported provider is available.
+** Private Repository
+
+A new private repository can be created like so:
+
+#+BEGIN_EXAMPLE
+$ git init private/
+$ cd private/
+$ mkdir inventory/ roles/
+$ touch inventory/hosts.yml
+$ cat <<EOF >private.yml
+---
+- name: private
+  hosts: all
+EOF
+$ ln --symbolic ../.gitignore
+$ ln --symbolic ../molecule/
+#+END_EXAMPLE
+
+* License
+
+This project is [[https://reuse.software/][REUSE]] compliant. The copyright and
+license information for all files are specified using SPDX tags.

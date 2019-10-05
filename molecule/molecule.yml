@@ -1,0 +1,25 @@
+# SPDX-FileCopyrightText: 2019 Emil Lundmark <emil@lndmrk.se>
+# SPDX-License-Identifier: GPL-3.0-or-later
+---
+driver:
+  # TODO: Podman is currently unstable and requires patching Ansible.
+  # https://github.com/ansible/molecule/issues/1572#issuecomment-501211291
+  name: ${DOTFILES_MOLECULE_DRIVER:-podman}
+platforms:
+  - name: debian
+    image: debian:stable
+    dockerfile: ../../../../molecule/debian/Dockerfile.j2
+    privileged: true
+    volumes:
+      - ${MOLECULE_PROJECT_DIRECTORY}:${MOLECULE_PROJECT_DIRECTORY}:ro
+  - name: fedora
+    image: fedora:latest
+    dockerfile: ../../../../molecule/fedora/Dockerfile.j2
+    privileged: true
+    volumes:
+      - ${MOLECULE_PROJECT_DIRECTORY}:${MOLECULE_PROJECT_DIRECTORY}:ro
+provisioner:
+  name: ansible
+  log: true
+  playbooks:
+    converge: ../../../../molecule/playbook.yml
