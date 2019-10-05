@@ -28,8 +28,3 @@ if [ -f "${XDG_CONFIG_HOME}/environment/profile" ]; then
     # shellcheck disable=SC1090
     . "${XDG_CONFIG_HOME}/environment/profile"
 fi
-
-if [ -f "${HOME}/.cargo/env" ]; then
-    # shellcheck disable=SC1090
-    . "${HOME}/.cargo/env"
-fi
