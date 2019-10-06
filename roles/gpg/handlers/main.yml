@@ -1,0 +1,7 @@
+# SPDX-FileCopyrightText: 2019 Emil Lundmark <emil@lndmrk.se>
+# SPDX-License-Identifier: GPL-3.0-or-later
+---
+- name: Reload systemd user configuration
+  systemd:
+    daemon_reload: true
+    scope: user

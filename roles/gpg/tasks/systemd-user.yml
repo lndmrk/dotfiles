@@ -1,0 +1,22 @@
+# SPDX-FileCopyrightText: 2019 Emil Lundmark <emil@lndmrk.se>
+# SPDX-License-Identifier: GPL-3.0-or-later
+---
+- name: Create systemd user config directory
+  file:
+    path: ~/.config/systemd/user/
+    state: directory
+
+- name: Install systemd user units
+  file:
+    src: "{{ role_path }}/files/systemd/{{ item }}"
+    dest: "~/.config/systemd/user/{{ item }}"
+    state: link
+  loop:
+    - gpg-agent-ssh.socket
+    - gpg-agent.service
+    - gpg-agent.socket
+  notify: Reload systemd user configuration
+  tags: molecule-notest
+
+- name: Run handlers
+  meta: flush_handlers

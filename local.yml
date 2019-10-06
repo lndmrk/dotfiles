@@ -16,3 +16,5 @@
       tags: emacs
     - name: git
       tags: git
+    - name: gpg
+      tags: gpg
