@@ -8,7 +8,6 @@ pre_setup_environment() {
 setup_environment_debian() {
     sudo DEBIAN_FRONTEND=noninteractive apt-get install --yes \
          coreutils \
-         python3 \
          task-desktop \
          xdg-user-dirs \
 
@@ -24,7 +23,6 @@ setup_environment_fedora() {
          coreutils \
          langpacks-en \
          langpacks-sv \
-         python3 \
          xdg-user-dirs
 }
 
@@ -46,5 +44,4 @@ post_setup_environment() {
 test_environment() {
     dircolors --version >/dev/null
     gio --version >/dev/null
-    python3 --version >/dev/null
 }

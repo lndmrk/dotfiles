@@ -6,6 +6,8 @@
   pre_tasks:
     - import_tasks: sync.yml
   roles:
+    - name: bank2qif
+      tags: bank2qif
     - name: bash
       tags: bash
     - name: dotfiles

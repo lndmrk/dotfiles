@@ -1,0 +1,20 @@
+# SPDX-FileCopyrightText: 2019 Emil Lundmark <emil@lndmrk.se>
+# SPDX-License-Identifier: GPL-3.0-or-later
+---
+- name: Install dependencies
+  package:
+    name: python3
+  become: true
+
+- name: Create local bin directory
+  file:
+    path: ~/.local/bin/
+    state: directory
+
+- name: Install bin
+  file:
+    src: "{{ role_path }}/files/{{ item }}"
+    dest: "~/.local/bin/{{ item }}"
+    state: link
+  loop:
+    - bank2qif
