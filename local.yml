@@ -14,3 +14,5 @@
       tags: dotfiles
     - name: emacs
       tags: emacs
+    - name: git
+      tags: git
