@@ -16,5 +16,7 @@
       tags: emacs
     - name: git
       tags: git
+    - name: gnome
+      tags: gnome
     - name: gpg
       tags: gpg
