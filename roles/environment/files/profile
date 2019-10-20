@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2019 Emil Lundmark <emil@lndmrk.se>
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 export LANG="en_US.UTF-8"
 export LC_ALL=""
 export LC_ADDRESS="sv_SE.UTF-8"

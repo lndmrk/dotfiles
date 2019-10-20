@@ -12,6 +12,8 @@
       tags: bash
     - name: dotfiles
       tags: dotfiles
+    - name: environment
+      tags: environment
     - name: emacs
       tags: emacs
     - name: git

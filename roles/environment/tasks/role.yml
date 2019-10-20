@@ -1,0 +1,67 @@
+# SPDX-FileCopyrightText: 2019 Emil Lundmark <emil@lndmrk.se>
+# SPDX-License-Identifier: GPL-3.0-or-later
+---
+- name: Install
+  package:
+    name:
+      - coreutils
+      - xdg-user-dirs
+  become: true
+
+- name: Install Debian packages
+  package:
+    name: locales
+  become: true
+  when: ansible_distribution_file_variety == 'Debian'
+
+- name: Install Fedora packages
+  package:
+    name:
+      - langpacks-en
+      - langpacks-sv
+  become: true
+  when: ansible_distribution_file_variety == 'RedHat'
+
+- name: Check existing config files
+  stat:
+    path: "{{ item }}"
+  register: existing
+  loop:
+    - ~/.profile
+
+- name: Backup any existing config files
+  command: >-
+    mv "{{ item.stat.path }}"
+       "{{ item.stat.path }}.{{ ansible_date_time.iso8601_basic_short }}.bak"
+  when: item.stat.exists and not item.stat.islnk
+  loop: "{{ existing.results }}"
+
+- name: Install miscellaneous config files
+  file:
+    src: "{{ role_path }}/files/{{ item }}"
+    dest: "~/.{{ item }}"
+    state: link
+  loop:
+    - dir_colors
+    - profile
+
+- name: Create local config directory
+  file:
+    path: ~/.config/
+    state: directory
+
+- name: Configure XDG user dirs
+  file:
+    src: "{{ role_path }}/files/user-dirs.dirs"
+    dest: "~/.config/user-dirs.dirs"
+    state: link
+  notify: Create XDG user dirs
+
+- name: Generate locales
+  locale_gen:
+    name: "{{ item }}"
+  become: true
+  loop:
+    - en_US.UTF-8
+    - sv_SE.UTF-8
+  when: ansible_distribution_file_variety == 'Debian'
