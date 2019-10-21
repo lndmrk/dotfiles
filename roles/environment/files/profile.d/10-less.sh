@@ -2,4 +2,4 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 export PAGER="less"
-export LESS="-FMR"
+export LESS="--quit-if-one-screen --LONG-PROMPT --RAW-CONTROL-CHARS"
