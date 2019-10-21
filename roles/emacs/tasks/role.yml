@@ -31,6 +31,19 @@
     - config.org
     - init.el
 
+- name: Create profiled.d directory
+  file:
+    path: ~/.config/profile.d/
+    state: directory
+
+- name: Install profile.d config file
+  file:
+    src: "{{ role_path }}/files/profile.d/{{ item }}"
+    dest: "~/.config/profile.d/{{ item }}"
+    state: link
+  loop:
+    - 20-emacs.sh
+
 - name: Create application entries directory
   file:
     path: ~/.local/share/applications/
