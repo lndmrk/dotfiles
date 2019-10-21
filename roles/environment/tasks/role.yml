@@ -57,6 +57,19 @@
     state: link
   notify: Create XDG user dirs
 
+- name: Create profiled.d directory
+  file:
+    path: ~/.config/profile.d/
+    state: directory
+
+- name: Install profile.d config files
+  file:
+    src: "{{ item }}"
+    dest: "~/.config/profile.d/{{ item | basename }}"
+    state: link
+  with_fileglob:
+    - profile.d/*
+
 - name: Generate locales
   locale_gen:
     name: "{{ item }}"
