@@ -2,3 +2,4 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 ---
 gpg_role: true
+gpg_set_ssh_auth_sock: true

@@ -42,6 +42,21 @@
   include_tasks: systemd-user.yml
   when: ansible_distribution_file_variety == 'RedHat'
 
+- name: Create gpg-agent-ssh.socket.d directory
+  file:
+    path: ~/.config/systemd/user/gpg-agent-ssh.socket.d/
+    state: directory
+  when: gpg_set_ssh_auth_sock
+
+- name: Configure SSH_AUTH_SOCK
+  copy:
+    dest: ~/.config/systemd/user/gpg-agent-ssh.socket.d/environment.conf
+    content: |
+      [Socket]
+      ExecStartPost=/usr/bin/systemctl --user set-environment \
+          SSH_AUTH_SOCK=%t/gnupg/S.gpg-agent.ssh
+  when: gpg_set_ssh_auth_sock
+
 - name: Enable gpg-agent sockets
   systemd:
     name: "{{ item }}"
