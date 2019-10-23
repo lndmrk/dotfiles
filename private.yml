@@ -5,12 +5,11 @@
 # supported, keep this playbook for convenience.
 # https://github.com/ansible/ansible/issues/34281
 ---
-- import_playbook: local.yml
-
 - name: private
   hosts: all
   pre_tasks:
     - import_tasks: sync.yml
       vars:
         path: private/
+- import_playbook: local.yml
 - import_playbook: private/private.yml
