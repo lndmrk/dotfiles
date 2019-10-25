@@ -1,11 +1,9 @@
 # SPDX-FileCopyrightText: 2019 Emil Lundmark <emil@lndmrk.se>
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-profile_dir="${XDG_CONFIG_HOME:-${HOME}/.config}/profile.d/"
-for file in "${profile_dir}"/*.sh; do
+for file in "${XDG_CONFIG_HOME:-${HOME}/.config}/profile.d/"*.sh; do
     if [ -f "${file}" ]; then
         # shellcheck disable=SC1090
         . "${file}"
     fi
 done
-unset profile_dir
