@@ -1,12 +1,12 @@
 # SPDX-FileCopyrightText: 2019 Emil Lundmark <emil@lndmrk.se>
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-if [[ -f ~/.profile ]]; then
+if [[ -r ~/.profile ]]; then
     # shellcheck disable=SC1090
     . ~/.profile
 fi
 
-if [[ -f ~/.bashrc ]]; then
+if [[ -r ~/.bashrc ]]; then
     # shellcheck disable=SC1090
     . ~/.bashrc
 fi
