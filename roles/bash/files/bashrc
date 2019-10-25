@@ -11,14 +11,9 @@ if [[ -r /usr/share/bash-completion/bash_completion ]]; then
     source /usr/share/bash-completion/bash_completion
 fi
 
-PS1='\[\e[37m\]\u@\h \[\e[1m\]\W\[\e[0;37m\]\$\[\e[0m\] '
-PS2='\[\e[37m\]>\[\e[0m\] '
-
-alias diff='diff --color=auto'
-alias e='${EDITOR}'
-alias grep='grep --color=auto'
-alias ll='ls -l --color=auto'
-alias ls='ls --color=auto'
-alias r='gio trash'
-alias vi='${EDITOR}'
-alias vim='${EDITOR}'
+for file in "${XDG_CONFIG_HOME:-${HOME}/.config}/bash/bashrc.d/"*.sh; do
+    if [[ -r "${file}" ]]; then
+        # shellcheck disable=SC1090
+        source "${file}"
+    fi
+done

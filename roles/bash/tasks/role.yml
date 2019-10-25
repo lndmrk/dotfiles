@@ -38,3 +38,16 @@
     - bash_logout
     - bash_profile
     - bashrc
+
+- name: Create bashrc.d directory
+  file:
+    path: ~/.config/bash/bashrc.d/
+    state: directory
+
+- name: Install bashrc.d config files
+  file:
+    src: "{{ item }}"
+    dest: "~/.config/bash/bashrc.d/{{ item | basename }}"
+    state: link
+  with_fileglob:
+    - bashrc.d/*
