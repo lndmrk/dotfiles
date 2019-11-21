@@ -8,7 +8,7 @@ env:
   - DOTFILES_PROJECT_ROOT=${TRAVIS_BUILD_DIR}
     DOTFILES_MOLECULE_DRIVER=docker
 install:
-  - pip install fsfe-reuse molecule[docker]
+  - pip install --requirement requirements.txt molecule[docker]
 script:
   - reuse lint
   - bin/dotfiles test
