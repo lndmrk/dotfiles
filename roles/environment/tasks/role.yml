@@ -50,12 +50,25 @@
     path: ~/.config/
     state: directory
 
+- name: Configure XDG user dirs locale
+  copy:
+    dest: ~/.config/user-dirs.locale
+    content: |-
+      en_US
+
 - name: Configure XDG user dirs
+  lineinfile:
+    dest: ~/.config/user-dirs.dirs
+    regex: "^{{ item.key }}"
+    line: '{{ item.key }}="{{ item.value }}"'
+    create: true
+  loop: "{{ query('dict', environment_xdg_user_dirs) }}"
+
+- name: Create XDG user dirs
   file:
-    src: "{{ role_path }}/files/user-dirs.dirs"
-    dest: "~/.config/user-dirs.dirs"
-    state: link
-  notify: Create XDG user dirs
+    path: "{{ item.value }}"
+    state: directory
+  loop: "{{ query('dict', environment_xdg_user_dirs) }}"
 
 - name: Create profile.d directory
   file:
