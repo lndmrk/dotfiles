@@ -1,6 +1,23 @@
 # SPDX-FileCopyrightText: 2019 Emil Lundmark <emil@lndmrk.se>
 # SPDX-License-Identifier: GPL-3.0-or-later
 ---
+- name: Install dependencies
+  package:
+    name:
+      - ansible
+      - python3-cookiecutter
+  become: true
+
+- name: Install test dependencies
+  package:
+    name:
+      - podman
+      - python3-devel
+      - python3-libselinux
+      - python3-testinfra
+  become: true
+  when: ansible_distribution_file_variety == 'RedHat'
+
 - name: Create local bin directory
   file:
     path: ~/.local/bin/
