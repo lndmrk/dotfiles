@@ -18,7 +18,6 @@ def test_gpg_config_directory_permissions(host):
 
 
 @pytest.mark.parametrize('name', [
-    'gpg-agent.conf',
     'gpg.conf',
     'sshcontrol',
 ])
