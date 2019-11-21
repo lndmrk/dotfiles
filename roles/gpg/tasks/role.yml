@@ -34,6 +34,19 @@
     - gpg.conf
     - sshcontrol
 
+- name: Create bashrc.d directory
+  file:
+    path: ~/.config/bash/bashrc.d/
+    state: directory
+
+- name: Install bashrc.d config files
+  file:
+    src: "{{ item }}"
+    dest: "~/.config/bash/bashrc.d/{{ item | basename }}"
+    state: link
+  with_fileglob:
+    - bashrc.d/*
+
 # TODO: These files are only installed inside /usr/share/doc/ on RHEL
 # derivatives. Since documentation is not present inside containers, these files
 # are instead included with the role.
