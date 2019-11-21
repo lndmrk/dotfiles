@@ -31,7 +31,7 @@
     - config.org
     - init.el
 
-- name: Create profiled.d directory
+- name: Create profile.d directory
   file:
     path: ~/.config/profile.d/
     state: directory
