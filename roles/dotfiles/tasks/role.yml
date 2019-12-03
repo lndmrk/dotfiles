@@ -3,10 +3,20 @@
 ---
 - name: Install dependencies
   package:
-    name:
-      - ansible
-      - python3-cookiecutter
+    name: ansible
   become: true
+
+- name: Install Fedora dependencies
+  package:
+    name: python3-cookiecutter
+  become: true
+  when: ansible_distribution_file_variety == 'RedHat'
+
+- name: Install Debian dependencies
+  package:
+    name: cookiecutter
+  become: true
+  when: ansible_distribution_file_variety == 'Debian'
 
 - name: Install test dependencies
   package:
