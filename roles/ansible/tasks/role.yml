@@ -1,0 +1,9 @@
+# SPDX-FileCopyrightText: 2020 Emil Lundmark <emil@lndmrk.se>
+# SPDX-License-Identifier: GPL-3.0-or-later
+---
+- name: Install
+  package:
+    name:
+      - ansible
+      - python3-netaddr
+  become: true
