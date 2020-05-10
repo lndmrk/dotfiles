@@ -6,7 +6,17 @@
     name: python3-psutil
   become: true
 
-- name: Bind key
+- name: Window manager keybindings
+  dconf:
+    key: "/org/gnome/desktop/wm/keybindings/{{ item.key }}"
+    value: "['{{ item.value | string }}']"
+  with_dict:
+    switch-applications: <Super>Tab
+    switch-applications-backward: <Shift><Super>Tab
+    switch-windows: <Alt>Tab
+    switch-windows-backward: <Shift><Alt>Tab
+
+- name: Custom keybindings
   dconf:
     key:
       "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings\
