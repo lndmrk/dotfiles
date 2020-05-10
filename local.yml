@@ -24,3 +24,5 @@
       tags: gnome
     - name: gpg
       tags: gpg
+    - name: python
+      tags: python
