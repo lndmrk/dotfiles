@@ -1,0 +1,13 @@
+# SPDX-FileCopyrightText: 2020 Emil Lundmark <emil@lndmrk.se>
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+[Unit]
+Description=Send error desktop notification
+
+[Service]
+Type=oneshot
+ExecStart=notify-send \
+  --urgency=critical \
+  --icon=dialog-error-symbolic \
+  "%i.service failed" \
+  "Run `systemctl --user status %i.service` for details."

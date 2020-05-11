@@ -10,7 +10,9 @@
 
 - name: Install Debian packages
   package:
-    name: locales
+    name:
+      - libnotify-bin
+      - locales
   become: true
   when: ansible_distribution_file_variety == 'Debian'
 
@@ -19,6 +21,7 @@
     name:
       - langpacks-en
       - langpacks-sv
+      - libnotify
   become: true
   when: ansible_distribution_file_variety == 'RedHat'
 
@@ -82,6 +85,19 @@
     state: link
   with_fileglob:
     - profile.d/*
+
+- name: Create systemd config directory
+  file:
+    path: ~/.config/systemd/user/
+    state: directory
+
+- name: Install notify-error@service
+  file:
+    src: "{{ role_path }}/files/systemd/{{ item }}"
+    dest: "~/.config/systemd/user/{{ item }}"
+    state: link
+  loop:
+    - notify-error@.service
 
 - name: Generate locales
   locale_gen:

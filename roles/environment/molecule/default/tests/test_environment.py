@@ -8,6 +8,10 @@ def test_environment_dircolors(host):
     assert host.exists('dircolors')
 
 
+def test_environment_notify_send(host):
+    assert host.exists('notify-send')
+
+
 @pytest.mark.parametrize('name', [
     'Desktop',
     'Documents',
