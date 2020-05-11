@@ -51,21 +51,23 @@ cmd_sync() {
 }
 
 cmd_test() (
+    if [[ ${#} -eq 0 ]]; then
+        : test
+    else
+        : "${@}"
+    fi
+    local arg=${_}
+
     shopt -s nullglob
     for role_path in roles/* private/roles/*; do
         (
             cd "${role_path}"
-            for file in molecule/*/molecule.yml; do
-                [[ -f "${file}" ]] && continue
+            if ! compgen -G "molecule/*/molecule.yml" >/dev/null; then
                 log warn "Skipping role ${role_path}"
                 exit 0
-            done
-            if [[ ${#} -eq 0 ]]; then
-                : test
-            else
-                : "${@}"
             fi
-            molecule "${_}"
+            log info "Role ${role_path}"
+            molecule "${arg}"
         )
     done
 )
