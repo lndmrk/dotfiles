@@ -1,0 +1,10 @@
+# SPDX-FileCopyrightText: 2020 Emil Lundmark <emil@lndmrk.se>
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+[Socket]
+ListenStream=%t/emacs/default
+SocketMode=0600
+DirectoryMode=0700
+
+[Install]
+WantedBy=sockets.target

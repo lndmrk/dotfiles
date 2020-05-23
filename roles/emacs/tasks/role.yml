@@ -41,6 +41,27 @@
     - early-init.el
     - init.el
 
+- name: Create systemd user config directory
+  file:
+    path: ~/.config/systemd/user/
+    state: directory
+
+- name: Install emacs.socket
+  file:
+    src: "{{ role_path }}/files/systemd/{{ item }}"
+    dest: "~/.config/systemd/user/{{ item }}"
+    state: link
+  loop:
+    - emacs.socket
+
+- name: Enable emacs.socket
+  systemd:
+    name: emacs.socket
+    daemon_reload: true
+    scope: user
+    enabled: true
+    state: started
+
 - name: Create profile.d directory
   file:
     path: ~/.config/profile.d/
@@ -53,3 +74,16 @@
     state: link
   loop:
     - 20-emacs.sh
+
+- name: Create application entries directory
+  file:
+    path: ~/.local/share/applications/
+    state: directory
+
+- name: Override Emacs desktop entry to use emacsclient
+  file:
+    src: "{{ role_path }}/files/applications/{{ item }}"
+    dest: "~/.local/share/applications/{{ item }}"
+    state: link
+  loop:
+    - emacs.desktop

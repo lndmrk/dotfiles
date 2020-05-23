@@ -1,0 +1,9 @@
+# SPDX-FileCopyrightText: 2020 Emil Lundmark <emil@lndmrk.se>
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+[Desktop Entry]
+Name=Emacs
+Exec=emacsclient --create-frame %f
+Icon=emacs
+Type=Application
+Terminal=false
