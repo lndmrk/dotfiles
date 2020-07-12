@@ -23,13 +23,17 @@ def parse_csv(filename, indicies_map, delimiter=";", skip_header=True):
             if len(r) == 0:
                 continue
 
-            date = datetime.datetime.strptime(r[i_date], "%Y-%m-%d")
-            date = date.strftime("%m/%d/%y")
-            amount = r[i_amount][:-3].replace(" ", "").replace(",", ".")
-            amount = r[i_amount].replace(".", "") \
-                                .replace(" ", "") \
-                                .replace(",", ".")
-            memo = r[i_memo]
+            date = r[i_date]
+            try:
+                date = datetime.datetime.strptime(date, "%Y-%m-%d")
+                date = date.strftime("%m/%d/%y")
+                amount = r[i_amount][:-3].replace(" ", "").replace(",", ".")
+                amount = r[i_amount].replace(".", "") \
+                                    .replace(" ", "") \
+                                    .replace(",", ".")
+                memo = r[i_memo]
+            except:
+                continue
 
             transactions.append({
                 "date": date,
@@ -49,6 +53,15 @@ def parse_ica(filename):
     return transactions, ""
 
 def parse_nordea(filename):
+    indicies_map = {
+        "date": 0,
+        "amount": 1,
+        "memo": 5
+    }
+    transactions = parse_csv(filename, indicies_map)
+    return transactions, ""
+
+def parse_nordea_legacy(filename):
     indicies_map = {
         "date": 0,
         "amount": 3,
@@ -101,7 +114,8 @@ if __name__ == "__main__":
     argparser = argparse.ArgumentParser()
     argparser.add_argument("-a", "--account", default="")
     argparser.add_argument("-f", "--format",
-                           choices=["ica", "nordea", "swedbank"],
+                           choices=["ica", "nordea", "nordea-legacy",
+                                    "swedbank"],
                            default="nordea")
     argparser.add_argument("filename", metavar="FILE")
     args = argparser.parse_args()
@@ -111,6 +125,8 @@ if __name__ == "__main__":
         parser = parse_ica
     elif args.format == "nordea":
         parser = parse_nordea
+    elif args.format == "nordea-legacy":
+        parser = parse_nordea_legacy
     elif args.format == "swedbank":
         parser = parse_swedbank
 
