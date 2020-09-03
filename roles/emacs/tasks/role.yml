@@ -18,9 +18,15 @@
 
 - name: Create Emacs config directory
   file:
-    path: ~/.emacs.d/
+    path: ~/.config/emacs/
     state: directory
     mode: 0775
+
+- name: Create symlink to old Emacs config directory
+  file:
+    src: ~/.config/emacs
+    dest: ~/.emacs.d
+    state: link
 
 - name: Install config files
   file:
@@ -30,6 +36,7 @@
     force: true
   loop:
     - config.org
+    - early-init.el
     - init.el
 
 - name: Create profile.d directory

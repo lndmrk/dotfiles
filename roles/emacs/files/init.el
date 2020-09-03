@@ -1,16 +1,16 @@
 ;; SPDX-FileCopyrightText: 2019 Emil Lundmark <emil@lndmrk.se>
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
-(require 'package)
-(setq package-enable-at-startup nil)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(package-initialize)
-
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+(when (< emacs-major-version 27)
+  (defvar early-init-file
+    (expand-file-name (locate-user-emacs-file "early-init.el")))
+  (load early-init-file)
+  (require 'early-init))
 
 (eval-when-compile
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
   (require 'use-package))
 
 (use-package vc

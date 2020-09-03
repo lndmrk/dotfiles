@@ -70,7 +70,7 @@
      (list
       (completing-read
        "Find config file: "
-       (add-to-list 'my-config--org-files user-init-file))))
+       (append `(,early-init-file ,user-init-file) my-config--org-files))))
     (find-file filename))
   :bind
   ("C-c d f" . my-config-find-file))
@@ -99,6 +99,14 @@
 * Packages
 
 ** Built-in
+
+*** display-fill-column-indicator
+
+#+BEGIN_SRC emacs-lisp
+(use-package display-fill-column-indicator
+  :if (>= emacs-major-version 27)
+  :hook ((find-file prog-mode text-mode) . display-fill-column-indicator-mode))
+#+END_SRC
 
 *** display-line-numbers
 
@@ -192,6 +200,7 @@
 
 #+BEGIN_SRC emacs-lisp
 (use-package fill-column-indicator
+  :if (< emacs-major-version 27)
   :ensure t
   :hook ((find-file prog-mode text-mode) . fci-mode))
 #+END_SRC

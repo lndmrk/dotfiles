@@ -30,6 +30,7 @@ def test_emacs_companion_tool_installed(host, name):
 
 @pytest.mark.parametrize('name', [
     'config.org',
+    'early-init.el',
     'init.el',
 ])
 def test_emacs_configured(host, name):
