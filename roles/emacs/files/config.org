@@ -61,6 +61,7 @@
   (create-lockfiles nil)
   (require-final-newline 'visit-save)
   (ring-bell-function 'ignore)
+  (save-interprogram-paste-before-kill t)
   (uniquify-buffer-name-style 'forward)
   :config
   (column-number-mode 1)
