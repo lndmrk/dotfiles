@@ -1,6 +1,8 @@
 ;; SPDX-FileCopyrightText: 2020 Emil Lundmark <emil@lndmrk.se>
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
+(setq gc-cons-threshold (* 32 1024 1024))
+
 (setq load-prefer-newer t)
 
 (eval-when-compile
