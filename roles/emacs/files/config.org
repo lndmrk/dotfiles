@@ -306,6 +306,19 @@
   :ensure t)
 #+END_SRC
 
+*** keyfreq
+
+#+BEGIN_SRC emacs-lisp
+(use-package keyfreq
+  :ensure t
+  :custom
+  (keyfreq-excluded-commands '(self-insert-command))
+  (keyfreq-file (expand-file-name (locate-user-emacs-file "keyfreq")))
+  :config
+  (keyfreq-autosave-mode 1)
+  (keyfreq-mode 1))
+#+END_SRC
+
 *** magit
 
 #+BEGIN_SRC emacs-lisp
