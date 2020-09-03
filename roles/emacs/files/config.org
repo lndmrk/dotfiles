@@ -53,6 +53,7 @@ Place backup files in its own directory.
       (quote (face
               trailing
               lines-tail
+              empty
               space-before-tab
               space-after-tab
               tab-mark))))
