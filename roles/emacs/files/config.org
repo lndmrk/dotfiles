@@ -197,7 +197,7 @@ Don't save customizations in =init.el=.
   :ensure t
   :config (global-magit-file-mode 1)
   :hook (git-commit-mode . my-message-compose)
-  :bind ("C-x g" . magit-status)
+  :bind ("C-c g" . magit-status))
 #+END_SRC
 
 ** markdown-mode
