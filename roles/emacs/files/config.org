@@ -68,14 +68,6 @@ Don't save customizations in =init.el=.
 (when (file-exists-p custom-file) (load custom-file))
 #+END_SRC
 
-** Mail
-
-#+BEGIN_SRC emacs-lisp
-(defun my-message-compose ()
-  (setq fill-column 72)
-  (auto-fill-mode 1))
-#+END_SRC
-
 ** Minibuffer
 
 #+BEGIN_SRC emacs-lisp
@@ -107,6 +99,40 @@ Don't save customizations in =init.el=.
   :hook
   (prog-mode . flyspell-prog-mode)
   (text-mode . flyspell-mode))
+#+END_SRC
+
+* Custom Functions
+
+** Configuration Management
+
+#+BEGIN_SRC emacs-lisp
+(use-package emacs
+  :config
+  (defun my-config-find-file (filename)
+    (interactive
+     (list
+      (completing-read
+       "Find config file: "
+       (add-to-list 'my-config--org-files user-init-file))))
+    (find-file filename)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(use-package emacs
+  :config
+  (defun my-config-reload ()
+    (interactive)
+    (load user-init-file)))
+#+END_SRC
+
+** Message Composing
+
+#+BEGIN_SRC emacs-lisp
+(use-package emacs
+  :config
+  (defun my-message-compose-mode ()
+    (setq fill-column 72)
+    (auto-fill-mode 1)))
 #+END_SRC
 
 * Theme
@@ -196,7 +222,7 @@ Don't save customizations in =init.el=.
 (use-package magit
   :ensure t
   :config (global-magit-file-mode 1)
-  :hook (git-commit-mode . my-message-compose)
+  :hook (git-commit-mode . my-message-compose-mode)
   :bind ("C-c g" . magit-status))
 #+END_SRC
 
