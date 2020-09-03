@@ -40,23 +40,23 @@ Place backup files in its own directory.
 
 #+BEGIN_SRC emacs-lisp
 (use-package paren
-  :hook (prog-mode . show-paren-mode)
-  :init (setq show-paren-delay 0))
+  :custom (show-paren-delay 0)
+  :hook (prog-mode . show-paren-mode))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
 (use-package whitespace
   :diminish
-  :hook ((find-file prog-mode text-mode) . whitespace-mode)
-  :init
-  (setq whitespace-style
-      (quote (face
-              trailing
-              lines-tail
-              empty
-              space-before-tab
-              space-after-tab
-              tab-mark))))
+  :custom
+  (whitespace-style '(face
+                      trailing
+                      lines-tail
+                      empty
+                      space-after-tab
+                      space-before-tab
+                      tab-mark))
+  :hook
+  ((find-file prog-mode text-mode) . whitespace-mode))
 #+END_SRC
 
 ** Customizations
@@ -202,7 +202,7 @@ Don't save customizations in =init.el=.
 #+BEGIN_SRC emacs-lisp
 (use-package markdown-mode
   :ensure t
-  :init (setq markdown-command "pandoc"))
+  :custom (markdown-command "pandoc"))
 #+END_SRC
 
 ** which-key
