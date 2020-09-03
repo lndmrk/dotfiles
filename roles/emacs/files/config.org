@@ -131,13 +131,6 @@
   :config (global-hl-line-mode 1))
 #+END_SRC
 
-*** org
-
-#+BEGIN_SRC emacs-lisp
-(use-package org
-  :custom (org-src-preserve-indentation t))
-#+END_SRC
-
 *** paren
 
 #+BEGIN_SRC emacs-lisp
@@ -277,6 +270,15 @@
 (use-package markdown-mode
   :ensure t
   :custom (markdown-command "pandoc"))
+#+END_SRC
+
+*** org
+
+This is already ensured to be installed in =init.el=.
+
+#+BEGIN_SRC emacs-lisp
+(use-package org
+  :custom (org-src-preserve-indentation t))
 #+END_SRC
 
 *** which-key

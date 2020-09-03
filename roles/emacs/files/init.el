@@ -17,6 +17,7 @@
   :custom (vc-follow-symlinks t))
 
 (use-package org
+  :ensure org-plus-contrib
   :init
   (defconst my-config--org-files
     (directory-files user-emacs-directory t "\\.org$"))
