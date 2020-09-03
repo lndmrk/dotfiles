@@ -185,6 +185,20 @@
   ((find-file prog-mode text-mode) . whitespace-mode))
 #+END_SRC
 
+*** winner
+
+#+BEGIN_SRC emacs-lisp
+(use-package winner
+  :after bind-key
+  :config
+  (unbind-key "C-c <left>")
+  (unbind-key "C-c <right>")
+  (winner-mode 1)
+  :bind
+  ("C-c w n" . winner-redo)
+  ("C-c w p" . winner-undo))
+#+END_SRC
+
 ** External
 
 *** bind-key
