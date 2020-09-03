@@ -14,17 +14,20 @@
     path: ~/.gnupg/gpg-agent.conf
     line: enable-ssh-support
     create: true
+    mode: 0664
   when: gpg_ssh_enabled
 
 - name: Create gpg-agent-ssh.socket.d directory
   file:
     path: ~/.config/systemd/user/gpg-agent-ssh.socket.d/
     state: directory
+    mode: 0775
   when: gpg_ssh_enabled
 
 - name: Configure SSH_AUTH_SOCK
   copy:
     dest: ~/.config/systemd/user/gpg-agent-ssh.socket.d/environment.conf
+    mode: 0664
     content: |
       [Socket]
       ExecStartPost=/usr/bin/systemctl --user set-environment \
@@ -42,10 +45,12 @@
   file:
     path: ~/.config/autostart/
     state: directory
+    mode: 0775
 
 - name: Disable autostart for Gnome Keyring SSH agent
   copy:
     dest: ~/.config/autostart/gnome-keyring-ssh.desktop
+    mode: 0664
     content: |
       [Desktop Entry]
       Type=Application

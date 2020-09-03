@@ -20,6 +20,7 @@
   file:
     path: ~/.emacs.d/
     state: directory
+    mode: 0775
 
 - name: Install config files
   file:
@@ -35,6 +36,7 @@
   file:
     path: ~/.config/profile.d/
     state: directory
+    mode: 0775
 
 - name: Install profile.d config file
   file:
@@ -48,10 +50,12 @@
   file:
     path: ~/.local/share/applications/
     state: directory
+    mode: 0775
 
 - name: Add Emacs Dark desktop entry
   copy:
     dest: ~/.local/share/applications/emacs-dark.desktop
+    mode: 0664
     content: |
       [Desktop Entry]
       Name=Emacs Dark

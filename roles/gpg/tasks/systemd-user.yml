@@ -5,6 +5,7 @@
   file:
     path: ~/.config/systemd/user/
     state: directory
+    mode: 0775
 
 - name: Install systemd user units
   file:

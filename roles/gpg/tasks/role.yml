@@ -36,6 +36,7 @@
   file:
     path: ~/.config/bash/bashrc.d/
     state: directory
+    mode: 0775
 
 - name: Install bashrc.d config files
   file:

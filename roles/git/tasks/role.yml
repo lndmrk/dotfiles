@@ -10,6 +10,7 @@
   file:
     path: ~/.config/git/
     state: directory
+    mode: 0775
 
 - name: Install config files
   file:
