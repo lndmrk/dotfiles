@@ -47,7 +47,7 @@
   :custom
   (fill-column 80)
   (indent-tabs-mode nil)
-  (tab-width 4))
+  (tab-width 2))
 #+END_SRC
 
 ** Miscellaneous
