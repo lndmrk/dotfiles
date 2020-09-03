@@ -1,13 +1,6 @@
 ;; SPDX-FileCopyrightText: 2019 Emil Lundmark <emil@lndmrk.se>
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
-;; Load these settings a.s.a.p.
-(tool-bar-mode -1)
-(setq initial-scratch-message nil)
-(setq inhibit-startup-screen t)
-(setq vc-follow-symlinks t)
-
-;; Initialize packages
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -20,7 +13,12 @@
 (eval-when-compile
   (require 'use-package))
 
-;; Configuration management
-(defconst my-config--org-files
-  (directory-files user-emacs-directory t "\\.org$"))
-(mapc #'org-babel-load-file my-config--org-files)
+(use-package vc
+  :custom (vc-follow-symlinks t))
+
+(use-package org
+  :init
+  (defconst my-config--org-files
+    (directory-files user-emacs-directory t "\\.org$"))
+  :config
+  (mapc #'org-babel-load-file my-config--org-files))

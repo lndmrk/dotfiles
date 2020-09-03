@@ -3,56 +3,59 @@
 #+TITLE: lndmrk's Emacs Configuration
 #+AUTHOR: Emil Lundmark
 
-* Sane defaults
+* Defaults
 
-** Backups
-
-Place backup files in its own directory.
+** User Interface
 
 #+BEGIN_SRC emacs-lisp
-(defconst backup-directory
-  (file-name-as-directory (concat user-emacs-directory "backups")))
-(make-directory backup-directory t)
-(setq backup-directory-alist `((".*" . ,backup-directory)))
-(setq auto-save-file-name-transforms `((".*" ,backup-directory t)))
+(use-package emacs
+  :init
+  (tool-bar-mode -1)
+  :custom
+  (inhibit-startup-screen t)
+  (initial-scratch-message nil))
 #+END_SRC
 
-** Buffer
+** Backup Files
 
 #+BEGIN_SRC emacs-lisp
-(setq-default fill-column 80)
+(use-package emacs
+  :init
+  (let ((backup-directory
+         (file-name-as-directory (locate-user-emacs-file "backups"))))
+    (unless (file-directory-p backup-directory)
+      (make-directory backup-directory t))
+    (setq backup-directory-alist `((".*" . ,backup-directory)))
+    (setq auto-save-file-name-transforms `((".*" ,backup-directory t)))))
 #+END_SRC
 
+** Custom File
+
 #+BEGIN_SRC emacs-lisp
-(setq-default indent-tabs-mode nil)
-(setq-default tab-width 4)
+(use-package emacs
+  :custom (custom-file (locate-user-emacs-file "custom.el"))
+  :init (when (file-exists-p custom-file) (load custom-file)))
 #+END_SRC
 
-** Customizations
-
-Don't save customizations in =init.el=.
+** Text
 
 #+BEGIN_SRC emacs-lisp
-(setq custom-file (concat user-emacs-directory "custom.el"))
-(when (file-exists-p custom-file) (load custom-file))
+(use-package emacs
+  :custom
+  (fill-column 80)
+  (indent-tabs-mode nil)
+  (tab-width 4))
 #+END_SRC
 
-** Minibuffer
+** Miscellaneous
 
 #+BEGIN_SRC emacs-lisp
-(defalias 'yes-or-no-p 'y-or-n-p)
-#+END_SRC
-
-** Mode line
-
-#+BEGIN_SRC emacs-lisp
-(column-number-mode 1)
-#+END_SRC
-
-** Notifications
-
-#+BEGIN_SRC emacs-lisp
-(setq ring-bell-function 'ignore)
+(use-package emacs
+  :custom
+  (ring-bell-function 'ignore)
+  :config
+  (column-number-mode 1)
+  (defalias 'yes-or-no-p 'y-or-n-p))
 #+END_SRC
 
 * Custom Functions
