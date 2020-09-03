@@ -10,6 +10,9 @@
 #+BEGIN_SRC emacs-lisp
 (use-package emacs
   :init
+  (horizontal-scroll-bar-mode -1)
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1)
   (tool-bar-mode -1)
   :custom
   (inhibit-startup-screen t)
