@@ -59,6 +59,7 @@
   :custom
   (confirm-kill-emacs #'yes-or-no-p)
   (create-lockfiles nil)
+  (require-final-newline 'visit-save)
   (ring-bell-function 'ignore)
   :config
   (column-number-mode 1)
