@@ -40,6 +40,13 @@
   :init (when (file-exists-p custom-file) (load custom-file)))
 #+END_SRC
 
+** Key Bindings
+
+#+BEGIN_SRC emacs-lisp
+(use-package emacs
+  :bind ([remap zap-to-char] . zap-up-to-char))
+#+END_SRC
+
 ** Text
 
 #+BEGIN_SRC emacs-lisp
