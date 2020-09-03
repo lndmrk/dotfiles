@@ -71,7 +71,9 @@
       (completing-read
        "Find config file: "
        (add-to-list 'my-config--org-files user-init-file))))
-    (find-file filename)))
+    (find-file filename))
+  :bind
+  ("C-c d f" . my-config-find-file))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -79,7 +81,9 @@
   :config
   (defun my-config-reload ()
     (interactive)
-    (load user-init-file)))
+    (load user-init-file))
+  :bind
+  ("C-c d r" . my-config-reload))
 #+END_SRC
 
 ** Message Composing
