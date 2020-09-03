@@ -161,6 +161,13 @@
   :hook (prog-mode . show-paren-mode))
 #+END_SRC
 
+*** saveplace
+
+#+BEGIN_SRC emacs-lisp
+(use-package saveplace
+  :config (save-place-mode 1))
+#+END_SRC
+
 *** whitespace
 
 #+BEGIN_SRC emacs-lisp
