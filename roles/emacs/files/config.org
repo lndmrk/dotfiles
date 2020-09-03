@@ -99,18 +99,6 @@ Don't save customizations in =init.el=.
 (setq org-src-preserve-indentation t)
 #+END_SRC
 
-** Shell
-
-#+BEGIN_SRC emacs-lisp
-(defvar my-term-shell "/bin/bash")
-
-(defadvice ansi-term (before force-bash)
-  (interactive (list my-term-shell)))
-(ad-activate 'ansi-term)
-
-(global-set-key (kbd "<M-return>") 'ansi-term)
-#+END_SRC
-
 ** Spell checking
 
 #+BEGIN_SRC emacs-lisp
@@ -124,17 +112,7 @@ Don't save customizations in =init.el=.
 #+BEGIN_SRC emacs-lisp
 (use-package color-theme-sanityinc-tomorrow
   :ensure t
-  :config
-  (load-theme 'sanityinc-tomorrow-eighties t)
-  (color-theme-sanityinc-tomorrow--with-colors
-   'eighties
-   (custom-set-variables
-    '(xterm-color-names
-      ["#030202" "#AC282B" "#3F8F3F" "#C18A1C"
-       "#29649D" "#8D3F8D" "#249393" "#999898"])
-    `(xterm-color-names-bright
-      ["#666666" ,red ,green ,yellow
-       ,blue ,purple ,aqua ,foreground]))))
+  :config (load-theme 'sanityinc-tomorrow-eighties t))
 #+END_SRC
 
 * Packages
@@ -144,15 +122,6 @@ Don't save customizations in =init.el=.
 #+BEGIN_SRC emacs-lisp
 (use-package eglot
   :ensure t)
-#+END_SRC
-
-** eterm-256color
-
-#+BEGIN_SRC emacs-lisp
-(use-package eterm-256color
-  :ensure t
-  :hook (term-mode . eterm-256color-mode)
-  :init (setq eterm-256color-disable-bold nil))
 #+END_SRC
 
 ** fill-column-indicator
