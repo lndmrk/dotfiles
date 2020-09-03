@@ -60,7 +60,9 @@
   (ring-bell-function 'ignore)
   :config
   (column-number-mode 1)
-  (defalias 'yes-or-no-p 'y-or-n-p))
+  (defalias 'yes-or-no-p 'y-or-n-p)
+  (line-number-mode 1)
+  :hook (find-file . size-indication-mode))
 #+END_SRC
 
 * Custom Functions
