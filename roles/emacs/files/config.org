@@ -279,7 +279,9 @@ This is already ensured to be installed in =init.el=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package org
-  :custom (org-src-preserve-indentation t))
+  :custom
+  (org-edit-src-content-indentation 0)
+  (org-src-preserve-indentation t))
 #+END_SRC
 
 *** which-key
