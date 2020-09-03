@@ -28,37 +28,6 @@ Place backup files in its own directory.
 (setq-default tab-width 4)
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
-(use-package display-line-numbers
-  :hook (find-file . display-line-numbers-mode))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(use-package hl-line
-  :config (global-hl-line-mode 1))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(use-package paren
-  :custom (show-paren-delay 0)
-  :hook (prog-mode . show-paren-mode))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(use-package whitespace
-  :diminish
-  :custom
-  (whitespace-style '(face
-                      trailing
-                      lines-tail
-                      empty
-                      space-after-tab
-                      space-before-tab
-                      tab-mark))
-  :hook
-  ((find-file prog-mode text-mode) . whitespace-mode))
-#+END_SRC
-
 ** Customizations
 
 Don't save customizations in =init.el=.
@@ -84,21 +53,6 @@ Don't save customizations in =init.el=.
 
 #+BEGIN_SRC emacs-lisp
 (setq ring-bell-function 'ignore)
-#+END_SRC
-
-** Org
-
-#+BEGIN_SRC emacs-lisp
-(setq org-src-preserve-indentation t)
-#+END_SRC
-
-** Spell checking
-
-#+BEGIN_SRC emacs-lisp
-(use-package flyspell
-  :hook
-  (prog-mode . flyspell-prog-mode)
-  (text-mode . flyspell-mode))
 #+END_SRC
 
 * Custom Functions
@@ -135,7 +89,76 @@ Don't save customizations in =init.el=.
     (auto-fill-mode 1)))
 #+END_SRC
 
-* Theme
+* Packages
+
+** Built-in
+
+*** display-line-numbers
+
+#+BEGIN_SRC emacs-lisp
+(use-package display-line-numbers
+  :hook (find-file . display-line-numbers-mode))
+#+END_SRC
+
+*** flyspell
+
+#+BEGIN_SRC emacs-lisp
+(use-package flyspell
+  :hook
+  (prog-mode . flyspell-prog-mode)
+  (text-mode . flyspell-mode))
+#+END_SRC
+
+*** hl-line
+
+#+BEGIN_SRC emacs-lisp
+(use-package hl-line
+  :config (global-hl-line-mode 1))
+#+END_SRC
+
+*** org
+
+#+BEGIN_SRC emacs-lisp
+(use-package org
+  :custom (org-src-preserve-indentation t))
+#+END_SRC
+
+*** paren
+
+#+BEGIN_SRC emacs-lisp
+(use-package paren
+  :custom (show-paren-delay 0)
+  :hook (prog-mode . show-paren-mode))
+#+END_SRC
+
+*** whitespace
+
+#+BEGIN_SRC emacs-lisp
+(use-package whitespace
+  :diminish
+  :custom
+  (whitespace-style '(face
+                      trailing
+                      lines-tail
+                      empty
+                      space-after-tab
+                      space-before-tab
+                      tab-mark))
+  :hook
+  ((find-file prog-mode text-mode) . whitespace-mode))
+#+END_SRC
+
+** External
+
+*** bind-key
+
+#+BEGIN_SRC emacs-lisp
+(use-package bind-key
+  :ensure t
+  :after use-package)
+#+END_SRC
+
+*** color-theme-sanityinc-tomorrow
 
 #+BEGIN_SRC emacs-lisp
 (use-package color-theme-sanityinc-tomorrow
@@ -143,16 +166,22 @@ Don't save customizations in =init.el=.
   :config (load-theme 'sanityinc-tomorrow-eighties t))
 #+END_SRC
 
-* Packages
+*** diminish
 
-** eglot
+#+BEGIN_SRC emacs-lisp
+(use-package diminish
+  :ensure t
+  :after use-package)
+#+END_SRC
+
+*** eglot
 
 #+BEGIN_SRC emacs-lisp
 (use-package eglot
   :ensure t)
 #+END_SRC
 
-** fill-column-indicator
+*** fill-column-indicator
 
 #+BEGIN_SRC emacs-lisp
 (use-package fill-column-indicator
@@ -160,7 +189,7 @@ Don't save customizations in =init.el=.
   :hook ((find-file prog-mode text-mode) . fci-mode))
 #+END_SRC
 
-** flycheck
+*** flycheck
 
 #+BEGIN_SRC emacs-lisp
 (use-package flycheck
@@ -168,7 +197,7 @@ Don't save customizations in =init.el=.
   :config (global-flycheck-mode 1))
 #+END_SRC
 
-** hl-todo
+*** hl-todo
 
 #+BEGIN_SRC emacs-lisp
 (use-package hl-todo
@@ -176,7 +205,7 @@ Don't save customizations in =init.el=.
   :config (global-hl-todo-mode 1))
 #+END_SRC
 
-** ivy, counsel, swiper
+*** ivy, counsel, swiper
 
 #+BEGIN_SRC emacs-lisp
 (use-package ivy
@@ -209,14 +238,14 @@ Don't save customizations in =init.el=.
   ([remap isearch-backward] . swiper))
 #+END_SRC
 
-** json-mode
+*** json-mode
 
 #+BEGIN_SRC emacs-lisp
 (use-package json-mode
   :ensure t)
 #+END_SRC
 
-** magit
+*** magit
 
 #+BEGIN_SRC emacs-lisp
 (use-package magit
@@ -226,7 +255,7 @@ Don't save customizations in =init.el=.
   :bind ("C-c g" . magit-status))
 #+END_SRC
 
-** markdown-mode
+*** markdown-mode
 
 #+BEGIN_SRC emacs-lisp
 (use-package markdown-mode
@@ -234,7 +263,7 @@ Don't save customizations in =init.el=.
   :custom (markdown-command "pandoc"))
 #+END_SRC
 
-** which-key
+*** which-key
 
 #+BEGIN_SRC emacs-lisp
 (use-package which-key
@@ -243,7 +272,7 @@ Don't save customizations in =init.el=.
   :config (which-key-mode 1))
 #+END_SRC
 
-** yaml-mode
+*** yaml-mode
 
 #+BEGIN_SRC emacs-lisp
 (use-package yaml-mode

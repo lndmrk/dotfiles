@@ -19,10 +19,6 @@
 
 (eval-when-compile
   (require 'use-package))
-(use-package bind-key
-  :ensure t)
-(use-package diminish
-  :ensure t)
 
 ;; Configuration management
 (defconst my-config--org-files
