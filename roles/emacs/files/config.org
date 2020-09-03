@@ -57,6 +57,7 @@
 #+BEGIN_SRC emacs-lisp
 (use-package emacs
   :custom
+  (confirm-kill-emacs #'yes-or-no-p)
   (ring-bell-function 'ignore)
   :config
   (column-number-mode 1)
