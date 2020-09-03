@@ -356,6 +356,21 @@ This is already ensured to be installed in =init.el=.
   (org-src-preserve-indentation t))
 #+END_SRC
 
+*** projectile
+
+#+BEGIN_SRC emacs-lisp
+(use-package projectile
+  :ensure t
+  :bind-keymap ("C-c p" . projectile-command-map))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(use-package counsel-projectile
+  :ensure t
+  :after (counsel projectile)
+  :config (counsel-projectile-mode 1))
+#+END_SRC
+
 *** which-key
 
 #+BEGIN_SRC emacs-lisp
