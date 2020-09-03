@@ -45,8 +45,10 @@
 #+BEGIN_SRC emacs-lisp
 (use-package emacs
   :custom
+  (colon-double-space nil)
   (fill-column 80)
   (indent-tabs-mode nil)
+  (sentence-end-double-space nil)
   (tab-width 2))
 #+END_SRC
 
