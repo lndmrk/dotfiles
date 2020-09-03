@@ -58,6 +58,7 @@
 (use-package emacs
   :custom
   (confirm-kill-emacs #'yes-or-no-p)
+  (create-lockfiles nil)
   (ring-bell-function 'ignore)
   :config
   (column-number-mode 1)
