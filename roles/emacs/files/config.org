@@ -225,6 +225,19 @@
   :config (load-theme 'sanityinc-tomorrow-eighties t))
 #+END_SRC
 
+*** company
+
+#+BEGIN_SRC emacs-lisp
+(use-package company
+  :ensure t
+  :diminish
+  :config
+  (global-company-mode 1)
+  :bind
+  ([remap dabbrev-completion] . company-complete)
+  ([remap dabbrev-expand] . company-complete-common-or-cycle))
+#+END_SRC
+
 *** diminish
 
 #+BEGIN_SRC emacs-lisp
