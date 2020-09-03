@@ -35,7 +35,7 @@ Place backup files in its own directory.
 
 #+BEGIN_SRC emacs-lisp
 (use-package hl-line
-  :hook ((find-file prog-mode text-mode) . hl-line-mode))
+  :config (global-hl-line-mode 1))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -104,8 +104,9 @@ Don't save customizations in =init.el=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package flyspell
-  :hook ((text-mode . flyspell-mode)
-         (prog-mode . flyspell-prog-mode)))
+  :hook
+  (prog-mode . flyspell-prog-mode)
+  (text-mode . flyspell-mode))
 #+END_SRC
 
 * Theme
@@ -138,7 +139,7 @@ Don't save customizations in =init.el=.
 #+BEGIN_SRC emacs-lisp
 (use-package flycheck
   :ensure t
-  :init (global-flycheck-mode))
+  :config (global-flycheck-mode 1))
 #+END_SRC
 
 ** hl-todo
@@ -161,13 +162,14 @@ Don't save customizations in =init.el=.
 #+BEGIN_SRC emacs-lisp
 (use-package ivy-rich
   :ensure t
-  :requires (ivy counsel)
+  :after (counsel ivy)
   :config (ivy-rich-mode 1))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
 (use-package counsel
   :ensure t
+  :after ivy
   :diminish
   :config (counsel-mode 1))
 #+END_SRC
@@ -175,6 +177,7 @@ Don't save customizations in =init.el=.
 #+BEGIN_SRC emacs-lisp
 (use-package swiper
   :ensure t
+  :after ivy
   :bind
   ([remap isearch-forward] . swiper)
   ([remap isearch-backward] . swiper))
@@ -192,9 +195,9 @@ Don't save customizations in =init.el=.
 #+BEGIN_SRC emacs-lisp
 (use-package magit
   :ensure t
+  :config (global-magit-file-mode 1)
   :hook (git-commit-mode . my-message-compose)
   :bind ("C-x g" . magit-status)
-  :config (global-magit-file-mode))
 #+END_SRC
 
 ** markdown-mode
