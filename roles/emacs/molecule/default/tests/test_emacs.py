@@ -16,6 +16,7 @@ def test_emacs_installed(host):
 
 @pytest.mark.parametrize('name', [
     'pandoc',
+    'proselint',
     'ShellCheck',
     'yamllint',
 ])

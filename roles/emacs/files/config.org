@@ -203,6 +203,7 @@
 #+BEGIN_SRC emacs-lisp
 (use-package flycheck
   :ensure t
+  :custom (flycheck-disabled-checkers '(yaml-ruby))
   :config (global-flycheck-mode 1))
 #+END_SRC
 

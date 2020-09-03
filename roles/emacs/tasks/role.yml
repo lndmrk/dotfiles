@@ -11,8 +11,11 @@
     name:
       - pandoc
       - >-
-        {{ 'shellcheck' if ansible_distribution_file_variety != 'RedHat' else
-           'ShellCheck' }}
+        {{ 'ShellCheck' if ansible_distribution_file_variety == 'RedHat' else
+           'shellcheck' }}
+      - >-
+        {{ 'proselint' if ansible_distribution_file_variety == 'RedHat' else
+           'python3-proselint' }}
       - yamllint
   become: true
 
