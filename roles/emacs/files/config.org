@@ -140,13 +140,6 @@ Don't save customizations in =init.el=.
   :init (global-flycheck-mode))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
-(use-package flycheck-yamllint
-  :ensure t
-  :requires (flycheck)
-  :hook (flycheck-mode . flycheck-yamllint-setup))
-#+END_SRC
-
 ** hl-todo
 
 #+BEGIN_SRC emacs-lisp
