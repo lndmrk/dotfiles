@@ -42,6 +42,60 @@
 
 ** Key Bindings
 
+*** Unbind Aliases
+
+#+BEGIN_SRC emacs-lisp
+(use-package emacs
+  :after bind-key
+  :config
+  (unbind-key "<C-M-down>")
+  (unbind-key "<C-M-end>")
+  (unbind-key "<C-M-home>")
+  (unbind-key "<C-M-left>")
+  (unbind-key "<C-M-right>")
+  (unbind-key "<C-M-up>")
+  (unbind-key "<C-backspace>")
+  (unbind-key "<C-delete>")
+  (unbind-key "<C-down>")
+  (unbind-key "<C-end>")
+  (unbind-key "<C-home>")
+  (unbind-key "<C-insert>")
+  (unbind-key "<C-insertchar>")
+  (unbind-key "<C-left>")
+  (unbind-key "<C-right>")
+  (unbind-key "<C-up>")
+  (unbind-key "<M-begin>")
+  (unbind-key "<M-end>")
+  (unbind-key "<M-home>")
+  (unbind-key "<M-left>")
+  (unbind-key "<M-next>")
+  (unbind-key "<M-prior>")
+  (unbind-key "<M-right>")
+  (unbind-key "<S-delete>")
+  (unbind-key "<S-insert>")
+  (unbind-key "<S-insertchar>")
+  (unbind-key "<begin>")
+  (unbind-key "<deletechar>")
+  (unbind-key "<down>")
+  (unbind-key "<end>")
+  (unbind-key "<home>")
+  (unbind-key "<insert>")
+  (unbind-key "<insertchar>")
+  (unbind-key "<left>")
+  (unbind-key "<next>")
+  (unbind-key "<prior>")
+  (unbind-key "<right>")
+  (unbind-key "<up>")
+  (unbind-key "C-c <left>")
+  (unbind-key "C-c <right>")
+  (unbind-key "C-x <C-left>")
+  (unbind-key "C-x <C-right>")
+  (unbind-key "C-x <left>")
+  (unbind-key "C-x <right>"))
+#+END_SRC
+
+*** Better Defaults
+
 #+BEGIN_SRC emacs-lisp
 (use-package emacs
   :after bind-key
