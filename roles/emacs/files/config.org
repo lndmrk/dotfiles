@@ -44,7 +44,9 @@
 
 #+BEGIN_SRC emacs-lisp
 (use-package emacs
-  :bind ([remap zap-to-char] . zap-up-to-char))
+  :bind
+  ([remap query-replace] . query-replace-regexp)
+  ([remap zap-to-char] . zap-up-to-char))
 #+END_SRC
 
 ** Text
