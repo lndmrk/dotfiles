@@ -44,6 +44,10 @@
 
 #+BEGIN_SRC emacs-lisp
 (use-package emacs
+  :after bind-key
+  :config
+  (unbind-key "C-x C-z")
+  (unbind-key "C-z")
   :bind
   ([remap query-replace] . query-replace-regexp)
   ([remap zap-to-char] . zap-up-to-char))
