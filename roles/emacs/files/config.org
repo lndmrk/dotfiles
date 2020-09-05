@@ -103,7 +103,9 @@
   (unbind-key "C-x C-z")
   (unbind-key "C-z")
   :bind
+  ("M-o" . delete-blank-lines)
   ([remap capitalize-word] . capitalize-dwim)
+  ([remap delete-horizontal-space] . cycle-spacing)
   ([remap downcase-word] . downcase-dwim)
   ([remap query-replace] . query-replace-regexp)
   ([remap upcase-word] . upcase-dwim)
