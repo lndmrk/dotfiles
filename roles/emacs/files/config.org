@@ -103,7 +103,10 @@
   (unbind-key "C-x C-z")
   (unbind-key "C-z")
   :bind
+  ([remap capitalize-word] . capitalize-dwim)
+  ([remap downcase-word] . downcase-dwim)
   ([remap query-replace] . query-replace-regexp)
+  ([remap upcase-word] . upcase-dwim)
   ([remap zap-to-char] . zap-up-to-char))
 #+END_SRC
 
@@ -134,9 +137,7 @@
   (column-number-mode 1)
   (defalias 'yes-or-no-p 'y-or-n-p)
   (line-number-mode 1)
-  (put 'downcase-region 'disabled nil)
   (put 'narrow-to-region 'disabled nil)
-  (put 'upcase-region 'disabled nil)
   :hook (find-file . size-indication-mode))
 #+END_SRC
 
