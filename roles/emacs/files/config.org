@@ -131,6 +131,7 @@
   :custom
   (confirm-kill-emacs #'yes-or-no-p)
   (create-lockfiles nil)
+  (delete-by-moving-to-trash t)
   (require-final-newline 'visit-save)
   (ring-bell-function 'ignore)
   (save-interprogram-paste-before-kill t)
