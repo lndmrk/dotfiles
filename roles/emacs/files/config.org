@@ -192,7 +192,15 @@
 (use-package dired
   :custom
   (dired-recursive-copies 'always)
-  (dired-recursive-deletes 'always))
+  (dired-recursive-deletes 'always)
+  :config
+  (defun my-dired-xdg-open-file ()
+    (interactive)
+    (let ((file (dired-get-filename nil t)))
+      (call-process "xdg-open" nil 0 nil file)))
+  :bind
+  (:map dired-mode-map
+        ("<C-return>" . my-dired-xdg-open-file)))
 #+END_SRC
 
 *** display-fill-column-indicator
