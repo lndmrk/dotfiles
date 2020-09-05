@@ -186,6 +186,15 @@
 
 ** Built-in
 
+*** dired
+
+#+BEGIN_SRC emacs-lisp
+(use-package dired
+  :custom
+  (dired-recursive-copies 'always)
+  (dired-recursive-deletes 'always))
+#+END_SRC
+
 *** display-fill-column-indicator
 
 #+BEGIN_SRC emacs-lisp
