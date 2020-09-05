@@ -295,6 +295,7 @@
   :ensure t
   :diminish
   :config
+  (add-to-list 'company-backends 'company-ispell)
   (global-company-mode 1)
   :bind
   ([remap dabbrev-completion] . company-complete)
