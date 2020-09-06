@@ -100,9 +100,11 @@
 (use-package emacs
   :after bind-key
   :config
+  (unbind-key "<C-S-backspace>")
   (unbind-key "C-x C-z")
   (unbind-key "C-z")
   :bind
+  ("C-S-k" . kill-whole-line)
   ("M-o" . delete-blank-lines)
   ([remap capitalize-word] . capitalize-dwim)
   ([remap delete-horizontal-space] . cycle-spacing)
