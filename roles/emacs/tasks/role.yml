@@ -55,21 +55,3 @@
     state: link
   loop:
     - 20-emacs.sh
-
-- name: Create application entries directory
-  file:
-    path: ~/.local/share/applications/
-    state: directory
-    mode: 0775
-
-- name: Add Emacs Dark desktop entry
-  copy:
-    dest: ~/.local/share/applications/emacs-dark.desktop
-    mode: 0664
-    content: |
-      [Desktop Entry]
-      Name=Emacs Dark
-      Exec=env GTK_THEME=Adwaita:dark emacs %f
-      Icon=emacs
-      Type=Application
-      Terminal=false

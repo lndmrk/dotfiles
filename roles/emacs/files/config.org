@@ -362,6 +362,14 @@
   :config (global-flycheck-mode 1))
 #+END_SRC
 
+*** gtk-variant
+
+#+BEGIN_SRC emacs-lisp
+(use-package gtk-variant
+  :ensure t
+  :hook (window-setup . gtk-variant-set-frame))
+#+END_SRC
+
 *** hl-todo
 
 #+BEGIN_SRC emacs-lisp
