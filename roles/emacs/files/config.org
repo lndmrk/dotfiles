@@ -217,6 +217,7 @@
 
 #+BEGIN_SRC emacs-lisp
 (use-package display-line-numbers
+  :custom (display-line-numbers-widen t)
   :hook (find-file . display-line-numbers-mode))
 #+END_SRC
 
