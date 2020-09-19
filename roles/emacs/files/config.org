@@ -188,6 +188,13 @@
 
 ** Built-in
 
+*** compile
+
+#+BEGIN_SRC emacs-lisp
+(use-package compile
+  :custom (compilation-scroll-output t))
+#+END_SRC
+
 *** dired
 
 #+BEGIN_SRC emacs-lisp
