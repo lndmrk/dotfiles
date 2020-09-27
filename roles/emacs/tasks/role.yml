@@ -34,7 +34,7 @@
 - name: Install config files
   file:
     src: "{{ role_path }}/files/{{ item }}"
-    dest: "~/.emacs.d/{{ item }}"
+    dest: "~/.config/emacs/{{ item }}"
     state: link
     force: true
   loop:
