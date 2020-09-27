@@ -3,3 +3,5 @@
 
 *.swp
 *~
+.dir-locals.el
+.projectile
