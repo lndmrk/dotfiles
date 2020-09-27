@@ -39,7 +39,6 @@
     name: gpg-agent-ssh.socket
     enabled: true
     scope: user
-  tags: molecule-notest
 
 - name: Create autostart directory
   file:

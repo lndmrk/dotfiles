@@ -2,13 +2,9 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 ---
 language: python
-services:
-  - docker
 env:
   - DOTFILES_PROJECT_ROOT=${TRAVIS_BUILD_DIR}
-    DOTFILES_MOLECULE_DRIVER=docker
 install:
-  - pip install --requirement requirements.txt molecule[docker]
+  - pip install ansible-lint fsfe-reuse yamllint
 script:
-  - reuse lint
   - bin/dotfiles test

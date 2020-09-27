@@ -34,28 +34,20 @@ arguments that Ansible understands can be appended.
 
 * Test
 
-To verify that everything has been set up correctly on the machine, run
-
-#+BEGIN_EXAMPLE
-$ pytest
-#+END_EXAMPLE
-
-This can be executed from a subdirectory to only run a subset of the tests.
-
-Tests can also be run in an isolated container with
-[[https://github.com/ansible/molecule][Molecule]]. By default, Podman will be
-used as the container engine, but Docker may also be used by setting the
-environment variable =DOTFILES_MOLECULE_DRIVER= accordingly.
-
-#+BEGIN_EXAMPLE
-$ cd roles/"${ROLE}"
-$ molecule test
-#+END_EXAMPLE
-
-To run all tests in isolation, the following convenience command can be used.
+A set of compliance tests can be run with
 
 #+BEGIN_EXAMPLE
 $ dotfiles test
+#+END_EXAMPLE
+
+This can be configured to run before every commit.
+
+#+BEGIN_EXAMPLE
+$ cat <<EOF >.git/hooks/pre-commit
+#!/bin/sh
+exec dotfiles test
+EOF
+$ chmod a+x .git/hooks/pre-commit
 #+END_EXAMPLE
 
 * Boilerplate
@@ -66,8 +58,6 @@ Quickly create a new role with
 
 #+BEGIN_EXAMPLE
 $ cookiecutter --output-dir=roles/ .templates/role/ role="${ROLE}"
-$ ln --symbolic \
-    ../../../../molecule/molecule.yml roles/"${ROLE}"/molecule/default/
 $ cat <<EOF >>local.yml
     - name: ${ROLE}
       tags: ${ROLE}
@@ -89,7 +79,6 @@ $ cat <<EOF >private.yml
   hosts: all
 EOF
 $ ln --symbolic ../.gitignore
-$ ln --symbolic ../molecule/
 #+END_EXAMPLE
 
 * License

@@ -3,4 +3,3 @@
 ---
 - import_tasks: role.yml
   when: gnome_role
-  tags: molecule-notest

@@ -50,27 +50,13 @@ cmd_sync() {
     ansible-playbook --tags=sync "$(get_playbook)"
 }
 
-cmd_test() (
-    if [[ ${#} -eq 0 ]]; then
-        : test
-    else
-        : "${@}"
-    fi
-    local arg=${_}
-
-    shopt -s nullglob
-    for role_path in roles/* private/roles/*; do
-        (
-            cd "${role_path}"
-            if ! compgen -G "molecule/*/molecule.yml" >/dev/null; then
-                log warn "Skipping role ${role_path}"
-                exit 0
-            fi
-            log info "Role ${role_path}"
-            molecule "${arg}"
-        )
-    done
-)
+cmd_test() {
+    local output
+    ansible-lint local.yml roles/*
+    yamllint --strict .
+    trap 'printf "%s\n" "${output}" >&2' ERR
+    output=$(reuse lint)
+}
 
 print_help() {
     local cmd
@@ -79,7 +65,7 @@ print_help() {
 	${cmd} [--help]
 	${cmd} deploy [...]
 	${cmd} sync
-	${cmd} test [...]
+	${cmd} test
 	EOF
 }
 

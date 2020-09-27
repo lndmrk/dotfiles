@@ -21,10 +21,9 @@
 - name: Install test dependencies
   package:
     name:
-      - podman
-      - python3-devel
-      - python3-libselinux
-      - python3-testinfra
+      - python3-ansible-lint
+      - reuse
+      - yamllint
   become: true
   when: ansible_distribution_file_variety == 'RedHat'
 

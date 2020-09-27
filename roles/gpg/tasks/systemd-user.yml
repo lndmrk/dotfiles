@@ -17,7 +17,6 @@
     - gpg-agent.service
     - gpg-agent.socket
   notify: Reload systemd user configuration
-  tags: molecule-notest
 
 - name: Run handlers
   meta: flush_handlers
