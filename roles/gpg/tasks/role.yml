@@ -45,14 +45,6 @@
   with_fileglob:
     - bashrc.d/*
 
-# TODO: These files are only installed inside /usr/share/doc/ on RHEL
-# derivatives. Since documentation is not present inside containers, these files
-# are instead included with the role.
-# https://bugzilla.redhat.com/show_bug.cgi?id=1560348
-- name: Install systemd user units
-  include_tasks: systemd-user.yml
-  when: ansible_distribution_file_variety == 'RedHat'
-
 - name: Configure SSH support
   include_tasks: ssh.yml
   when: gpg_ssh_support
