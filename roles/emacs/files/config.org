@@ -491,6 +491,13 @@ This is already ensured to be installed in =init.el=.
   (counsel-projectile-mode 1))
 #+END_SRC
 
+*** wgrep
+
+#+BEGIN_SRC emacs-lisp
+(use-package wgrep
+  :ensure t)
+#+END_SRC
+
 *** which-key
 
 #+BEGIN_SRC emacs-lisp
