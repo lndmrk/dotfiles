@@ -216,7 +216,6 @@
 
 #+BEGIN_SRC emacs-lisp
 (use-package display-fill-column-indicator
-  :if (>= emacs-major-version 27)
   :hook ((find-file prog-mode text-mode) . display-fill-column-indicator-mode))
 #+END_SRC
 
@@ -357,15 +356,6 @@
 #+BEGIN_SRC emacs-lisp
 (use-package eglot
   :ensure t)
-#+END_SRC
-
-*** fill-column-indicator
-
-#+BEGIN_SRC emacs-lisp
-(use-package fill-column-indicator
-  :if (< emacs-major-version 27)
-  :ensure t
-  :hook ((find-file prog-mode text-mode) . fci-mode))
 #+END_SRC
 
 *** flycheck

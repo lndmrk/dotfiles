@@ -1,12 +1,6 @@
 ;; SPDX-FileCopyrightText: 2019 Emil Lundmark <emil@lndmrk.se>
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
-(when (< emacs-major-version 27)
-  (defvar early-init-file
-    (expand-file-name (locate-user-emacs-file "early-init.el")))
-  (load early-init-file)
-  (require 'early-init))
-
 (eval-when-compile
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)

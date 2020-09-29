@@ -10,8 +10,3 @@
   (setq package-quickstart t)
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
   (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t))
-
-(when (< emacs-major-version 27)
-  (setq package-enable-at-startup nil)
-  (package-initialize)
-  (provide 'early-init))
