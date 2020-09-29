@@ -52,12 +52,10 @@
   file:
     path: ~/.config/
     state: directory
-    mode: 0775
 
 - name: Configure XDG user dirs locale
   copy:
     dest: ~/.config/user-dirs.locale
-    mode: 0664
     content: |-
       en_US
 
@@ -67,21 +65,18 @@
     regex: "^{{ item.key }}"
     line: '{{ item.key }}="{{ item.value }}"'
     create: true
-    mode: 0664
   loop: "{{ query('dict', environment_xdg_user_dirs) }}"
 
 - name: Create XDG user dirs
   file:
     path: "{{ item.value }}"
     state: directory
-    mode: 0775
   loop: "{{ query('dict', environment_xdg_user_dirs) }}"
 
 - name: Create profile.d directory
   file:
     path: ~/.config/profile.d/
     state: directory
-    mode: 0775
 
 - name: Install profile.d config files
   file:
@@ -95,7 +90,6 @@
   file:
     path: ~/.config/systemd/user/
     state: directory
-    mode: 0775
 
 - name: Install notify-error@service
   file:

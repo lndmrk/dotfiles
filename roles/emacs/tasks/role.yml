@@ -23,7 +23,6 @@
   file:
     path: ~/.config/emacs/
     state: directory
-    mode: 0775
 
 - name: Create symlink to old Emacs config directory
   file:
@@ -46,7 +45,6 @@
   file:
     path: ~/.config/profile.d/
     state: directory
-    mode: 0775
 
 - name: Install profile.d config file
   file:

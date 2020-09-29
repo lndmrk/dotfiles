@@ -14,7 +14,6 @@
     path: ~/.gnupg/gpg-agent.conf
     line: enable-ssh-support
     create: true
-    mode: 0664
   when: gpg_ssh_enabled
 
 - name: Create gpg-agent-ssh.socket.d directory
@@ -44,12 +43,10 @@
   file:
     path: ~/.config/autostart/
     state: directory
-    mode: 0775
 
 - name: Disable autostart for Gnome Keyring SSH agent
   copy:
     dest: ~/.config/autostart/gnome-keyring-ssh.desktop
-    mode: 0664
     content: |
       [Desktop Entry]
       Type=Application

@@ -31,7 +31,6 @@
   file:
     path: ~/.local/bin/
     state: directory
-    mode: 0775
 
 - name: Install bin
   file:
