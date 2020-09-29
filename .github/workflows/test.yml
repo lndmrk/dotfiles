@@ -4,7 +4,9 @@
 name: Test
 # yamllint disable-line rule:truthy
 on:
-  - push
+  push:
+    branches-ignore:
+      - wip-*
 jobs:
   test:
     runs-on: ubuntu-latest
