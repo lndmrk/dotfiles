@@ -262,6 +262,13 @@
   :hook (find-file . display-line-numbers-mode))
 #+END_SRC
 
+*** eldoc
+
+#+BEGIN_SRC emacs-lisp
+(use-package eldoc
+  :custom (eldoc-echo-area-use-multiline-p nil))
+#+END_SRC
+
 *** flyspell
 
 #+BEGIN_SRC emacs-lisp
