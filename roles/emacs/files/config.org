@@ -411,7 +411,13 @@
 
 #+BEGIN_SRC emacs-lisp
 (use-package eglot
-  :ensure t)
+  :ensure t
+  :bind
+  (:map eglot-mode-map
+        ("C-c l a" . eglot-code-actions)
+        ("C-c l d" . eglot-find-declaration)
+        ("C-c l r" . eglot-rename)
+        ([remap my-format-buffer-or-region] . eglot-format)))
 #+END_SRC
 
 *** exec-path-from-shell
