@@ -421,8 +421,12 @@
   :ensure t
   :config
   (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("clangd")))
+  (defun my-eglot-ensure-python ()
+    (when (my-pyvenv-p)
+      (eglot-ensure)))
   :hook
   ((c++-mode c-mode) . eglot-ensure)
+  (python-mode . my-eglot-ensure-python)
   :bind
   (:map eglot-mode-map
         ("C-c l a" . eglot-code-actions)
@@ -571,6 +575,29 @@ This is already ensured to be installed in =init.el=.
    'counsel-projectile-switch-project-action-vc)
   :config
   (counsel-projectile-mode 1))
+#+END_SRC
+
+*** pyvenv
+
+#+BEGIN_SRC emacs-lisp
+(use-package pyvenv
+  :ensure t
+  :init
+  (defun my-pyvenv-p ()
+    (bound-and-true-p pyvenv-virtual-env))
+  (defun my-pyvenv-install-packages ()
+    (interactive)
+    (let ((packages '("pyls-black"
+                      "pyls-isort"
+                      "pyls-mypy"
+                      "python-language-server")))
+      (when (my-pyvenv-p)
+        (with-current-buffer (get-buffer-create "*virtualenv-pip*")
+          (apply 'call-process
+                 "pip" nil t t
+                 "install" "--upgrade" "--upgrade-strategy" "eager"
+                 packages)))))
+  (add-hook 'pyvenv-post-activate-hooks 'my-pyvenv-install-packages))
 #+END_SRC
 
 *** wgrep
