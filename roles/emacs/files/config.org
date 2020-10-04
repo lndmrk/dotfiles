@@ -123,7 +123,8 @@
   (fill-column 80)
   (indent-tabs-mode nil)
   (sentence-end-double-space nil)
-  (tab-width 2))
+  (standard-indent 2)
+  (tab-width standard-indent))
 #+END_SRC
 
 ** Miscellaneous
@@ -188,6 +189,13 @@
 
 ** Built-in
 
+*** cc-mode
+
+#+BEGIN_SRC emacs-lisp
+(use-package cc-mode
+  :custom (c-basic-offset standard-indent))
+#+END_SRC
+
 *** compile
 
 #+BEGIN_SRC emacs-lisp
@@ -243,6 +251,13 @@
   :config (global-hl-line-mode 1))
 #+END_SRC
 
+*** js
+
+#+BEGIN_SRC emacs-lisp
+(use-package js
+  :custom (js-indent-level standard-indent))
+#+END_SRC
+
 *** paren
 
 #+BEGIN_SRC emacs-lisp
@@ -251,11 +266,25 @@
   :hook (prog-mode . show-paren-mode))
 #+END_SRC
 
+*** python
+
+#+BEGIN_SRC emacs-lisp
+(use-package python
+  :custom (python-indent-offset standard-indent))
+#+END_SRC
+
 *** saveplace
 
 #+BEGIN_SRC emacs-lisp
 (use-package saveplace
   :config (save-place-mode 1))
+#+END_SRC
+
+*** sh-script
+
+#+BEGIN_SRC emacs-lisp
+(use-package sh-script
+  :custom (sh-basic-offset standard-indent))
 #+END_SRC
 
 *** so-long
@@ -466,7 +495,8 @@ source of truth for environment variables.
   :ensure t
   :custom
   (markdown-command "pandoc")
-  (markdown-fontify-code-blocks-natively t))
+  (markdown-fontify-code-blocks-natively t)
+  (markdown-list-indent-width standard-indent))
 #+END_SRC
 
 *** org
@@ -521,5 +551,6 @@ This is already ensured to be installed in =init.el=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package yaml-mode
-  :ensure t)
+  :ensure t
+  :custom (yaml-indent-offset standard-indent))
 #+END_SRC
