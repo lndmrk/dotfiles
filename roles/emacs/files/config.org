@@ -161,18 +161,44 @@
        "Find config file: "
        (append `(,early-init-file ,user-init-file) my-config--org-files))))
     (find-file filename))
-  :bind
-  ("C-c d f" . my-config-find-file))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(use-package emacs
-  :config
   (defun my-config-reload ()
     (interactive)
     (load user-init-file))
   :bind
+  ("C-c d f" . my-config-find-file)
   ("C-c d r" . my-config-reload))
+#+END_SRC
+
+** Formatting
+
+#+BEGIN_SRC emacs-lisp
+(use-package emacs
+  :config
+  (defun my-format-buffer-or-region ()
+    (interactive)
+    (let ((beginning (if (use-region-p) (region-beginning) (point-min)))
+          (end (if (use-region-p) (region-end) (point-max))))
+      (save-mark-and-excursion
+        (indent-region beginning end)
+        (whitespace-cleanup-region beginning end))))
+  (defun my-sort-lines ()
+    (interactive)
+    (let ((inhibit-field-text-motion t)
+          (saved-point (point)))
+      (unless (use-region-p)
+        (mark-paragraph)
+        (unless (eq (line-number-at-pos) (point-min))
+          (forward-line 1)))
+      (call-interactively 'sort-lines)
+      (goto-char saved-point)))
+  (defun my-sort-lines-fold-case ()
+    (interactive)
+    (let ((sort-fold-case t))
+      (call-interactively 'my-sort-lines)))
+  :bind
+  ("C-c l f" . my-format-buffer-or-region)
+  ("C-c l s" . my-sort-lines-fold-case)
+  ("C-c l S" . my-sort-lines))
 #+END_SRC
 
 ** Message Composing
