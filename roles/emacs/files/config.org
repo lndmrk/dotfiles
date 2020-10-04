@@ -511,8 +511,7 @@ source of truth for environment variables.
 (use-package magit
   :ensure t
   :config (global-magit-file-mode 1)
-  :hook (git-commit-mode . my-message-compose-mode)
-  :bind ("C-c g" . magit-status))
+  :hook (git-commit-mode . my-message-compose-mode))
 #+END_SRC
 
 *** markdown-mode
@@ -552,7 +551,7 @@ This is already ensured to be installed in =init.el=.
   :after (counsel projectile)
   :custom
   (counsel-projectile-switch-project-action
-   'counsel-projectile-switch-project-action-dired)
+   'counsel-projectile-switch-project-action-vc)
   :config
   (counsel-projectile-mode 1))
 #+END_SRC
