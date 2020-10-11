@@ -1,5 +1,150 @@
 # SPDX-FileCopyrightText: 2019 Emil Lundmark <emil@lndmrk.se>
 # SPDX-License-Identifier: GPL-3.0-or-later
 ---
-- import_tasks: role.yml
-  when: gnome_role
+- name: Install dependencies
+  package:
+    name: python3-psutil
+  become: true
+
+- name: Window manager keybindings
+  dconf:
+    key: "/org/gnome/desktop/wm/keybindings/{{ item.key }}"
+    value: "['{{ item.value | string }}']"
+  with_dict:
+    switch-applications: <Super>Tab
+    switch-applications-backward: <Shift><Super>Tab
+    switch-windows: <Alt>Tab
+    switch-windows-backward: <Shift><Alt>Tab
+
+- name: Custom keybindings
+  dconf:
+    key:
+      "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings\
+       /custom{{ (index / 3) | round(0, 'floor') | int }}/{{ item.key }}"
+    value: "'{{ item.value }}'"
+  with_dict:
+    - name: Terminal
+      binding: <Super>Return
+      command: gnome-terminal
+    - name: Browser
+      binding: <Super>b
+      command: xdg-open https://
+  loop_control:
+    index_var: index
+
+- name: Query default Terminal profile
+  command: gsettings get org.gnome.Terminal.ProfilesList default
+  changed_when: false
+  check_mode: false
+  register: profile
+
+- name: Set default profile path fact
+  set_fact:
+    default_profile_path:
+      "/org/gnome/terminal/legacy/profiles:/:\
+       {{ profile.stdout | replace(\"'\", '') }}"
+
+- name: Configure Terminal
+  dconf:
+    key: "{{ default_profile_path }}/{{ item.key }}"
+    value: "{{ item.value | string }}"
+  with_dict:
+    scrollback-unlimited: "true"
+    use-theme-colors: "false"
+    foreground-color: "'rgb(204,204,204)'"
+    background-color: "'rgb(45,45,45)'"
+    # Tomorrow Night Eighties
+    palette: >-
+      ['rgb(3,2,2)', 'rgb(172,40,43)',
+      'rgb(63,143,63)', 'rgb(193,138,28)',
+      'rgb(41,100,157)', 'rgb(141,63,141)',
+      'rgb(36,147,147)', 'rgb(153,152,152)',
+      'rgb(102,102,102)', 'rgb(242,119,122)',
+      'rgb(153,204,153)', 'rgb(255,204,102)',
+      'rgb(102,153,204)', 'rgb(204,153,204)',
+      'rgb(102,204,204)', 'rgb(204,204,204)']
+
+- name: /org/gnome/desktop/calendar/show-weekdate
+  dconf:
+    key: /org/gnome/desktop/calendar/show-weekdate
+    value: "true"
+
+- name: /org/gnome/desktop/datetime/automatic-timezone
+  dconf:
+    key: /org/gnome/desktop/datetime/automatic-timezone
+    value: "true"
+
+- name: /org/gnome/desktop/input-sources/sources
+  dconf:
+    key: /org/gnome/desktop/input-sources/sources
+    value: "[('xkb', 'us'), ('xkb', 'se')]"
+
+- name: /org/gnome/desktop/interface/clock-show-date
+  dconf:
+    key: /org/gnome/desktop/interface/clock-show-date
+    value: "true"
+
+- name: /org/gnome/desktop/interface/gtk-enable-primary-paste
+  dconf:
+    key: /org/gnome/desktop/interface/gtk-enable-primary-paste
+    value: "false"
+
+- name: /org/gnome/desktop/notifications/show-in-lock-screen
+  dconf:
+    key: /org/gnome/desktop/notifications/show-in-lock-screen
+    value: "false"
+
+- name: /org/gnome/desktop/peripherals/touchpad/tap-to-click
+  dconf:
+    key: /org/gnome/desktop/peripherals/touchpad/tap-to-click
+    value: "true"
+
+- name: /org/gnome/desktop/wm/keybindings/panel-run-dialog
+  dconf:
+    key: /org/gnome/desktop/wm/keybindings/panel-run-dialog
+    value: "['<Super>F2']"
+
+- name: /org/gnome/desktop/wm/preferences/audible-bell
+  dconf:
+    key: /org/gnome/desktop/wm/preferences/audible-bell
+    value: "false"
+
+- name: /org/gnome/settings-daemon/plugins/color/night-light-enabled
+  dconf:
+    key: /org/gnome/settings-daemon/plugins/color/night-light-enabled
+    value: "true"
+
+- name: /org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-timeout
+  dconf:
+    key: /org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-timeout
+    value: "{{ 15 * 60 }}"
+
+- name: /org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-type
+  dconf:
+    key: /org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-type
+    value: "'suspend'"
+
+- name: /org/gnome/shell/favorite-apps
+  dconf:
+    key: /org/gnome/shell/favorite-apps
+    value: "['']"
+
+- name: /org/gnome/mutter/workspaces-only-on-primary
+  dconf:
+    key: /org/gnome/mutter/workspaces-only-on-primary
+    value: "false"
+
+- name: /org/gnome/system/locale/region
+  dconf:
+    key: /org/gnome/system/locale/region
+    value: "'sv_SE.UTF-8'"
+
+- name: /org/gnome/system/location/enabled
+  dconf:
+    key: /org/gnome/system/location/enabled
+    value: "true"
+
+- name: /org/gnome/system/location/max-accuracy-level
+  dconf:
+    key: /org/gnome/system/location/max-accuracy-level
+    value: "'city'"
