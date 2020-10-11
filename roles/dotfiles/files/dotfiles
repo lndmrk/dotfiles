@@ -33,6 +33,10 @@ get_playbook() {
   echo "$(hostname --short).yml"
 }
 
+cmd_apply() {
+  ansible-playbook --skip-tags=become,sync "${@}" "$(get_playbook)"
+}
+
 cmd_deploy() {
   local extra_args=""
   if [[ ${#} -eq 0 ]]; then
@@ -51,6 +55,7 @@ print_help() {
   cmd=$(basename "${0}")
   cat <<-EOF
 	${cmd} [--help]
+	${cmd} apply
 	${cmd} deploy [...]
 	${cmd} sync
 	EOF
