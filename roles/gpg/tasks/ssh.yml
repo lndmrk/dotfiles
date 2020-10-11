@@ -20,13 +20,11 @@
   file:
     path: ~/.config/systemd/user/gpg-agent-ssh.socket.d/
     state: directory
-    mode: 0775
   when: gpg_ssh_enabled
 
 - name: Configure SSH_AUTH_SOCK
   copy:
     dest: ~/.config/systemd/user/gpg-agent-ssh.socket.d/environment.conf
-    mode: 0664
     content: |
       [Socket]
       ExecStartPost=/usr/bin/systemctl --user set-environment \
