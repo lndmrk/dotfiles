@@ -5,6 +5,7 @@
   package:
     name: python3-psutil
   become: true
+  tags: become
 
 - name: Window manager keybindings
   dconf:
