@@ -1,5 +1,29 @@
 # SPDX-FileCopyrightText: 2019 Emil Lundmark <emil@lndmrk.se>
 # SPDX-License-Identifier: GPL-3.0-or-later
 ---
-- import_tasks: role.yml
-  when: dotfiles_role
+- name: Install dependencies
+  package:
+    name: ansible
+  become: true
+
+- name: Install test dependencies
+  package:
+    name:
+      - python3-ansible-lint
+      - reuse
+      - yamllint
+  become: true
+  when: ansible_distribution_file_variety == 'RedHat'
+
+- name: Create local bin directory
+  file:
+    path: ~/.local/bin/
+    state: directory
+
+- name: Install bin
+  file:
+    src: "{{ role_path }}/files/{{ item }}"
+    dest: "~/.local/bin/{{ item }}"
+    state: link
+  loop:
+    - dotfiles
