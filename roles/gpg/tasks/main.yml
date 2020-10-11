@@ -5,18 +5,21 @@
   package:
     name: gnupg
   become: true
+  tags: become
 
 - name: Install smart card support
   package:
     name: scdaemon
   become: true
   when: ansible_distribution_file_variety == 'Debian'
+  tags: become
 
 - name: Install smart card support
   package:
     name: pcsc-lite
   become: true
   when: ansible_distribution_file_variety == 'RedHat'
+  tags: become
 
 - name: Create config directory
   file:
