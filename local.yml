@@ -8,8 +8,6 @@
   roles:
     - name: ansible
       tags: ansible
-    - name: bank2qif
-      tags: bank2qif
     - name: bash
       tags: bash
     - name: dotfiles
