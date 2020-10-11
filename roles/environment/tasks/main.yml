@@ -7,6 +7,7 @@
       - coreutils
       - xdg-user-dirs
   become: true
+  tags: become
 
 - name: Install Debian packages
   package:
@@ -15,6 +16,7 @@
       - locales
   become: true
   when: ansible_distribution_file_variety == 'Debian'
+  tags: become
 
 - name: Install Fedora packages
   package:
@@ -24,6 +26,7 @@
       - libnotify
   become: true
   when: ansible_distribution_file_variety == 'RedHat'
+  tags: become
 
 - name: Check existing config files
   stat:
@@ -107,3 +110,4 @@
     - en_US.UTF-8
     - sv_SE.UTF-8
   when: ansible_distribution_file_variety == 'Debian'
+  tags: become
