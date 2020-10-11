@@ -5,6 +5,7 @@
   package:
     name: ansible
   become: true
+  tags: become
 
 - name: Install test dependencies
   package:
@@ -14,6 +15,7 @@
       - yamllint
   become: true
   when: ansible_distribution_file_variety == 'RedHat'
+  tags: become
 
 - name: Create local bin directory
   file:
