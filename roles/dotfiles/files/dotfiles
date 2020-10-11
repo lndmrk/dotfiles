@@ -50,14 +50,6 @@ cmd_sync() {
   ansible-playbook --tags=sync "$(get_playbook)"
 }
 
-cmd_test() {
-  local output
-  ansible-lint local.yml roles/*
-  yamllint --strict .
-  trap 'printf "%s\n" "${output}" >&2' ERR
-  output=$(reuse lint)
-}
-
 print_help() {
   local cmd
   cmd=$(basename "${0}")
@@ -65,7 +57,6 @@ print_help() {
 	${cmd} [--help]
 	${cmd} deploy [...]
 	${cmd} sync
-	${cmd} test
 	EOF
 }
 
