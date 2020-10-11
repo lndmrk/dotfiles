@@ -5,6 +5,7 @@
   package:
     name: bash
   become: true
+  tags: become
 
 - name: Check existing config files
   stat:
