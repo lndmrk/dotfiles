@@ -10,58 +10,58 @@ set -o pipefail
 : "${DOTFILES_PROJECT_ROOT:=$(realpath "$(dirname "$(realpath "${BASH_SOURCE[0]}")")"/../../../)}"
 
 log() {
-    local level="${1}"
-    local message="${2}"
-    local esc_start=""
-    local esc_end=""
-    local fd=2
+  local level="${1}"
+  local message="${2}"
+  local esc_start=""
+  local esc_end=""
+  local fd=2
 
-    if [[ -t ${fd} ]]; then
-        case ${level} in
-            info) : '\e[34m' ;;
-            warning) : '\e[33m' ;;
-            error) : '\e[31m' ;;
-            *) : '' ;;
-        esac
-        esc_start="\e[1m${_}"
-        esc_end='\e[0m'
-    fi
-    printf '%b\n' "${esc_start}${level^^}: ${message}${esc_end}" >&${fd}
+  if [[ -t ${fd} ]]; then
+    case ${level} in
+      info) : '\e[34m' ;;
+      warning) : '\e[33m' ;;
+      error) : '\e[31m' ;;
+      *) : '' ;;
+    esac
+    esc_start="\e[1m${_}"
+    esc_end='\e[0m'
+  fi
+  printf '%b\n' "${esc_start}${level^^}: ${message}${esc_end}" >&${fd}
 }
 
 get_playbook() {
-    if [[ -d private/ ]]; then
-        echo private.yml
-    else
-        echo local.yml
-    fi
+  if [[ -d private/ ]]; then
+    echo private.yml
+  else
+    echo local.yml
+  fi
 }
 
 cmd_deploy() {
-    local extra_args=""
-    if [[ ${#} -eq 0 ]]; then
-        extra_args=--ask-become-pass
-    fi
+  local extra_args=""
+  if [[ ${#} -eq 0 ]]; then
+    extra_args=--ask-become-pass
+  fi
 
-    ansible-playbook ${extra_args} "${@}" "$(get_playbook)"
+  ansible-playbook ${extra_args} "${@}" "$(get_playbook)"
 }
 
 cmd_sync() {
-    ansible-playbook --tags=sync "$(get_playbook)"
+  ansible-playbook --tags=sync "$(get_playbook)"
 }
 
 cmd_test() {
-    local output
-    ansible-lint local.yml roles/*
-    yamllint --strict .
-    trap 'printf "%s\n" "${output}" >&2' ERR
-    output=$(reuse lint)
+  local output
+  ansible-lint local.yml roles/*
+  yamllint --strict .
+  trap 'printf "%s\n" "${output}" >&2' ERR
+  output=$(reuse lint)
 }
 
 print_help() {
-    local cmd
-    cmd=$(basename "${0}")
-    cat <<-EOF
+  local cmd
+  cmd=$(basename "${0}")
+  cat <<-EOF
 	${cmd} [--help]
 	${cmd} deploy [...]
 	${cmd} sync
@@ -70,31 +70,31 @@ print_help() {
 }
 
 main() {
-    if [[ ${#} -eq 0 ]]; then
+  if [[ ${#} -eq 0 ]]; then
+    print_help
+    exit 1
+  fi
+
+  local arg=${1}
+  case ${arg} in
+    --help)
+      print_help
+      exit 0
+      ;;
+    *)
+      local cmd=cmd_${arg}
+      if [[ $(type -t "${cmd}") != "function" ]]; then
+        log error "No such command: ${arg}"
         print_help
         exit 1
-    fi
-
-    local arg=${1}
-    case ${arg} in
-        --help)
-            print_help
-            exit 0
-            ;;
-        *)
-            local cmd=cmd_${arg}
-            if [[ $(type -t "${cmd}") != "function" ]]; then
-                log error "No such command: ${arg}"
-                print_help
-                exit 1
-            fi
-            shift
-            (
-                cd "${DOTFILES_PROJECT_ROOT}"
-                ${cmd} "${@}"
-            )
-            ;;
-    esac
+      fi
+      shift
+      (
+        cd "${DOTFILES_PROJECT_ROOT}"
+        ${cmd} "${@}"
+      )
+      ;;
+  esac
 }
 
 main "${@}"
