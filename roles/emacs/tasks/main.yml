@@ -5,6 +5,7 @@
   package:
     name: emacs
   become: true
+  tags: become
 
 - name: Install companion tools
   package:
@@ -21,6 +22,7 @@
       - yamllint
   become: true
   when: ansible_distribution_file_variety == 'Debian'
+  tags: become
 
 - name: Install companion tools
   package:
@@ -34,6 +36,7 @@
       - yamllint
   become: true
   when: ansible_distribution_file_variety == 'RedHat'
+  tags: become
 
 - name: Create Emacs config directory
   file:
