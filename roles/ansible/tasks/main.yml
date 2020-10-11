@@ -7,3 +7,4 @@
       - ansible
       - python3-netaddr
   become: true
+  tags: become
