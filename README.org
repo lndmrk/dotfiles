@@ -3,34 +3,29 @@
 #+TITLE: lndmrk's dotfiles
 #+AUTHOR: Emil Lundmark
 
-These are my personal dotfiles---in fact, this is how my entire environment is
-set up and configured. A machine is provisioned by running an
-[[https://www.ansible.com/][Ansible]] playbook. Components are organized into
-Ansible /roles/. For convenience, all roles are included in a single playbook,
-with each role defining a variable =${ROLE}_role= that determines if the role's
-tasks should be imported.
+These are my personal dotfiles organized as an
+[[https://www.ansible.com/][Ansible]] collection.
 
-Unfortunately I can not share everything, so there is also support for importing
-a private playbook that lives in a private repository.
+* Usage
 
-* Install
-
-Install everything by running
+This describes how I use this collection with my private playbooks. Since I
+don't intent to upload the collection to any Ansible Galaxy server I instead use
+project-local collections by configuring =ansible.cfg= like this:
 
 #+BEGIN_EXAMPLE
-$ ansible-pull --url="${REPO}" --directory="${DEST}" --ask-become-pass
+[defaults]
+collections_path = ./
 #+END_EXAMPLE
 
-or alternatively
+I then clone this repository into =ansible_collections/lndmrk/dotfiles/=. It's
+then possible to use the roles from this collection in playbooks, for example:
 
 #+BEGIN_EXAMPLE
-$ git clone "${REPO}"
-$ cd "$(basename "${REPO}" .git)"
-$ bin/dotfiles deploy
+---
+- hosts: localhost
+  roles:
+    - lndmrk.dotfiles.environment
 #+END_EXAMPLE
-
-Since =dotfiles deploy= uses Ansible under the hood, additional command line
-arguments that Ansible understands can be appended.
 
 * Test
 
@@ -44,25 +39,6 @@ This should be configured to run before every commit.
 
 #+BEGIN_EXAMPLE
 $ ln -s ../../bin/test .git/hooks/pre-commit
-#+END_EXAMPLE
-
-* Boilerplate
-
-** Private Repository
-
-A new private repository can be created like so:
-
-#+BEGIN_EXAMPLE
-$ git init private/
-$ cd private/
-$ mkdir inventory/ roles/
-$ touch inventory/hosts.yml
-$ cat <<EOF >private.yml
----
-- name: private
-  hosts: all
-EOF
-$ ln --symbolic ../.gitignore
 #+END_EXAMPLE
 
 * License

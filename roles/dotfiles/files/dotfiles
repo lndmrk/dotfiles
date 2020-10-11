@@ -30,11 +30,7 @@ log() {
 }
 
 get_playbook() {
-  if [[ -d private/ ]]; then
-    echo private.yml
-  else
-    echo local.yml
-  fi
+  echo "$(hostname --short).yml"
 }
 
 cmd_deploy() {
