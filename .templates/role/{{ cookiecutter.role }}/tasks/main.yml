@@ -1,5 +1,0 @@
-# SPDX-FileCopyrightText: {% now 'local', '%Y' %} {{ cookiecutter.full_name }} <{{ cookiecutter.email }}>
-# SPDX-License-Identifier: GPL-3.0-or-later
----
-- import_tasks: role.yml
-  when: {{ cookiecutter.role | replace('-', '_') }}_role

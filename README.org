@@ -52,18 +52,6 @@ $ chmod a+x .git/hooks/pre-commit
 
 * Boilerplate
 
-** New Role
-
-Quickly create a new role with
-
-#+BEGIN_EXAMPLE
-$ cookiecutter --output-dir=roles/ .templates/role/ role="${ROLE}"
-$ cat <<EOF >>local.yml
-    - name: ${ROLE}
-      tags: ${ROLE}
-EOF
-#+END_EXAMPLE
-
 ** Private Repository
 
 A new private repository can be created like so:
