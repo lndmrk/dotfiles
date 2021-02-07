@@ -531,7 +531,7 @@ source of truth for environment variables.
 #+begin_src emacs-lisp
 (use-package magit
   :ensure t
-  :config (global-magit-file-mode 1)
+  :custom (magit-define-global-key-bindings t)
   :hook (git-commit-mode . my-message-compose-mode))
 #+end_src
 
