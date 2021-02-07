@@ -489,6 +489,15 @@ source of truth for environment variables.
 #+end_src
 
 #+begin_src emacs-lisp
+(use-package ivy-xref
+  :ensure t
+  :after (ivy xref)
+  :custom
+  (xref-show-definitions-function 'ivy-xref-show-defs)
+  (xref-show-xrefs-function 'ivy-xref-show-xrefs))
+#+end_src
+
+#+begin_src emacs-lisp
 (use-package flyspell-correct-ivy
   :ensure t
   :after (flyspell ivy)
