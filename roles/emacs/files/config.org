@@ -7,7 +7,7 @@
 
 ** User Interface
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package emacs
   :init
   (horizontal-scroll-bar-mode -1)
@@ -17,11 +17,11 @@
   :custom
   (inhibit-startup-screen t)
   (initial-scratch-message nil))
-#+END_SRC
+#+end_src
 
 ** Backup Files
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package emacs
   :init
   (let ((backup-directory
@@ -30,21 +30,21 @@
       (make-directory backup-directory t))
     (setq backup-directory-alist `((".*" . ,backup-directory)))
     (setq auto-save-file-name-transforms `((".*" ,backup-directory t)))))
-#+END_SRC
+#+end_src
 
 ** Custom File
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package emacs
   :custom (custom-file (locate-user-emacs-file "custom.el"))
   :init (when (file-exists-p custom-file) (load custom-file)))
-#+END_SRC
+#+end_src
 
 ** Key Bindings
 
 *** Unbind Aliases
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package emacs
   :after bind-key
   :config
@@ -92,11 +92,11 @@
   (unbind-key "C-x <C-right>")
   (unbind-key "C-x <left>")
   (unbind-key "C-x <right>"))
-#+END_SRC
+#+end_src
 
 *** Better Defaults
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package emacs
   :after bind-key
   :config
@@ -112,11 +112,11 @@
   ([remap query-replace] . query-replace-regexp)
   ([remap upcase-word] . upcase-dwim)
   ([remap zap-to-char] . zap-up-to-char))
-#+END_SRC
+#+end_src
 
 ** Text
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package emacs
   :custom
   (colon-double-space nil)
@@ -125,11 +125,11 @@
   (sentence-end-double-space nil)
   (standard-indent 2)
   (tab-width standard-indent))
-#+END_SRC
+#+end_src
 
 ** Miscellaneous
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package emacs
   :custom
   (confirm-kill-emacs #'yes-or-no-p)
@@ -146,13 +146,13 @@
   (put 'narrow-to-region 'disabled nil)
   :hook
   (find-file . size-indication-mode))
-#+END_SRC
+#+end_src
 
 * Custom Functions
 
 ** Configuration Management
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package emacs
   :config
   (defun my-config-find-file (filename)
@@ -168,11 +168,11 @@
   :bind
   ("C-c d f" . my-config-find-file)
   ("C-c d r" . my-config-reload))
-#+END_SRC
+#+end_src
 
 ** Formatting
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package emacs
   :config
   (defun my-format-buffer-or-region ()
@@ -200,17 +200,17 @@
   ("C-c l f" . my-format-buffer-or-region)
   ("C-c l s" . my-sort-lines-fold-case)
   ("C-c l S" . my-sort-lines))
-#+END_SRC
+#+end_src
 
 ** Message Composing
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package emacs
   :config
   (defun my-message-compose-mode ()
     (setq fill-column 72)
     (auto-fill-mode 1)))
-#+END_SRC
+#+end_src
 
 * Packages
 
@@ -218,21 +218,21 @@
 
 *** cc-mode
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package cc-mode
   :custom (c-basic-offset standard-indent))
-#+END_SRC
+#+end_src
 
 *** compile
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package compile
   :custom (compilation-scroll-output t))
-#+END_SRC
+#+end_src
 
 *** dired
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package dired
   :custom
   (dired-recursive-copies 'always)
@@ -245,100 +245,100 @@
   :bind
   (:map dired-mode-map
         ("<C-return>" . my-dired-xdg-open-file)))
-#+END_SRC
+#+end_src
 
 *** display-fill-column-indicator
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package display-fill-column-indicator
   :hook ((find-file prog-mode text-mode) . display-fill-column-indicator-mode))
-#+END_SRC
+#+end_src
 
 *** display-line-numbers
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package display-line-numbers
   :custom (display-line-numbers-widen t)
   :hook (find-file . display-line-numbers-mode))
-#+END_SRC
+#+end_src
 
 *** eldoc
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package eldoc
   :custom (eldoc-echo-area-use-multiline-p nil))
-#+END_SRC
+#+end_src
 
 *** flyspell
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package flyspell
   :hook
   (prog-mode . flyspell-prog-mode)
   (text-mode . flyspell-mode))
-#+END_SRC
+#+end_src
 
 *** hl-line
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package hl-line
   :config (global-hl-line-mode 1))
-#+END_SRC
+#+end_src
 
 *** js
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package js
   :custom (js-indent-level standard-indent))
-#+END_SRC
+#+end_src
 
 *** paren
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package paren
   :custom (show-paren-delay 0)
   :hook (prog-mode . show-paren-mode))
-#+END_SRC
+#+end_src
 
 *** python
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package python
   :custom (python-indent-offset standard-indent))
-#+END_SRC
+#+end_src
 
 *** saveplace
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package saveplace
   :config (save-place-mode 1))
-#+END_SRC
+#+end_src
 
 *** sh-script
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package sh-script
   :custom (sh-basic-offset standard-indent))
-#+END_SRC
+#+end_src
 
 *** so-long
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package so-long
   :config (global-so-long-mode 1))
-#+END_SRC
+#+end_src
 
 *** subword
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package subword
   :diminish
   :hook (prog-mode . subword-mode))
-#+END_SRC
+#+end_src
 
 *** whitespace
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package whitespace
   :diminish
   :custom
@@ -351,11 +351,11 @@
                       tab-mark))
   :hook
   ((find-file prog-mode text-mode) . whitespace-mode))
-#+END_SRC
+#+end_src
 
 *** winner
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package winner
   :after bind-key
   :config
@@ -365,29 +365,29 @@
   :bind
   ("C-c w n" . winner-redo)
   ("C-c w p" . winner-undo))
-#+END_SRC
+#+end_src
 
 ** External
 
 *** bind-key
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package bind-key
   :ensure t
   :after use-package)
-#+END_SRC
+#+end_src
 
 *** color-theme-sanityinc-tomorrow
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package color-theme-sanityinc-tomorrow
   :ensure t
   :config (load-theme 'sanityinc-tomorrow-eighties t))
-#+END_SRC
+#+end_src
 
 *** company
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package company
   :ensure t
   :diminish
@@ -397,26 +397,26 @@
   :bind
   ([remap dabbrev-completion] . company-complete)
   ([remap dabbrev-expand] . company-complete-common-or-cycle))
-#+END_SRC
+#+end_src
 
 *** diminish
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package diminish
   :ensure t
   :after use-package)
-#+END_SRC
+#+end_src
 
 *** edit-indirect
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package edit-indirect
   :ensure t)
-#+END_SRC
+#+end_src
 
 *** eglot
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package eglot
   :ensure t
   :config
@@ -433,89 +433,89 @@
         ("C-c l d" . eglot-find-declaration)
         ("C-c l r" . eglot-rename)
         ([remap my-format-buffer-or-region] . eglot-format)))
-#+END_SRC
+#+end_src
 
 *** exec-path-from-shell
 
 Use this as a workaround until I've sorted out if shell or systemd should be the
 source of truth for environment variables.
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package exec-path-from-shell
   :ensure t
   :config
   (when (daemonp)
     (exec-path-from-shell-initialize)))
-#+END_SRC
+#+end_src
 
 *** flycheck
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package flycheck
   :ensure t
   :custom (flycheck-disabled-checkers '(yaml-ruby))
   :config (global-flycheck-mode 1))
-#+END_SRC
+#+end_src
 
 *** gtk-variant
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package gtk-variant
   :ensure t
   :hook ((server-after-make-frame window-setup) . gtk-variant-set-frame))
-#+END_SRC
+#+end_src
 
 *** hl-todo
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package hl-todo
   :ensure t
   :config (global-hl-todo-mode 1))
-#+END_SRC
+#+end_src
 
 *** ivy, counsel, swiper
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package ivy
   :ensure t
   :diminish
   :config (ivy-mode 1))
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package ivy-rich
   :ensure t
   :after (counsel ivy)
   :config (ivy-rich-mode 1))
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package counsel
   :ensure t
   :after ivy
   :diminish
   :config (counsel-mode 1))
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package swiper
   :ensure t
   :after ivy
   :bind
   ([remap isearch-forward] . swiper)
   ([remap isearch-backward] . swiper))
-#+END_SRC
+#+end_src
 
 *** json-mode
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package json-mode
   :ensure t)
-#+END_SRC
+#+end_src
 
 *** keyfreq
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package keyfreq
   :ensure t
   :custom
@@ -524,49 +524,49 @@ source of truth for environment variables.
   :config
   (keyfreq-autosave-mode 1)
   (keyfreq-mode 1))
-#+END_SRC
+#+end_src
 
 *** magit
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package magit
   :ensure t
   :config (global-magit-file-mode 1)
   :hook (git-commit-mode . my-message-compose-mode))
-#+END_SRC
+#+end_src
 
 *** markdown-mode
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package markdown-mode
   :ensure t
   :custom
   (markdown-command "pandoc")
   (markdown-fontify-code-blocks-natively t)
   (markdown-list-indent-width standard-indent))
-#+END_SRC
+#+end_src
 
 *** org
 
 This is already ensured to be installed in =init.el=.
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package org
   :custom
   (org-catch-invisible-edits 'error)
   (org-edit-src-content-indentation 0)
   (org-src-preserve-indentation t))
-#+END_SRC
+#+end_src
 
 *** projectile
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package projectile
   :ensure t
   :bind-keymap ("C-c p" . projectile-command-map))
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package counsel-projectile
   :ensure t
   :after (counsel projectile)
@@ -575,11 +575,11 @@ This is already ensured to be installed in =init.el=.
    'counsel-projectile-switch-project-action-vc)
   :config
   (counsel-projectile-mode 1))
-#+END_SRC
+#+end_src
 
 *** pyvenv
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package pyvenv
   :ensure t
   :init
@@ -598,28 +598,28 @@ This is already ensured to be installed in =init.el=.
                  "install" "--upgrade" "--upgrade-strategy" "eager"
                  packages)))))
   (add-hook 'pyvenv-post-activate-hooks 'my-pyvenv-install-packages))
-#+END_SRC
+#+end_src
 
 *** wgrep
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package wgrep
   :ensure t)
-#+END_SRC
+#+end_src
 
 *** which-key
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package which-key
   :ensure t
   :diminish
   :config (which-key-mode 1))
-#+END_SRC
+#+end_src
 
 *** yaml-mode
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package yaml-mode
   :ensure t
   :custom (yaml-indent-offset standard-indent))
-#+END_SRC
+#+end_src
