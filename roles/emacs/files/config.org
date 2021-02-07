@@ -392,7 +392,6 @@
   :ensure t
   :diminish
   :config
-  (add-to-list 'company-backends 'company-ispell)
   (global-company-mode 1)
   :bind
   ([remap dabbrev-completion] . company-complete)
@@ -487,6 +486,15 @@ source of truth for environment variables.
   :ensure t
   :after (counsel ivy)
   :config (ivy-rich-mode 1))
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package flyspell-correct-ivy
+  :ensure t
+  :after (flyspell ivy)
+  :bind
+  ([remap flyspell-auto-correct-previous-word] . flyspell-correct-wrapper)
+  ([remap ispell-word] . flyspell-correct-wrapper))
 #+end_src
 
 #+begin_src emacs-lisp
