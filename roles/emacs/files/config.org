@@ -278,6 +278,14 @@
   (text-mode . flyspell-mode))
 #+end_src
 
+*** hideshow
+
+#+begin_src emacs-lisp
+(use-package hideshow
+  :diminish hs-minor-mode
+  :hook (prog-mode . hs-minor-mode))
+#+end_src
+
 *** hl-line
 
 #+begin_src emacs-lisp
