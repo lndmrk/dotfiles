@@ -571,6 +571,15 @@ source of truth for environment variables.
   (markdown-list-indent-width standard-indent))
 #+end_src
 
+*** mood-line
+
+#+begin_src emacs-lisp
+(use-package mood-line
+  :ensure t
+  :custom (mood-line-show-eol-style t)
+  :config (mood-line-mode 1))
+#+end_src
+
 *** org
 
 This is already ensured to be installed in =init.el=.
@@ -596,7 +605,13 @@ This is already ensured to be installed in =init.el=.
 #+begin_src emacs-lisp
 (use-package projectile
   :ensure t
-  :bind-keymap ("C-c p" . projectile-command-map))
+  :diminish
+  :custom
+  (projectile-mode-line-prefix " P")
+  :config
+  (add-to-list 'mode-line-misc-info `(projectile-mode projectile--mode-line))
+  :bind-keymap
+  ("C-c p" . projectile-command-map))
 #+end_src
 
 #+begin_src emacs-lisp
