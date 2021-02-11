@@ -587,6 +587,7 @@ This is already ensured to be installed in =init.el=.
 #+begin_src emacs-lisp
 (use-package org
   :custom
+  (org-adapt-indentation nil)
   (org-catch-invisible-edits 'error)
   (org-edit-src-content-indentation 0)
   (org-src-preserve-indentation t)
