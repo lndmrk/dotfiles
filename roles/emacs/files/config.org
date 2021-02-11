@@ -390,7 +390,14 @@
 #+begin_src emacs-lisp
 (use-package color-theme-sanityinc-tomorrow
   :ensure t
-  :config (load-theme 'sanityinc-tomorrow-eighties t))
+  :config
+  (load-theme 'sanityinc-tomorrow-eighties t)
+  ;; It's not possible to use :inherit with :custom-face, see
+  ;; https://github.com/jwiegley/use-package/issues/841
+  (custom-theme-set-faces
+   'sanityinc-tomorrow-eighties
+   `(diff-refine-added ((t (:inherit diff-added :weight bold))))
+   `(diff-refine-removed ((t (:inherit diff-removed :weight bold))))))
 #+end_src
 
 *** company
@@ -556,8 +563,11 @@ source of truth for environment variables.
 #+begin_src emacs-lisp
 (use-package magit
   :ensure t
-  :custom (magit-define-global-key-bindings t)
-  :hook (git-commit-mode . my-message-compose-mode))
+  :custom
+  (magit-define-global-key-bindings t)
+  (magit-diff-refine-hunk 'all)
+  :hook
+  (git-commit-mode . my-message-compose-mode))
 #+end_src
 
 *** markdown-mode
