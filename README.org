@@ -12,34 +12,34 @@ This describes how I use this collection with my private playbooks. Since I
 don't intent to upload the collection to any Ansible Galaxy server I instead use
 project-local collections by configuring =ansible.cfg= like this:
 
-#+BEGIN_EXAMPLE
+#+begin_example
 [defaults]
 collections_path = ./
-#+END_EXAMPLE
+#+end_example
 
 I then clone this repository into =ansible_collections/lndmrk/dotfiles/=. It's
 then possible to use the roles from this collection in playbooks, for example:
 
-#+BEGIN_EXAMPLE
+#+begin_example
 ---
 - hosts: localhost
   roles:
     - lndmrk.dotfiles.environment
-#+END_EXAMPLE
+#+end_example
 
 * Test
 
 A set of compliance tests can be run with
 
-#+BEGIN_EXAMPLE
+#+begin_example
 $ bin/test
-#+END_EXAMPLE
+#+end_example
 
 This should be configured to run before every commit.
 
-#+BEGIN_EXAMPLE
+#+begin_example
 $ ln -s ../../bin/test .git/hooks/pre-commit
-#+END_EXAMPLE
+#+end_example
 
 * License
 
