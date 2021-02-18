@@ -216,6 +216,13 @@
 
 ** Built-in
 
+*** autorevert
+
+#+begin_src emacs-lisp
+(use-package autorevert
+  :config (global-auto-revert-mode 1))
+#+end_src
+
 *** cc-mode
 
 #+begin_src emacs-lisp
