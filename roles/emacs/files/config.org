@@ -339,7 +339,7 @@
 
 #+begin_src emacs-lisp
 (use-package python
-  :custom (python-indent-offset standard-indent))
+  :hook (python-mode . (lambda () (my-set-fill-column 88))))
 #+end_src
 
 *** saveplace
