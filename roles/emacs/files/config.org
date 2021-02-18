@@ -215,8 +215,21 @@
 (use-package emacs
   :config
   (defun my-message-compose-mode ()
-    (setq fill-column 72)
+    (my-set-fill-column 72)
     (auto-fill-mode 1)))
+#+end_src
+
+** Text
+
+#+begin_src emacs-lisp
+(use-package emacs
+  :config
+  (defun my-set-fill-column (n)
+    (setq fill-column n)
+    (setq whitespace-line-column fill-column)
+    (when (bound-and-true-p whitespace-mode)
+      (whitespace-mode 0)
+      (whitespace-mode 1))))
 #+end_src
 
 * Packages
