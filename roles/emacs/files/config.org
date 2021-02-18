@@ -356,6 +356,13 @@
   :custom (sh-basic-offset standard-indent))
 #+end_src
 
+*** smerge-mode
+
+#+begin_src emacs-lisp
+(use-package smerge-mode
+  :bind-keymap ("C-c v" . smerge-basic-map))
+#+end_src
+
 *** so-long
 
 #+begin_src emacs-lisp
