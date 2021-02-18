@@ -2,18 +2,18 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 if [[ -r /etc/bashrc ]]; then
-    # shellcheck disable=SC1091
-    source /etc/bashrc
+  # shellcheck disable=SC1091
+  source /etc/bashrc
 fi
 
 if [[ -r /usr/share/bash-completion/bash_completion ]]; then
-    # shellcheck disable=SC1091
-    source /usr/share/bash-completion/bash_completion
+  # shellcheck disable=SC1091
+  source /usr/share/bash-completion/bash_completion
 fi
 
 for file in "${XDG_CONFIG_HOME:-${HOME}/.config}/bash/bashrc.d/"*.sh; do
-    if [[ -r "${file}" ]]; then
-        # shellcheck disable=SC1090
-        source "${file}"
-    fi
+  if [[ -r "${file}" ]]; then
+    # shellcheck disable=SC1090
+    source "${file}"
+  fi
 done

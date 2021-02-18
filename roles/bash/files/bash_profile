@@ -2,11 +2,11 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 if [[ -r ~/.profile ]]; then
-    # shellcheck disable=SC1090
-    . ~/.profile
+  # shellcheck disable=SC1090
+  . ~/.profile
 fi
 
 if [[ -r ~/.bashrc ]]; then
-    # shellcheck disable=SC1090
-    . ~/.bashrc
+  # shellcheck disable=SC1090
+  . ~/.bashrc
 fi
