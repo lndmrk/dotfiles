@@ -29,14 +29,14 @@
     (unless (file-directory-p backup-directory)
       (make-directory backup-directory t))
     (setq backup-directory-alist `((".*" . ,backup-directory)))
-    (setq auto-save-file-name-transforms `((".*" ,backup-directory t)))
-    (setq my-backup-ignore-regexp-list `("\\.asc$" "\\.gpg$" "^/dev/shm"))
-    (defun my-backup-enable-p (name)
-      (when (normal-backup-enable-predicate name)
-        (let ((result t))
-          (dolist (regexp my-backup-ignore-regexp-list result)
-            (setq result (and result (not (string-match regexp name))))))))
-    (setq backup-enable-predicate 'my-backup-enable-p)))
+    (setq auto-save-file-name-transforms `((".*" ,backup-directory t))))
+  (defun my-backup-enable-p (name)
+    (when (normal-backup-enable-predicate name)
+      (let ((backup-ignore-regexp-list '("\\.asc$" "\\.gpg$" "^/dev/shm"))
+            (result t))
+        (dolist (regexp backup-ignore-regexp-list result)
+          (setq result (and result (not (string-match regexp name))))))))
+  (setq backup-enable-predicate 'my-backup-enable-p))
 #+end_src
 
 ** Custom File
