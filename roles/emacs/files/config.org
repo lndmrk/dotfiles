@@ -406,8 +406,8 @@
   (unbind-key "C-c <right>")
   (winner-mode 1)
   :bind
-  ("C-c w n" . winner-redo)
-  ("C-c w p" . winner-undo))
+  ("C-c w U" . winner-redo)
+  ("C-c w u" . winner-undo))
 #+end_src
 
 ** External
