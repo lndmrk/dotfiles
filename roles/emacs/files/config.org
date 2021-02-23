@@ -290,6 +290,13 @@
   :hook (find-file . display-line-numbers-mode))
 #+end_src
 
+*** ediff
+
+#+begin_src emacs-lisp
+(use-package ediff
+  :custom (ediff-window-setup-function 'ediff-setup-windows-plain))
+#+end_src
+
 *** eldoc
 
 #+begin_src emacs-lisp
