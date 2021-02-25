@@ -427,21 +427,6 @@
   :after use-package)
 #+end_src
 
-*** color-theme-sanityinc-tomorrow
-
-#+begin_src emacs-lisp
-(use-package color-theme-sanityinc-tomorrow
-  :ensure t
-  :config
-  (load-theme 'sanityinc-tomorrow-eighties t)
-  ;; It's not possible to use :inherit with :custom-face, see
-  ;; https://github.com/jwiegley/use-package/issues/841
-  (custom-theme-set-faces
-   'sanityinc-tomorrow-eighties
-   `(diff-refine-added ((t (:inherit diff-added :weight bold))))
-   `(diff-refine-removed ((t (:inherit diff-removed :weight bold))))))
-#+end_src
-
 *** company
 
 #+begin_src emacs-lisp
@@ -621,6 +606,32 @@ source of truth for environment variables.
   (markdown-command "pandoc")
   (markdown-fontify-code-blocks-natively t)
   (markdown-list-indent-width standard-indent))
+#+end_src
+
+*** modus-theme
+
+#+begin_src emacs-lisp
+(use-package modus-themes
+  :ensure t
+  :init
+  (modus-themes-load-themes)
+  :custom
+  (modus-themes-completions 'opinionated)
+  (modus-themes-diffs 'desaturnated)
+  (modus-themes-fringes 'intense)
+  (modus-themes-lang-checkers 'intense-foreground)
+  (modus-themes-mode-line 'borderless)
+  (modus-themes-org-blocks 'grayscale)
+  (modus-themes-syntax 'faint)
+  (modus-themes-vivendi-color-overrides
+   '((bg-main . "#1C1C1C")
+     (bg-dim . "#2E2E2E")
+     (bg-alt . "#383838")
+     (bg-active . "#363636")
+     (bg-inactive . "#3B3B3B")
+     (bg-hl-line . "#343A3C")))
+  :config
+  (modus-themes-load-vivendi))
 #+end_src
 
 *** mood-line
