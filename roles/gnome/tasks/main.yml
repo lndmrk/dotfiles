@@ -58,20 +58,18 @@
     key: "{{ default_profile_path }}/{{ item.key }}"
     value: "{{ item.value | string }}"
   with_dict:
-    scrollback-unlimited: "true"
+    visible-name: "'Modus Vivendi'"
+    bold-color-same-as-fg: "true"
+    bold-is-bright: "'false'"
+    use-theme-background: "false"
     use-theme-colors: "false"
-    foreground-color: "'rgb(204,204,204)'"
-    background-color: "'rgb(45,45,45)'"
-    # Tomorrow Night Eighties
+    background-color: "'#1C1C1C'"
+    foreground-color: "'#FFFFFF'"
     palette: >-
-      ['rgb(3,2,2)', 'rgb(172,40,43)',
-      'rgb(63,143,63)', 'rgb(193,138,28)',
-      'rgb(41,100,157)', 'rgb(141,63,141)',
-      'rgb(36,147,147)', 'rgb(153,152,152)',
-      'rgb(102,102,102)', 'rgb(242,119,122)',
-      'rgb(153,204,153)', 'rgb(255,204,102)',
-      'rgb(102,153,204)', 'rgb(204,153,204)',
-      'rgb(102,204,204)', 'rgb(204,204,204)']
+      ['#000000', '#FF8059', '#44BC44', '#EECC00',
+       '#2FAFFF', '#FEACD0', '#00D3D0', '#A6A6A6',
+       '#595959', '#F4923B', '#70C900', '#CFDF30',
+       '#79A8FF', '#F78FE7', '#4AE8FC', '#FFFFFF']
 
 - name: /org/gnome/desktop/calendar/show-weekdate
   dconf:
