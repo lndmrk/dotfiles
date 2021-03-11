@@ -304,6 +304,14 @@
   :custom (eldoc-echo-area-use-multiline-p nil))
 #+end_src
 
+*** elisp-mode
+
+#+begin_src emacs-lisp
+(use-package elisp-mode
+  :hook
+  (emacs-lisp-mode . (lambda () (setq-local sentence-end-double-space t))))
+#+end_src
+
 *** flyspell
 
 #+begin_src emacs-lisp
