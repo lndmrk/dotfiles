@@ -4,6 +4,7 @@
 *.log
 *.swp
 *~
+.cache/
 .dir-locals.el
 .projectile
 .venv/
