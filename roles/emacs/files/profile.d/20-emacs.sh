@@ -4,5 +4,3 @@
 export EMACS_SOCKET_NAME="default"
 export EDITOR="emacsclient"
 export VISUAL="${EDITOR}"
-
-export MYPY_CACHE_DIR="${XDG_CACHE_HOME:-${HOME}/.cache}/mypy"
