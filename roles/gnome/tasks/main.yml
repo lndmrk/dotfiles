@@ -30,14 +30,6 @@
     - name: Browser
       binding: <Super>b
       command: xdg-open https://
-    # These shouldn't be configured unconditionally, but setting custom
-    # keybindings is already a mess and I don't feel like working around it...
-    - name: Monitor DP-1
-      binding: <Super>F11
-      command: monitor-change-input DP-1
-    - name: Monitor DP-2
-      binding: <Super>F12
-      command: monitor-change-input DP-2
   loop_control:
     index_var: index
 
