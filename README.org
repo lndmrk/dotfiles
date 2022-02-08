@@ -19,20 +19,6 @@ $ ./dotfiles install
 The program will find any bundles relative to this directory. It will also
 handle any inner Git repositories along with its bundles.
 
-* Test
-
-A set of compliance tests can be run with
-
-#+begin_example
-$ ./test
-#+end_example
-
-This should be configured to run before every commit.
-
-#+begin_example
-$ ln -s "$(pwd)/test" "$(git rev-parse --git-common-dir)/hooks/pre-commit"
-#+end_example
-
 * License
 
 This project is [[https://reuse.software/][REUSE]] compliant. The copyright and
