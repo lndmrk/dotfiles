@@ -1,0 +1,192 @@
+#!/usr/bin/env python3
+#
+# SPDX-FileCopyrightText: 2022 Emil Lundmark <emil@lndmrk.se>
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+import argparse
+import importlib
+import os
+import platform
+import subprocess
+from pathlib import Path
+from typing import Iterator
+
+
+def _get_os_release(key: str) -> str:
+    result = ""
+    with open("/etc/os-release") as f:
+        for line in f:
+            if line.startswith(f"{key}="):
+                result = line.split("=")[1].strip()
+    return result
+
+
+def _git_command(*args, **kwargs) -> None:
+    args = ("git", ) + tuple(*args)
+    env = {"GIT_CONFIG_GLOBAL": "/dev/null"}
+    subprocess.check_call(args, env=env, **kwargs)
+
+
+def _sudo_command(*args, **kwargs) -> None:
+    args = ("sudo", ) + tuple(*args)
+    subprocess.check_call(args, **kwargs)
+
+
+class DotfilesManager:
+    def __init__(self, program: Path, target_directory: Path,
+                 hostname: str) -> None:
+        if not program.is_file():
+            raise ValueError(f"Invalid program: {program}")
+        if not target_directory.is_dir():
+            raise ValueError(f"Invalid target directory: {target_directory}")
+        if not hostname:
+            raise ValueError("Hostname not specified")
+
+        self._program = program
+        self._working_directory = program.parent
+        self._target_directory = target_directory
+        self._hostname = hostname
+        self._os_release_id = _get_os_release("ID")
+        self._os_release_version_id = _get_os_release("VERSION_ID")
+
+    def get_bundles(self, include: set[str] = None) -> list[str]:
+        bundles = {
+            ".".join(p.relative_to(self._working_directory).parts[:-1])
+            for p in self._working_directory.rglob("*/__init__.py")
+        }
+        if include:
+            bundles = bundles.intersection(include)
+        return sorted(bundles, key=lambda b: b.split(".")[::-1])
+
+    def _bundle_path(self, name: str) -> Path:
+        return self._working_directory.joinpath(name.replace(".", "/"))
+
+    def _bundle_files(self, name: str) -> Iterator[Path]:
+        bundle_path = self._bundle_path(name)
+        for f in bundle_path.rglob("*"):
+            if not f.is_file():
+                continue
+            if f.relative_to(bundle_path).name.startswith("__"):
+                continue
+            yield f
+
+    def _symlink_bundle(self, name: str) -> None:
+        bundle_path = self._bundle_path(name)
+        for f in self._bundle_files(name):
+            dotfile = Path(f".{f.relative_to(bundle_path).as_posix()}")
+            target = self._target_directory.joinpath(dotfile)
+            if target.exists() and f.samefile(target):
+                continue
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.symlink_to(f)
+
+    def _install_packages(self, packages_dict: dict[str, list[str]]) -> None:
+        packages = packages_dict.get(self._os_release_id)
+        if not packages:
+            return
+        print(f"Installing packages: {', '.join(packages)}")
+        if self._os_release_id == "debian":
+            _sudo_command(("apt", "install", "--assume-yes", *packages))
+        elif self._os_release_id == "fedora":
+            _sudo_command(("dnf", "install", "--assumeyes", *packages))
+        else:
+            raise ValueError(
+                f"Unable to install packages for: {self._os_release_id}")
+
+    def deploy(self, bundles: set[str] = None, setup=True) -> None:
+        setup_kwargs = {
+            "target_directory": self._target_directory,
+            "hostname": self._hostname,
+            "os_release_id": self._os_release_id,
+            "os_release_version_id": self._os_release_version_id,
+        }
+        for name in self.get_bundles(bundles):
+            print(f"Deploying: {name}")
+            bundle = importlib.import_module(name)
+            if setup and hasattr(bundle, "pre_setup"):
+                bundle.pre_setup(**setup_kwargs)
+            if setup and hasattr(bundle, "packages"):
+                self._install_packages(bundle.packages(**setup_kwargs))
+            self._symlink_bundle(name)
+            if setup and hasattr(bundle, "post_setup"):
+                bundle.post_setup(**setup_kwargs)
+
+    def install(self) -> None:
+        target = self._target_directory.joinpath(".local/bin",
+                                                 self._program.name)
+        if target.resolve() == self._program:
+            print(f"{self._program.name} is already installed to {target}")
+            return
+        print(f"Installing {self._program.name} to {target}")
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.symlink_to(self._program)
+
+    def sync(self) -> None:
+        for repo in self._working_directory.rglob(".git"):
+            _git_command(("pull", "--rebase"), cwd=repo.parent)
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument(
+        "--hostname",
+        default=platform.node().split(".")[0],
+        type=str,
+        help="override detected hostname",
+    )
+    parser.add_argument(
+        "--target",
+        default=os.getenv("HOME"),
+        type=str,
+        help="target directory for dotfiles",
+    )
+    subparsers = parser.add_subparsers(dest="subcommand")
+    deploy_parser = subparsers.add_parser("deploy",
+                                          help="deploy and set up bundles")
+    deploy_parser.add_argument(
+        "-b",
+        "--bundles",
+        action="extend",
+        nargs="+",
+        default=[],
+        type=str,
+        help="only include selected bundles",
+        metavar="BUNDLE",
+    )
+    deploy_parser.add_argument(
+        "--sync",
+        action="store_true",
+        help="sync before deploying",
+    )
+    deploy_parser.add_argument(
+        "--no-setup",
+        action="store_false",
+        help="don't run setup",
+        dest="setup",
+    )
+    subparsers.add_parser("install", help="install this program")
+    subparsers.add_parser("list", help="list available bundles")
+    subparsers.add_parser("sync", help="sync managed git repositories")
+    args = parser.parse_args()
+
+    manager = DotfilesManager(Path(os.path.realpath(__file__)),
+                              Path(args.target), args.hostname)
+
+    if args.subcommand == "deploy":
+        if args.sync:
+            manager.sync()
+        manager.deploy(set(args.bundles), args.setup)
+    elif args.subcommand == "install":
+        manager.install()
+    elif args.subcommand == "list":
+        for name in manager.get_bundles():
+            print(name)
+    elif args.subcommand == "sync":
+        manager.sync()
+    else:
+        parser.print_help()
+
+
+if __name__ == "__main__":
+    main()

@@ -3,42 +3,34 @@
 #+TITLE: lndmrk's dotfiles
 #+AUTHOR: Emil Lundmark
 
-These are my personal dotfiles organized as an
-[[https://www.ansible.com/][Ansible]] collection.
+These are my personal dotfiles organized into /bundles/. A bundle is essentially
+a Python module and a collection of dotfiles without the initial dot in the
+name; it's implied.
 
 * Usage
 
-This describes how I use this collection with my private playbooks. Since I
-don't intent to upload the collection to any Ansible Galaxy server I instead use
-project-local collections by configuring =ansible.cfg= like this:
+The =dotfiles= program is used to orchestrate everything. It can be installed by
+running
 
 #+begin_example
-[defaults]
-collections_path = ./
+$ ./dotfiles install
 #+end_example
 
-I then clone this repository into =ansible_collections/lndmrk/dotfiles/=. It's
-then possible to use the roles from this collection in playbooks, for example:
-
-#+begin_example
----
-- hosts: localhost
-  roles:
-    - lndmrk.dotfiles.environment
-#+end_example
+The program will find any bundles relative to this directory. It will also
+handle any inner Git repositories along with its bundles.
 
 * Test
 
 A set of compliance tests can be run with
 
 #+begin_example
-$ bin/test
+$ ./test
 #+end_example
 
 This should be configured to run before every commit.
 
 #+begin_example
-$ ln -s ../../bin/test .git/hooks/pre-commit
+$ ln -s "$(pwd)/test" "$(git rev-parse --git-common-dir)/hooks/pre-commit"
 #+end_example
 
 * License

@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+#
+# SPDX-FileCopyrightText: 2021 Emil Lundmark <emil@lndmrk.se>
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+set -e
+set -u
+
+: "${ROOT:=$(dirname "$(realpath "${BASH_SOURCE[0]}")")}"
+
+mime() {
+  file --brief --mime-type "${@}"
+}
+
+lint() {
+  for file in $(git ls-files); do
+    if [[ "$(mime "${file}")" = "text/x-script.python" ]]; then
+      if ! yapf --diff "${file}" >/dev/null; then
+        printf "Not formatted correctly: %s\n" "${file}"
+      fi
+    fi
+  done
+
+  trap 'printf "%s\n" "${reuse}"' ERR
+  reuse=$(reuse lint)
+}
+
+main() (
+  cd "${ROOT}"
+  local output
+  output=$(lint)
+  if [[ -n "${output}" ]]; then
+    printf "%s\n" "${output}" >&2
+    exit 1
+  fi
+)
+
+main "${@}"
