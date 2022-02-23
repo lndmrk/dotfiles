@@ -1,0 +1,10 @@
+# SPDX-FileCopyrightText: 2022 Emil Lundmark <emil@lndmrk.se>
+# SPDX-License-Identifier: GPL-3.0-or-later
+---
+image: fedora/latest
+packages:
+  - reuse
+tasks:
+  - test: |
+      cd dotfiles/
+      reuse lint
