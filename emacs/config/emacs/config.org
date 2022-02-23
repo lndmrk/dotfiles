@@ -624,13 +624,12 @@ source of truth for environment variables.
   :init
   (modus-themes-load-themes)
   :custom
-  (modus-themes-completions 'opinionated)
   (modus-themes-diffs 'desaturnated)
   (modus-themes-fringes 'intense)
   (modus-themes-lang-checkers 'intense-foreground)
-  (modus-themes-mode-line 'borderless)
+  (modus-themes-mode-line '(borderless))
   (modus-themes-org-blocks 'grayscale)
-  (modus-themes-syntax 'faint)
+  (modus-themes-syntax '(faint))
   (modus-themes-vivendi-color-overrides
    '((bg-main . "#1C1C1C")
      (bg-dim . "#2E2E2E")
