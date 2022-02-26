@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+#
+# SPDX-FileCopyrightText: 2022 Emil Lundmark <emil@lndmrk.se>
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+set -e
+set -u
+
+: "${SHELL=/bin/bash}"
+
+temp_dir="$(mktemp --directory)"
+trap 'rm --recursive --force "${temp_dir}"' EXIT
+exec gpg-agent --homedir "${temp_dir}" --enable-ssh-support --daemon "${SHELL}"
