@@ -101,8 +101,13 @@ class DotfilesManager:
             "os_release_version_id": self._os_release_version_id,
         }
         for name in self.get_bundles(bundles):
-            print(f"Deploying: {name}")
             bundle = importlib.import_module(name)
+            if hasattr(bundle,
+                       "is_enabled") and not bundle.is_enabled(**setup_kwargs):
+                print(f"Skipping: {name}")
+                continue
+
+            print(f"Deploying: {name}")
             if setup and hasattr(bundle, "pre_setup"):
                 bundle.pre_setup(**setup_kwargs)
             if setup and hasattr(bundle, "packages"):
