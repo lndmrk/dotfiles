@@ -9,6 +9,7 @@
 	cp = cherry-pick
 	d = diff
 	ds = diff --staged
+	e = commit --amend --no-edit
 	l = log --pretty=oneline-short
 	la = log --pretty=fuller
 	lf = log --pretty=fixes --abbrev=12
