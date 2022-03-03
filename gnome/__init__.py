@@ -92,7 +92,7 @@ def post_setup(**kwargs):
     s.set_strv("cycle-windows-backward", ["<Shift><Super>Escape"])
     s.set_strv("cycle-panels", [])
     s.set_strv("cycle-panels-backward", [])
-    s.set_strv("panel-run-dialog", ["<Super>F2"])
+    s.set_strv("panel-run-dialog", ["<Super>x"])
     s.set_strv("activate-window-menu", [])
     s.set_strv("toggle-maximized", [])
     s.set_strv("maximize", ["<Super>Up"])
