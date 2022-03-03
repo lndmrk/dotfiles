@@ -31,6 +31,8 @@ def post_setup(**kwargs):
     s = Gio.Settings.new("org.gnome.settings-daemon.plugins.media-keys")
     s.set_strv("custom-keybindings", paths)
     # Launchers
+    s.set_strv("calculator", ["<Super>c"])
+    s.set_strv("home", ["<Super>d"])
     s.set_strv("www", ["<Super>b"])
 
     # Terminal
