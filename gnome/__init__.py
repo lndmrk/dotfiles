@@ -17,10 +17,6 @@ def post_setup(**kwargs):
         "name": "Terminal",
         "binding": "<Super>Return",
         "command": "gnome-terminal",
-    }, {
-        "name": "Browser",
-        "binding": "<Super>b",
-        "command": "xdg-open https://",
     }]
     paths = []
     for i, binding in enumerate(bindings):
@@ -34,6 +30,8 @@ def post_setup(**kwargs):
         paths.append(path)
     s = Gio.Settings.new("org.gnome.settings-daemon.plugins.media-keys")
     s.set_strv("custom-keybindings", paths)
+    # Launchers
+    s.set_strv("www", ["<Super>b"])
 
     # Terminal
     s = Gio.Settings.new("org.gnome.Terminal.ProfilesList")
