@@ -33,6 +33,8 @@ def post_setup(**kwargs):
     # Launchers
     s.set_strv("calculator", ["<Super>c"])
     s.set_strv("home", ["<Super>d"])
+    s.set_strv("screencast", [])
+    s.set_strv("screenreader", [])
     s.set_strv("www", ["<Super>b"])
 
     # Terminal
