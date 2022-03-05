@@ -29,6 +29,8 @@
 [diff "ansible-vault"]
 	textconv = ansible-vault view
 	cachetextconv = false
+[fetch]
+	prune = true
 [merge]
 	conflictstyle = diff3
 [pretty]
