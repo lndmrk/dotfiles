@@ -1,6 +1,10 @@
 # SPDX-FileCopyrightText: 2019 Emil Lundmark <emil@lndmrk.se>
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+__lndmrk_prompt_extra() {
+  :
+}
+
 __lndmrk_prompt() {
   local exit_status=${?}
   local color_default=37
@@ -29,6 +33,7 @@ __lndmrk_prompt() {
                "${c3}"'\h' \
                ' ' \
                "${c1}"'\[\e[1m\]\W\[\e[22m\]' \
+               "$(__lndmrk_prompt_extra)" \
                "${c4}"'\$'
         ;;
       2)
