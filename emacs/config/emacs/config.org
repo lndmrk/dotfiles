@@ -406,6 +406,28 @@
   ((find-file prog-mode text-mode) . whitespace-mode))
 #+end_src
 
+*** windmove
+
+#+begin_src emacs-lisp
+(use-package emacs
+  :config (unbind-key "C-x o"))
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package windmove
+  :custom
+  (windmove-wrap-around t)
+  :bind
+  ("M-s-H" . windmove-swap-states-left)
+  ("M-s-J" . windmove-swap-states-down)
+  ("M-s-K" . windmove-swap-states-up)
+  ("M-s-L" . windmove-swap-states-right)
+  ("M-s-h" . windmove-left)
+  ("M-s-j" . windmove-down)
+  ("M-s-k" . windmove-up)
+  ("M-s-l" . windmove-right))
+#+end_src
+
 *** winner
 
 #+begin_src emacs-lisp
