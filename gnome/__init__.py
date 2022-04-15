@@ -51,12 +51,25 @@ def post_setup(**kwargs):
     s.set_boolean("bold-color-same-as-fg", True)
     s.set_boolean("bold-is-bright", False)
     s.set_boolean("use-theme-colors", False)
-    s.set_string("background-color", "#1C1C1C")
+    s.set_string("background-color", "#171717")
     s.set_string("foreground-color", "#FFFFFF")
     s.set_strv("palette", [
-        "#000000", "#FF8059", "#44BC44", "#EECC00", "#2FAFFF", "#FEACD0",
-        "#00D3D0", "#A6A6A6", "#595959", "#F4923B", "#70C900", "#CFDF30",
-        "#79A8FF", "#F78FE7", "#4AE8FC", "#FFFFFF"
+        "#171717",
+        "#FF8059",
+        "#44BC44",
+        "#D0BC00",
+        "#2FAFFF",
+        "#FEACD0",
+        "#00D3D0",
+        "#D0D0D0",
+        "#5E5E5E",
+        "#FE6060",
+        "#4FE42F",
+        "#F0DD60",
+        "#4FAFFF",
+        "#FF62D4",
+        "#3FDFD0",
+        "#FFFFFF",
     ])
 
     s = Gio.Settings.new("org.gnome.desktop.calendar")
