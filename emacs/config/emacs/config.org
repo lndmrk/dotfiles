@@ -373,7 +373,7 @@
 
 #+begin_src emacs-lisp
 (use-package smerge-mode
-  :bind-keymap ("C-c v" . smerge-basic-map))
+  :custom (smerge-command-prefix (kbd "C-c v")))
 #+end_src
 
 *** so-long
