@@ -151,6 +151,7 @@
   (line-number-mode 1)
   (put 'narrow-to-region 'disabled nil)
   :hook
+  (after-save . executable-make-buffer-file-executable-if-script-p)
   (find-file . size-indication-mode))
 #+end_src
 
