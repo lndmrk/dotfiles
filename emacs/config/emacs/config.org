@@ -325,7 +325,6 @@
 
 #+begin_src emacs-lisp
 (use-package hideshow
-  :diminish hs-minor-mode
   :hook (prog-mode . hs-minor-mode))
 #+end_src
 
@@ -390,7 +389,6 @@
 
 #+begin_src emacs-lisp
 (use-package subword
-  :diminish
   :hook (prog-mode . subword-mode))
 #+end_src
 
@@ -398,7 +396,6 @@
 
 #+begin_src emacs-lisp
 (use-package whitespace
-  :diminish
   :custom
   (whitespace-style '(face
                       trailing
@@ -440,20 +437,11 @@
 #+begin_src emacs-lisp
 (use-package company
   :ensure t
-  :diminish
   :config
   (global-company-mode 1)
   :bind
   ([remap dabbrev-completion] . company-complete)
   ([remap dabbrev-expand] . company-complete-common-or-cycle))
-#+end_src
-
-*** diminish
-
-#+begin_src emacs-lisp
-(use-package diminish
-  :ensure t
-  :after use-package)
 #+end_src
 
 *** edit-indirect
@@ -527,7 +515,6 @@ source of truth for environment variables.
 #+begin_src emacs-lisp
 (use-package ivy
   :ensure t
-  :diminish
   :config (ivy-mode 1))
 #+end_src
 
@@ -560,7 +547,6 @@ source of truth for environment variables.
 (use-package counsel
   :ensure t
   :after ivy
-  :diminish
   :config (counsel-mode 1))
 #+end_src
 
@@ -724,7 +710,6 @@ This is already ensured to be installed in =init.el=.
 #+begin_src emacs-lisp
 (use-package projectile
   :ensure t
-  :diminish
   :custom
   (projectile-mode-line-prefix " P")
   :config
@@ -786,7 +771,6 @@ This is already ensured to be installed in =init.el=.
 #+begin_src emacs-lisp
 (use-package which-key
   :ensure t
-  :diminish
   :config (which-key-mode 1))
 #+end_src
 
