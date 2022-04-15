@@ -12,6 +12,9 @@ def packages(**kwargs):
 def post_setup(**kwargs):
     from gi.repository import Gio, GLib
 
+    s = Gio.Settings.new("org.freedesktop.ibus.panel.emoji")
+    s.set_strv("hotkey", ["<Super>period"])
+
     # Custom key bindings
     bindings = [{
         "name": "Terminal",
