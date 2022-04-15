@@ -626,9 +626,9 @@ source of truth for environment variables.
   :custom
   (modus-themes-diffs 'desaturnated)
   (modus-themes-fringes 'intense)
-  (modus-themes-lang-checkers 'intense-foreground)
+  (modus-themes-lang-checkers '(intense))
   (modus-themes-mode-line '(borderless))
-  (modus-themes-org-blocks 'grayscale)
+  (modus-themes-org-blocks 'gray-background)
   (modus-themes-syntax '(faint))
   (modus-themes-vivendi-color-overrides
    '((bg-main . "#1C1C1C")
