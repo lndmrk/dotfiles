@@ -133,6 +133,18 @@
   (tab-width standard-indent))
 #+end_src
 
+** Minibuffer
+
+#+begin_src emacs-lisp
+(use-package emacs
+  :custom (enable-recursive-minibuffers t))
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package mb-depth
+  :config (minibuffer-depth-indicate-mode 1))
+#+end_src
+
 ** Miscellaneous
 
 #+begin_src emacs-lisp
