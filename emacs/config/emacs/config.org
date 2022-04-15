@@ -240,6 +240,7 @@
 
 #+begin_src emacs-lisp
 (use-package autorevert
+  :custom (global-auto-revert-non-file-buffers t)
   :config (global-auto-revert-mode 1))
 #+end_src
 
