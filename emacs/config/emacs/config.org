@@ -54,7 +54,6 @@
 
 #+begin_src emacs-lisp
 (use-package emacs
-  :after bind-key
   :config
   (unbind-key "<C-M-down>")
   (unbind-key "<C-M-end>")
@@ -106,7 +105,6 @@
 
 #+begin_src emacs-lisp
 (use-package emacs
-  :after bind-key
   :config
   (unbind-key "<C-S-backspace>")
   (unbind-key "C-x C-z")
@@ -412,7 +410,6 @@
 
 #+begin_src emacs-lisp
 (use-package winner
-  :after bind-key
   :config
   (unbind-key "C-c <left>")
   (unbind-key "C-c <right>")
@@ -423,14 +420,6 @@
 #+end_src
 
 ** External
-
-*** bind-key
-
-#+begin_src emacs-lisp
-(use-package bind-key
-  :ensure t
-  :after use-package)
-#+end_src
 
 *** company
 
