@@ -679,12 +679,14 @@ ratio.
   :config
   (add-to-list 'mc/cmds-to-run-once 'swiper-mc)
   :bind
-  (("C-c m a" . mc/mark-all-dwim)
-   ("C-c m c" . mc/edit-lines)
-   ("C-c m n" . mc/mark-next-like-this)
-   ("C-c m p" . mc/mark-previous-like-this)
-   ("C-c m r" . set-rectangular-region-anchor)
-   ("C-c m s" . mc/skip-to-next-like-this)))
+  ("C-c m a" . mc/mark-all-like-this)
+  ("C-c m c" . mc/edit-lines)
+  ("C-c m d" . mc/mark-all-dwim)
+  ("C-c m M-n" . mc/skip-to-next-like-this)
+  ("C-c m M-p" . mc/skip-to-previous-like-this)
+  ("C-c m n" . mc/mark-next-like-this)
+  ("C-c m p" . mc/mark-previous-like-this)
+  ("C-c m r" . set-rectangular-region-anchor))
 #+end_src
 
 *** org
