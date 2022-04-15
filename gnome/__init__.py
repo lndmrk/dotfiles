@@ -68,6 +68,7 @@ def post_setup(**kwargs):
     s = Gio.Settings.new("org.gnome.desktop.input-sources")
     s.set_value("sources", GLib.Variant("a(ss)", [("xkb", "us"),
                                                   ("xkb", "se")]))
+    s.set_strv("xkb-options", ["compose:ralt"])
 
     s = Gio.Settings.new("org.gnome.desktop.interface")
     s.set_boolean("clock-show-date", True)
