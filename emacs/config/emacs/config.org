@@ -183,7 +183,8 @@
               (if (eq action 'metadata)
                   '(metadata (category . file))
                 (complete-with-action action config-files string predicate)))))
-       (list (completing-read "Find config file: " collection))))
+       (list (completing-read
+              "Find config file: " collection nil 'require-match))))
     (find-file filename))
   (defun my-config-reload ()
     (interactive)
