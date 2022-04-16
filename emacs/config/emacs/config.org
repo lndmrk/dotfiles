@@ -176,10 +176,14 @@
   :config
   (defun my-config-find-file (filename)
     (interactive
-     (list
-      (completing-read
-       "Find config file: "
-       (append `(,early-init-file ,user-init-file) my-config--org-files))))
+     (let ((config-files
+            (append `(,early-init-file ,user-init-file) my-config--org-files))
+           (collection
+            (lambda (string predicate action)
+              (if (eq action 'metadata)
+                  '(metadata (category . file))
+                (complete-with-action action config-files string predicate)))))
+       (list (completing-read "Find config file: " collection))))
     (find-file filename))
   (defun my-config-reload ()
     (interactive)
