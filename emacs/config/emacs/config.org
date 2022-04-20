@@ -111,7 +111,7 @@
   (unbind-key "C-z")
   :bind
   ("C-S-k" . kill-whole-line)
-  ("M-o" . delete-blank-lines)
+  ("M-o" . cycle-spacing)
   ([remap capitalize-word] . capitalize-dwim)
   ([remap delete-horizontal-space] . cycle-spacing)
   ([remap downcase-word] . downcase-dwim)
