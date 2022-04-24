@@ -110,14 +110,14 @@
   (unbind-key "C-x C-z")
   (unbind-key "C-z")
   :bind
-  ("C-S-k" . kill-whole-line)
-  ("M-o" . cycle-spacing)
-  ([remap capitalize-word] . capitalize-dwim)
-  ([remap delete-horizontal-space] . cycle-spacing)
-  ([remap downcase-word] . downcase-dwim)
-  ([remap query-replace] . query-replace-regexp)
-  ([remap upcase-word] . upcase-dwim)
-  ([remap zap-to-char] . zap-up-to-char))
+  (("C-S-k" . kill-whole-line)
+   ("M-o" . cycle-spacing)
+   ([remap capitalize-word] . capitalize-dwim)
+   ([remap delete-horizontal-space] . cycle-spacing)
+   ([remap downcase-word] . downcase-dwim)
+   ([remap query-replace] . query-replace-regexp)
+   ([remap upcase-word] . upcase-dwim)
+   ([remap zap-to-char] . zap-up-to-char)))
 #+end_src
 
 ** Text
@@ -190,8 +190,8 @@
     (interactive)
     (load user-init-file))
   :bind
-  ("C-c d f" . my-config-find-file)
-  ("C-c d r" . my-config-reload))
+  (("C-c d f" . my-config-find-file)
+   ("C-c d r" . my-config-reload)))
 #+end_src
 
 ** Formatting
@@ -221,9 +221,9 @@
     (let ((sort-fold-case t))
       (call-interactively 'my-sort-lines)))
   :bind
-  ("C-c l f" . my-format-buffer-or-region)
-  ("C-c l s" . my-sort-lines-fold-case)
-  ("C-c l S" . my-sort-lines))
+  (("C-c l f" . my-format-buffer-or-region)
+   ("C-c l s" . my-sort-lines-fold-case)
+   ("C-c l S" . my-sort-lines)))
 #+end_src
 
 ** Message Composing
@@ -289,7 +289,7 @@
       (call-process "xdg-open" nil 0 nil file)))
   :bind
   (:map dired-mode-map
-        ("<C-return>" . my-dired-xdg-open-file)))
+   ("<C-return>" . my-dired-xdg-open-file)))
 #+end_src
 
 *** display-fill-column-indicator
@@ -437,14 +437,14 @@
   :custom
   (windmove-wrap-around t)
   :bind
-  ("M-s-H" . windmove-swap-states-left)
-  ("M-s-J" . windmove-swap-states-down)
-  ("M-s-K" . windmove-swap-states-up)
-  ("M-s-L" . windmove-swap-states-right)
-  ("M-s-h" . windmove-left)
-  ("M-s-j" . windmove-down)
-  ("M-s-k" . windmove-up)
-  ("M-s-l" . windmove-right))
+  (("M-s-H" . windmove-swap-states-left)
+   ("M-s-J" . windmove-swap-states-down)
+   ("M-s-K" . windmove-swap-states-up)
+   ("M-s-L" . windmove-swap-states-right)
+   ("M-s-h" . windmove-left)
+   ("M-s-j" . windmove-down)
+   ("M-s-k" . windmove-up)
+   ("M-s-l" . windmove-right)))
 #+end_src
 
 *** winner
@@ -456,8 +456,8 @@
   (unbind-key "C-c <right>")
   (winner-mode 1)
   :bind
-  ("C-c w C-/" . winner-undo)
-  ("C-c w C-?" . winner-redo))
+  (("C-c w C-/" . winner-undo)
+   ("C-c w C-?" . winner-redo)))
 #+end_src
 
 ** External
@@ -470,8 +470,8 @@
   :config
   (global-company-mode 1)
   :bind
-  ([remap dabbrev-completion] . company-complete)
-  ([remap dabbrev-expand] . company-complete-common-or-cycle))
+  (([remap dabbrev-completion] . company-complete)
+   ([remap dabbrev-expand] . company-complete-common-or-cycle)))
 #+end_src
 
 *** edit-indirect
@@ -496,10 +496,10 @@
   (python-mode . my-eglot-ensure-python)
   :bind
   (:map eglot-mode-map
-        ("C-c l a" . eglot-code-actions)
-        ("C-c l d" . eglot-find-declaration)
-        ("C-c l r" . eglot-rename)
-        ([remap my-format-buffer-or-region] . eglot-format)))
+   ("C-c l a" . eglot-code-actions)
+   ("C-c l d" . eglot-find-declaration)
+   ("C-c l r" . eglot-rename)
+   ([remap my-format-buffer-or-region] . eglot-format)))
 #+end_src
 
 *** exec-path-from-shell
@@ -569,8 +569,8 @@ source of truth for environment variables.
   :ensure t
   :after (flyspell ivy)
   :bind
-  ([remap flyspell-auto-correct-previous-word] . flyspell-correct-wrapper)
-  ([remap ispell-word] . flyspell-correct-wrapper))
+  (([remap flyspell-auto-correct-previous-word] . flyspell-correct-wrapper)
+   ([remap ispell-word] . flyspell-correct-wrapper)))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -585,8 +585,8 @@ source of truth for environment variables.
   :ensure t
   :after ivy
   :bind
-  ([remap isearch-forward] . swiper)
-  ([remap isearch-backward] . swiper))
+  (([remap isearch-forward] . swiper)
+   ([remap isearch-backward] . swiper)))
 #+end_src
 
 *** json-mode
@@ -698,14 +698,14 @@ ratio.
   :config
   (add-to-list 'mc/cmds-to-run-once 'swiper-mc)
   :bind
-  ("C-c m a" . mc/mark-all-like-this)
-  ("C-c m c" . mc/edit-lines)
-  ("C-c m d" . mc/mark-all-dwim)
-  ("C-c m M-n" . mc/skip-to-next-like-this)
-  ("C-c m M-p" . mc/skip-to-previous-like-this)
-  ("C-c m n" . mc/mark-next-like-this)
-  ("C-c m p" . mc/mark-previous-like-this)
-  ("C-c m r" . set-rectangular-region-anchor))
+  (("C-c m a" . mc/mark-all-like-this)
+   ("C-c m c" . mc/edit-lines)
+   ("C-c m d" . mc/mark-all-dwim)
+   ("C-c m M-n" . mc/skip-to-next-like-this)
+   ("C-c m M-p" . mc/skip-to-previous-like-this)
+   ("C-c m n" . mc/mark-next-like-this)
+   ("C-c m p" . mc/mark-previous-like-this)
+   ("C-c m r" . set-rectangular-region-anchor)))
 #+end_src
 
 *** org
