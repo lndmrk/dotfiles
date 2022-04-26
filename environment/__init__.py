@@ -17,6 +17,7 @@ def packages(**kwargs):
             "coreutils",
             "libnotify-bin",
             "locales",
+            "ripgrep",
             "xdg-user-dirs",
         ],
         "fedora": [
@@ -24,6 +25,7 @@ def packages(**kwargs):
             "langpacks-en",
             "langpacks-sv",
             "libnotify",
+            "ripgrep",
             "xdg-user-dirs",
         ],
     }
