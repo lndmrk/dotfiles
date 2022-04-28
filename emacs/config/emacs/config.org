@@ -130,6 +130,7 @@
   (indent-tabs-mode nil)
   (sentence-end-double-space nil)
   (standard-indent 2)
+  (tab-always-indent 'complete)
   (tab-width standard-indent))
 #+end_src
 
@@ -199,31 +200,24 @@
 #+begin_src emacs-lisp
 (use-package emacs
   :config
-  (defun my-format-buffer-or-region ()
+  (defun my-format-buffer (&optional buffer-or-name)
+    "Format BUFFER-OR-NAME, or the current buffer if omitted."
     (interactive)
-    (let ((beginning (if (use-region-p) (region-beginning) (point-min)))
-          (end (if (use-region-p) (region-end) (point-max))))
-      (save-mark-and-excursion
-        (indent-region beginning end)
-        (whitespace-cleanup-region beginning end))))
-  (defun my-sort-lines ()
-    (interactive)
-    (let ((inhibit-field-text-motion t)
-          (saved-point (point)))
-      (unless (use-region-p)
-        (mark-paragraph)
-        (unless (eq (line-number-at-pos) (point-min))
-          (forward-line 1)))
-      (call-interactively 'sort-lines)
-      (goto-char saved-point)))
+    (with-current-buffer (or buffer-or-name (current-buffer))
+      (my-format-region (point-min) (point-max))))
+  (defun my-format-region (start end)
+    "Format the region between START and END."
+    (interactive "r")
+    (save-excursion
+      (if (and (fboundp #'eglot-managed-p) (eglot-managed-p))
+          (eglot-format start end)
+        (indent-region start end)
+        (whitespace-cleanup-region start end))))
   (defun my-sort-lines-fold-case ()
+    "Wrapper around `sort-lines' with `sort-fold-case' set to t."
     (interactive)
     (let ((sort-fold-case t))
-      (call-interactively 'my-sort-lines)))
-  :bind
-  (("C-c l f" . my-format-buffer-or-region)
-   ("C-c l s" . my-sort-lines-fold-case)
-   ("C-c l S" . my-sort-lines)))
+      (call-interactively 'sort-lines))))
 #+end_src
 
 ** Message Composing
@@ -273,6 +267,14 @@
 #+begin_src emacs-lisp
 (use-package compile
   :custom (compilation-scroll-output t))
+#+end_src
+
+*** dabbrev
+
+#+begin_src emacs-lisp
+(use-package dabbrev
+  :bind*
+  ("C-M-i" . dabbrev-completion))
 #+end_src
 
 *** dired
@@ -335,7 +337,10 @@
 (use-package flyspell
   :hook
   (prog-mode . flyspell-prog-mode)
-  (text-mode . flyspell-mode))
+  (text-mode . flyspell-mode)
+  :bind
+  ([remap ispell-word] .  flyspell-correct-at-point)
+  ([remap flyspell-auto-correct-word] .  flyspell-correct-at-point))
 #+end_src
 
 *** hideshow
@@ -372,6 +377,21 @@
 #+begin_src emacs-lisp
 (use-package python
   :hook (python-mode . (lambda () (my-set-fill-column 88))))
+#+end_src
+
+*** recentf
+
+#+begin_src emacs-lisp
+(use-package recentf
+  :custom (recentf-max-saved-items 50)
+  :config (recentf-mode 1))
+#+end_src
+
+*** savehist
+
+#+begin_src emacs-lisp
+(use-package savehist
+  :config (savehist-mode 1))
 #+end_src
 
 *** saveplace
@@ -462,16 +482,89 @@
 
 ** External
 
-*** company
+*** cape
 
 #+begin_src emacs-lisp
-(use-package company
+(use-package cape
   :ensure t
+  :demand t
   :config
-  (global-company-mode 1)
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file)
   :bind
-  (([remap dabbrev-completion] . company-complete)
-   ([remap dabbrev-expand] . company-complete-common-or-cycle)))
+  ("C-." . cape-file))
+#+end_src
+
+*** consult
+
+#+begin_src emacs-lisp
+(use-package consult
+  :ensure t
+  :custom
+  (advice-add #'completing-read-multiple
+              :override #'consult-completing-read-multiple)
+  (consult-narrow-key "<")
+  (xref-show-definitions-function #'consult-xref)
+  (xref-show-xrefs-function #'consult-xref)
+  :bind
+  (("C-c g I" . consult-imenu-multi)
+   ("C-c g M" . consult-global)
+   ("C-c g e" . consult-compile-error)
+   ("C-c g f" . consult-flymake)
+   ("C-c g i" . consult-imenu)
+   ("C-c g m" . consult-mark)
+   ("C-c g o" . consult-outline)
+   ("C-c s F" . consult-locate)
+   ("C-c s G" . consult-grep)
+   ("C-c s L" . consult-line-multi)
+   ("C-c s f" . consult-find)
+   ("C-c s g" . consult-ripgrep)
+   ("C-c s k" . consult-keep-lines)
+   ("C-c s l" . consult-line)
+   ("C-c s o" . consult-multi-occur)
+   ("C-c s u" . consult-focus-lines)
+   ("C-c s v" . consult-git-grep)
+   ([remap apropos-command] . consult-apropos)
+   ([remap bookmark-jump] . consult-bookmark)
+   ([remap goto-line] . consult-goto-line)
+   ([remap isearch-backward] . consult-line)
+   ([remap isearch-forward] . consult-line)
+   ([remap project-switch-to-buffer] . consult-project-buffer)
+   ([remap repeat-complex-command] . consult-complex-command)
+   ([remap switch-to-buffer-other-frame] . consult-buffer-other-frame)
+   ([remap switch-to-buffer-other-window] . consult-buffer-other-window)
+   ([remap switch-to-buffer] . consult-buffer)
+   ([remap yank-pop] . consult-yank-pop)
+   :map minibuffer-local-map
+   ("M-s" . consult-history)
+   ("M-r" . consult-history)))
+#+end_src
+
+*** corfu
+
+#+begin_src emacs-lisp
+(use-package corfu
+  :ensure t
+  :demand t
+  :custom
+  (corfu-cycle t)
+  (corfu-echo-documentation t)
+  :config
+  (add-to-list 'savehist-additional-variables 'corfu-history)
+  (corfu-history-mode 1)
+  (global-corfu-mode 1)
+  :bind
+  (:map corfu-map
+   ("SPC" . corfu-insert-separator)))
+#+end_src
+
+*** corfu-terminal
+
+#+begin_src emacs-lisp
+(use-package corfu-terminal
+  :ensure t
+  :unless (display-graphic-p)
+  :config (corfu-terminal-mode 1))
 #+end_src
 
 *** edit-indirect
@@ -486,6 +579,7 @@
 #+begin_src emacs-lisp
 (use-package eglot
   :ensure t
+  :demand t
   :config
   (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("clangd")))
   (defun my-eglot-ensure-python ()
@@ -498,8 +592,60 @@
   (:map eglot-mode-map
    ("C-c l a" . eglot-code-actions)
    ("C-c l d" . eglot-find-declaration)
-   ("C-c l r" . eglot-rename)
-   ([remap my-format-buffer-or-region] . eglot-format)))
+   ("C-c l r" . eglot-rename)))
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package consult-eglot
+  :ensure t
+  :after consult
+  :bind
+  (:map eglot-mode-map
+   ([remap xref-find-apropos] . consult-eglot-symbols)))
+#+end_src
+
+*** embark
+
+#+begin_src emacs-lisp
+(use-package embark
+  :ensure t
+  :init
+  (setq prefix-help-command #'embark-prefix-help-command)
+  :custom
+  (embark-indicators
+   '(embark-minimal-indicator
+     embark-highlight-indicator
+     embark-isearch-highlight-indicator))
+  :config
+  (defun my-embark-target-current-buffer ()
+    `(current-buffer ,(buffer-name)))
+  (add-to-list 'embark-target-finders #'my-embark-target-current-buffer 'append)
+  (embark-define-keymap my-embark-current-buffer-map
+    "Keymap for Embark actions on current buffer."
+    ("c" clone-buffer)
+    ("f" my-format-buffer)
+    ("g" revert-buffer)
+    ("r" embark-rename-buffer)
+    ("|" embark-shell-command-on-buffer))
+  (add-to-list 'embark-keymap-alist
+               '(current-buffer . my-embark-current-buffer-map))
+  :bind
+  (:map embark-expression-map
+   ("f" . my-format-region)
+   :map embark-region-map
+   ("F" . fill-region)
+   ("f" . my-format-region)
+   :map embark-sort-map
+   ("L" . my-sort-lines-fold-case))
+  :bind*
+  (("C-M-/" . embark-dwim)
+   ("M-/" . embark-act)))
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package embark-consult
+  :ensure t
+  :after (embark consult))
 #+end_src
 
 *** exec-path-from-shell
@@ -524,6 +670,12 @@ source of truth for environment variables.
   :config (global-flycheck-mode 1))
 #+end_src
 
+#+begin_src emacs-lisp
+(use-package consult-flycheck
+  :ensure t
+  :bind ("C-c g F" . consult-flycheck))
+#+end_src
+
 *** gtk-variant
 
 #+begin_src emacs-lisp
@@ -538,55 +690,6 @@ source of truth for environment variables.
 (use-package hl-todo
   :ensure t
   :config (global-hl-todo-mode 1))
-#+end_src
-
-*** ivy, counsel, swiper
-
-#+begin_src emacs-lisp
-(use-package ivy
-  :ensure t
-  :config (ivy-mode 1))
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package ivy-rich
-  :ensure t
-  :after (counsel ivy)
-  :config (ivy-rich-mode 1))
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package ivy-xref
-  :ensure t
-  :after (ivy xref)
-  :custom
-  (xref-show-definitions-function 'ivy-xref-show-defs)
-  (xref-show-xrefs-function 'ivy-xref-show-xrefs))
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package flyspell-correct-ivy
-  :ensure t
-  :after (flyspell ivy)
-  :bind
-  (([remap flyspell-auto-correct-previous-word] . flyspell-correct-wrapper)
-   ([remap ispell-word] . flyspell-correct-wrapper)))
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package counsel
-  :ensure t
-  :after ivy
-  :config (counsel-mode 1))
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package swiper
-  :ensure t
-  :after ivy
-  :bind
-  (([remap isearch-forward] . swiper)
-   ([remap isearch-backward] . swiper)))
 #+end_src
 
 *** json-mode
@@ -609,6 +712,20 @@ source of truth for environment variables.
   (keyfreq-mode 1))
 #+end_src
 
+*** kind-icon
+
+#+begin_src emacs-lisp
+(use-package kind-icon
+  :ensure t
+  :after corfu
+  :custom
+  (kind-icon-blend-frac 0)
+  (kind-icon-default-face 'corfu-default)
+  (kind-icon-use-icons nil)
+  :config
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+#+end_src
+
 *** magit
 
 #+begin_src emacs-lisp
@@ -619,6 +736,14 @@ source of truth for environment variables.
   (magit-diff-refine-hunk 'all)
   :hook
   (git-commit-mode . my-message-compose-mode))
+#+end_src
+
+*** marginalia
+
+#+begin_src emacs-lisp
+(use-package marginalia
+  :ensure t
+  :config (marginalia-mode 1))
 #+end_src
 
 *** markdown-mode
@@ -694,9 +819,6 @@ ratio.
 #+begin_src emacs-lisp
 (use-package multiple-cursors
   :ensure t
-  :after swiper
-  :config
-  (add-to-list 'mc/cmds-to-run-once 'swiper-mc)
   :bind
   (("C-c m a" . mc/mark-all-like-this)
    ("C-c m c" . mc/edit-lines)
@@ -706,6 +828,33 @@ ratio.
    ("C-c m n" . mc/mark-next-like-this)
    ("C-c m p" . mc/mark-previous-like-this)
    ("C-c m r" . set-rectangular-region-anchor)))
+#+end_src
+
+*** orderless
+
+#+begin_src emacs-lisp
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion))))
+  (orderless-style-dispatchers
+   '(my-orderless-flex
+     my-orderless-prefixes
+     my-orderless-without-literal))
+  :config
+  (defun my-orderless-flex (pattern _index _total)
+    (when (string-suffix-p "~" pattern)
+      `(orderless-flex . ,(substring pattern 0 -1))))
+  (defun my-orderless-prefixes (pattern _index _total)
+    (when (string-suffix-p "^" pattern)
+      `(orderless-prefixes . ,(substring pattern 0 -1))))
+  (defun my-orderless-without-literal (pattern _index _total)
+    (cond
+     ((equal "!" pattern)
+      '(orderless-literal . ""))
+     ((string-prefix-p "!" pattern)
+      `(orderless-without-literal . ,(substring pattern 1))))))
 #+end_src
 
 *** org
@@ -740,17 +889,6 @@ This is already ensured to be installed in =init.el=.
   (add-to-list 'mode-line-misc-info `(projectile-mode projectile--mode-line))
   :bind-keymap
   ("C-c p" . projectile-command-map))
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package counsel-projectile
-  :ensure t
-  :after (counsel projectile)
-  :custom
-  (counsel-projectile-switch-project-action
-   'counsel-projectile-switch-project-action-vc)
-  :config
-  (counsel-projectile-mode 1))
 #+end_src
 
 *** pyvenv
@@ -792,19 +930,29 @@ This is already ensured to be installed in =init.el=.
   :ensure t)
 #+end_src
 
+*** vertico
+
+#+begin_src emacs-lisp
+(use-package vertico
+  :ensure t
+  :demand t
+  :custom
+  (vertico-cycle t)
+  :config
+  (vertico-mode 1)
+  (vertico-multiform-mode 1)
+  :bind
+  (:map vertico-map
+   ("C-M-n" . vertico-next-group)
+   ("C-M-p" . vertico-previous-group)
+   ("M-g" . vertico-multiform-grid)))
+#+end_src
+
 *** wgrep
 
 #+begin_src emacs-lisp
 (use-package wgrep
   :ensure t)
-#+end_src
-
-*** which-key
-
-#+begin_src emacs-lisp
-(use-package which-key
-  :ensure t
-  :config (which-key-mode 1))
 #+end_src
 
 *** yaml-mode
