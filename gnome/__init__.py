@@ -37,7 +37,6 @@ def post_setup(**kwargs):
     s.set_strv("calculator", ["<Super>c"])
     s.set_strv("home", ["<Super>d"])
     s.set_strv("logout", ["<Super>Delete"])
-    s.set_strv("screencast", [])
     s.set_strv("screenreader", [])
     s.set_strv("www", ["<Super>b"])
 
@@ -149,6 +148,9 @@ def post_setup(**kwargs):
 
     s = Gio.Settings.new("org.gnome.shell")
     s.set_strv("favorite-apps", [])
+
+    s = Gio.Settings.new("org.gnome.shell.keybindings")
+    s.set_strv("show-screen-recording-ui", [])
 
     s = Gio.Settings.new("org.gnome.mutter")
     s.set_boolean("workspaces-only-on-primary", False)
