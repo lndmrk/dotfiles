@@ -448,8 +448,10 @@
 *** windmove
 
 #+begin_src emacs-lisp
-(use-package emacs
-  :config (unbind-key "C-x o"))
+(use-package frame
+  :config
+  (when (display-graphic-p)
+    (unbind-key "C-x o")))
 #+end_src
 
 #+begin_src emacs-lisp
