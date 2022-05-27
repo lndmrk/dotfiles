@@ -503,8 +503,6 @@
 (use-package consult
   :ensure t
   :custom
-  (advice-add #'completing-read-multiple
-              :override #'consult-completing-read-multiple)
   (consult-narrow-key "<")
   (xref-show-definitions-function #'consult-xref)
   (xref-show-xrefs-function #'consult-xref)
