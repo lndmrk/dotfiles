@@ -55,9 +55,11 @@ __lndmrk_prompt() {
                      "${color_status}")"
   PS2="$(prompt 2 "${color_default}")"
   export PS1 SUDO_PS1 PS2
+
+  unset prompt
 }
 
-if [[ ${BASH_VERSINFO[0]} -ge 5 && ${BASH_VERSINFO[1]} -ge 1 ]]; then
+if [[ "$(declare -p PROMPT_COMMAND)" =~ "^declare -a" ]]; then
   # shellcheck disable=2206
   PROMPT_COMMAND=(__lndmrk_prompt ${PROMPT_COMMAND[@]})
 else
