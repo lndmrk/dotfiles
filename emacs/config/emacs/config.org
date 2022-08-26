@@ -456,9 +456,12 @@
 
 #+begin_src emacs-lisp
 (use-package frame
-  :config
-  (when (display-graphic-p)
-    (unbind-key "C-x o")))
+  :init
+  (defun my-unbind-other-window (&optional frame)
+    (when (display-graphic-p frame)
+      (unbind-key "C-x o")))
+  (add-hook 'after-init-hook 'my-unbind-other-window)
+  (add-hook 'after-make-frame-functions 'my-unbind-other-window))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -570,8 +573,12 @@
 #+begin_src emacs-lisp
 (use-package corfu-terminal
   :ensure t
-  :unless (display-graphic-p)
-  :config (corfu-terminal-mode 1))
+  :init
+  (defun my-corfu-terminal-mode (&optional frame)
+    (unless (display-graphic-p frame)
+      (corfu-terminal-mode 1)))
+  (add-hook 'after-init-hook 'my-corfu-terminal-mode)
+  (add-hook 'after-make-frame-functions 'my-corfu-terminal-mode))
 #+end_src
 
 *** edit-indirect
