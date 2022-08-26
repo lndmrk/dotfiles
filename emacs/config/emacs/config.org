@@ -259,7 +259,14 @@
 
 #+begin_src emacs-lisp
 (use-package cc-mode
-  :custom (c-basic-offset standard-indent))
+  :custom
+  (c-basic-offset standard-indent)
+  :config
+  (define-advice c-indent-line-or-region (:around (f &rest args) complete)
+    (let ((saved-point (point)))
+      (apply f args)
+      (when (= saved-point (point))
+        (completion-at-point)))))
 #+end_src
 
 *** compile
