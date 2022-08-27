@@ -176,6 +176,7 @@
 (use-package emacs
   :config
   (defun my-config-find-file (filename)
+    "Edit config file FILENAME."
     (interactive
      (let ((config-files
             (append `(,early-init-file ,user-init-file) my-config--org-files))
@@ -188,6 +189,7 @@
               "Find config file: " collection nil 'require-match))))
     (find-file filename))
   (defun my-config-reload ()
+    "Reload all config files."
     (interactive)
     (load user-init-file))
   :bind
@@ -293,6 +295,7 @@
   (dired-recursive-deletes 'always)
   :config
   (defun my-dired-xdg-open-file ()
+    "Open file with preferred application using xdg-open."
     (interactive)
     (let ((file (dired-get-filename nil t)))
       (call-process "xdg-open" nil 0 nil file)))
@@ -923,6 +926,7 @@ This is already ensured to be installed in =init.el=.
   (defun my-pyvenv-p ()
     (bound-and-true-p pyvenv-virtual-env))
   (defun my-pyvenv-install-packages ()
+    "Install desired packages in the virtual environment."
     (interactive)
     (let ((packages '("pyls-black"
                       "pyls-isort"
