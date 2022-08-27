@@ -647,9 +647,12 @@
     ("|" embark-shell-command-on-buffer))
   (add-to-list 'embark-keymap-alist
                '(current-buffer . my-embark-current-buffer-map))
+  (add-to-list 'embark-repeat-actions #'string-inflection-all-cycle)
   :bind
   (:map embark-expression-map
    ("f" . my-format-region)
+   :map embark-identifier-map
+   ("-" . string-inflection-all-cycle)
    :map embark-region-map
    ("F" . fill-region)
    ("f" . my-format-region)
@@ -949,6 +952,13 @@ This is already ensured to be installed in =init.el=.
   :ensure t
   :custom (shackle-default-rule '(:select t))
   :config (shackle-mode 1))
+#+end_src
+
+*** string-inflection
+
+#+begin_src emacs-lisp
+(use-package string-inflection
+  :ensure t)
 #+end_src
 
 *** systemd
