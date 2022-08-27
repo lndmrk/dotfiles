@@ -344,10 +344,7 @@
 (use-package flyspell
   :hook
   (prog-mode . flyspell-prog-mode)
-  (text-mode . flyspell-mode)
-  :bind
-  ([remap ispell-word] .  flyspell-correct-at-point)
-  ([remap flyspell-auto-correct-word] .  flyspell-correct-at-point))
+  (text-mode . flyspell-mode))
 #+end_src
 
 *** hideshow
@@ -691,6 +688,15 @@ source of truth for environment variables.
 (use-package consult-flycheck
   :ensure t
   :bind ("C-c g F" . consult-flycheck))
+#+end_src
+
+*** flyspell-correct
+
+#+begin_src emacs-lisp
+(use-package flyspell-correct
+  :ensure t
+  :after flyspell
+  :bind ([remap ispell-word] . flyspell-correct-wrapper))
 #+end_src
 
 *** gtk-variant
