@@ -599,8 +599,11 @@
   (defun my-eglot-ensure-python ()
     (when (my-pyvenv-p)
       (eglot-ensure)))
+  (defun my-eglot-managed-mode ()
+    (flycheck-mode -1))
   :hook
   ((c++-mode c-mode) . eglot-ensure)
+  (eglot-managed-mode . my-eglot-managed-mode)
   (python-mode . my-eglot-ensure-python)
   :bind
   (:map eglot-mode-map
