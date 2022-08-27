@@ -609,6 +609,7 @@
   (:map eglot-mode-map
    ("C-c l a" . eglot-code-actions)
    ("C-c l d" . eglot-find-declaration)
+   ("C-c l f" . eglot-format-buffer)
    ("C-c l r" . eglot-rename)))
 #+end_src
 
