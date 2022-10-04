@@ -384,8 +384,7 @@
 
 #+begin_src emacs-lisp
 (use-package paren
-  :custom (show-paren-delay 0)
-  :hook (prog-mode . show-paren-mode))
+  :custom (show-paren-delay 0))
 #+end_src
 
 *** python
