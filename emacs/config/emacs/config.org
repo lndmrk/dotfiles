@@ -15,8 +15,14 @@
   (scroll-bar-mode -1)
   (tool-bar-mode -1)
   :custom
+  (inhibit-startup-echo-area-message (user-login-name))
   (inhibit-startup-screen t)
   (initial-scratch-message nil))
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package server
+  :custom (server-client-instructions nil))
 #+end_src
 
 ** Backup Files
