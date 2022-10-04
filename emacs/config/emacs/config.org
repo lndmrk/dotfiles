@@ -451,7 +451,9 @@
   (whitespace-style '(face
                       trailing
                       lines-tail
+                      missing-newline-at-eof
                       empty
+                      indentation::space
                       space-after-tab
                       space-before-tab
                       tab-mark))
