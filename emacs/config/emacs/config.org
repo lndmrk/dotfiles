@@ -299,6 +299,7 @@
 #+begin_src emacs-lisp
 (use-package dired
   :custom
+  (dired-kill-when-opening-new-dired-buffer t)
   (dired-recursive-copies 'always)
   (dired-recursive-deletes 'always)
   :config
