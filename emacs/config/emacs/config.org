@@ -457,8 +457,13 @@
                       space-after-tab
                       space-before-tab
                       tab-mark))
+  :config
+  (defun my-whitespace-reload ()
+    (whitespace-turn-off)
+    (whitespace-turn-on-if-enabled))
   :hook
-  ((find-file prog-mode text-mode) . whitespace-mode))
+  ((find-file prog-mode text-mode) . whitespace-mode)
+  (after-save . my-whitespace-reload))
 #+end_src
 
 *** windmove
