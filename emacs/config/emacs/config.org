@@ -162,6 +162,7 @@
   (create-lockfiles nil)
   (delete-by-moving-to-trash t)
   (next-error-message-highlight t)
+  (read-extended-command-predicate #'command-completion-default-include-p)
   (require-final-newline 'visit-save)
   (ring-bell-function 'ignore)
   (save-interprogram-paste-before-kill t)
