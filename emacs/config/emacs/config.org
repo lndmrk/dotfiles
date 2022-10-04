@@ -137,6 +137,7 @@
   (sentence-end-double-space nil)
   (standard-indent 2)
   (tab-always-indent 'complete)
+  (tab-first-completion 'eol)
   (tab-width standard-indent))
 #+end_src
 
