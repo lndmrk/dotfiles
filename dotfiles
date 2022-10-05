@@ -33,6 +33,7 @@ def _sudo_command(*args, **kwargs) -> None:
 
 
 class DotfilesManager:
+
     def __init__(self, program: Path, target_directory: Path,
                  hostname: str) -> None:
         if not program.is_file():
@@ -80,18 +81,32 @@ class DotfilesManager:
             target.parent.mkdir(parents=True, exist_ok=True)
             target.symlink_to(f)
 
-    def _install_packages(self, packages_dict: dict[str, list[str]]) -> None:
+    def _packages(self, action: str, packages_dict: dict[str,
+                                                         list[str]]) -> None:
+        actions = {
+            "debian": {
+                "install": ("apt", "install", "--assume-yes"),
+                "remove": ("apt", "remove", "--assume-yes"),
+            },
+            "fedora": {
+                "install": ("dnf", "install", "--assumeyes"),
+                "remove": ("dnf", "remove", "--assumeyes"),
+            },
+        }
+
+        if self._os_release_id not in actions.keys():
+            raise ValueError(
+                f"Unable to {action} packages for: {self._os_release_id}")
+        os_actions = actions[self._os_release_id]
+        if action not in os_actions.keys():
+            raise ValueError(
+                f"Invalid action for {self._os_release_id}: {action}")
         packages = packages_dict.get(self._os_release_id)
         if not packages:
             return
-        print(f"Installing packages: {', '.join(packages)}")
-        if self._os_release_id == "debian":
-            _sudo_command(("apt", "install", "--assume-yes", *packages))
-        elif self._os_release_id == "fedora":
-            _sudo_command(("dnf", "install", "--assumeyes", *packages))
-        else:
-            raise ValueError(
-                f"Unable to install packages for: {self._os_release_id}")
+
+        print(f"Packages {action}: {', '.join(packages)}")
+        _sudo_command((*os_actions[action], *packages))
 
     def deploy(self, bundles: set[str] = None, setup=True) -> None:
         setup_kwargs = {
@@ -111,7 +126,12 @@ class DotfilesManager:
             if setup and hasattr(bundle, "pre_setup"):
                 bundle.pre_setup(**setup_kwargs)
             if setup and hasattr(bundle, "install_packages"):
-                self._install_packages(bundle.install_packages(**setup_kwargs))
+                self._packages("install",
+                               bundle.install_packages(**setup_kwargs))
+            self._symlink_bundle(name)
+            if setup and hasattr(bundle, "remove_packages"):
+                self._packages("remove",
+                               bundle.remove_packages(**setup_kwargs))
             self._symlink_bundle(name)
             if setup and hasattr(bundle, "post_setup"):
                 bundle.post_setup(**setup_kwargs)
