@@ -70,6 +70,7 @@ def post_setup(**kwargs):
         "#3FDFD0",
         "#FFFFFF",
     ])
+    s.set_int("scrollback-lines", 100000)
 
     s = Gio.Settings.new("org.gnome.desktop.calendar")
     s.set_boolean("show-weekdate", True)
