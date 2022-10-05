@@ -6,7 +6,7 @@ import subprocess
 
 def pre_setup(**kwargs):
     f = kwargs["target_directory"].joinpath(".emacs")
-    if f.is_file() and not d.is_symlink():
+    if f.is_file() and not f.is_symlink():
         f.rename(f.with_suffix(".bak"))
     d = kwargs["target_directory"].joinpath(".emacs.d")
     if d.is_dir() and not d.is_symlink():
