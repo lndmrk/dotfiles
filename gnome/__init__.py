@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 
-def packages(**kwargs):
+def install_packages(**kwargs):
     return {
         "debian": ["python3-gi"],
         "fedora": ["python3-gobject"],

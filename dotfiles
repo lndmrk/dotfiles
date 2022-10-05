@@ -110,8 +110,8 @@ class DotfilesManager:
             print(f"Deploying: {name}")
             if setup and hasattr(bundle, "pre_setup"):
                 bundle.pre_setup(**setup_kwargs)
-            if setup and hasattr(bundle, "packages"):
-                self._install_packages(bundle.packages(**setup_kwargs))
+            if setup and hasattr(bundle, "install_packages"):
+                self._install_packages(bundle.install_packages(**setup_kwargs))
             self._symlink_bundle(name)
             if setup and hasattr(bundle, "post_setup"):
                 bundle.post_setup(**setup_kwargs)

@@ -4,7 +4,7 @@
 import subprocess
 
 
-def packages(**kwargs):
+def install_packages(**kwargs):
     return {
         "debian": ["gnupg", "scdaemon"],
         "fedora": ["gnupg", "pcsc-lite"],

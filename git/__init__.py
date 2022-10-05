@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 
-def packages(**kwargs):
+def install_packages(**kwargs):
     return {
         "debian": ["git"],
         "fedora": ["git"],

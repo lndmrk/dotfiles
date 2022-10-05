@@ -11,7 +11,7 @@ def pre_setup(**kwargs):
         f.rename(f.with_suffix(".bak"))
 
 
-def packages(**kwargs):
+def install_packages(**kwargs):
     return {
         "debian": [
             "coreutils",

@@ -13,7 +13,7 @@ def pre_setup(**kwargs):
         d.rename(d.with_suffix(".bak"))
 
 
-def packages(**kwargs):
+def install_packages(**kwargs):
     return {
         "debian": [
             "clang",
