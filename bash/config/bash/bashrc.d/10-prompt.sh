@@ -59,7 +59,7 @@ __lndmrk_prompt() {
   unset prompt
 }
 
-if [[ "$(declare -p PROMPT_COMMAND)" =~ "^declare -a" ]]; then
+if [[ "$(declare -p PROMPT_COMMAND 2>/dev/null)" =~ "^declare -a" ]]; then
   # shellcheck disable=2206
   PROMPT_COMMAND=(__lndmrk_prompt ${PROMPT_COMMAND[@]})
 else
