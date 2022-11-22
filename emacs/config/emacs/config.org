@@ -566,9 +566,11 @@
   :custom
   (corfu-cycle t)
   (corfu-echo-documentation t)
+  (corfu-popupinfo-delay t)
   :config
   (add-to-list 'savehist-additional-variables 'corfu-history)
   (corfu-history-mode 1)
+  (corfu-popupinfo-mode 1)
   (global-corfu-mode 1)
   :bind
   (:map corfu-map
