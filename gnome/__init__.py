@@ -47,6 +47,7 @@ def post_setup(**kwargs):
         "org.gnome.Terminal.Legacy.Profile",
         f"/org/gnome/terminal/legacy/profiles:/:{default_profile}/")
     s.set_string("visible-name", "Modus Vivendi")
+    s.set_boolean("audible-bell", False)
     s.set_boolean("bold-color-same-as-fg", True)
     s.set_boolean("bold-is-bright", False)
     s.set_boolean("use-theme-colors", False)
