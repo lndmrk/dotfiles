@@ -41,7 +41,7 @@
             (result t))
         (dolist (regexp backup-ignore-regexp-list result)
           (setq result (and result (not (string-match regexp name))))))))
-  (setq backup-enable-predicate 'my-backup-enable-p)
+  (setq backup-enable-predicate #'my-backup-enable-p)
   :config
   (auto-save-visited-mode 1))
 #+end_src
@@ -229,7 +229,7 @@
     "Wrapper around `sort-lines' with `sort-fold-case' set to t."
     (interactive)
     (let ((sort-fold-case t))
-      (call-interactively 'sort-lines))))
+      (call-interactively #'sort-lines))))
 #+end_src
 
 ** Message Composing
@@ -334,7 +334,7 @@
 
 #+begin_src emacs-lisp
 (use-package ediff
-  :custom (ediff-window-setup-function 'ediff-setup-windows-plain))
+  :custom (ediff-window-setup-function #'ediff-setup-windows-plain))
 #+end_src
 
 *** eldoc
@@ -584,8 +584,8 @@
   (defun my-corfu-terminal-mode (&optional frame)
     (unless (display-graphic-p frame)
       (corfu-terminal-mode 1)))
-  (add-hook 'after-init-hook 'my-corfu-terminal-mode)
-  (add-hook 'after-make-frame-functions 'my-corfu-terminal-mode))
+  (add-hook 'after-init-hook #'my-corfu-terminal-mode)
+  (add-hook 'after-make-frame-functions #'my-corfu-terminal-mode))
 #+end_src
 
 *** edit-indirect
@@ -946,7 +946,7 @@ This is already ensured to be installed in =init.el=.
                  "pip" nil t t
                  "install" "--upgrade" "--upgrade-strategy" "eager"
                  packages)))))
-  (add-hook 'pyvenv-post-activate-hooks 'my-pyvenv-install-packages))
+  (add-hook 'pyvenv-post-activate-hooks #'my-pyvenv-install-packages))
 #+end_src
 
 *** shackle
