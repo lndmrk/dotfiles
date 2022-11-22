@@ -472,16 +472,6 @@
 *** windmove
 
 #+begin_src emacs-lisp
-(use-package frame
-  :init
-  (defun my-unbind-other-window (&optional frame)
-    (when (display-graphic-p frame)
-      (unbind-key "C-x o")))
-  (add-hook 'after-init-hook 'my-unbind-other-window)
-  (add-hook 'after-make-frame-functions 'my-unbind-other-window))
-#+end_src
-
-#+begin_src emacs-lisp
 (use-package windmove
   :custom
   (windmove-wrap-around t)
