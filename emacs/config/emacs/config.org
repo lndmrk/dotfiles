@@ -683,8 +683,7 @@
 
 #+begin_src emacs-lisp
 (use-package embark-consult
-  :ensure t
-  :after (embark consult))
+  :ensure t)
 #+end_src
 
 *** exec-path-from-shell
