@@ -51,25 +51,25 @@ def post_setup(**kwargs):
     s.set_boolean("bold-color-same-as-fg", True)
     s.set_boolean("bold-is-bright", False)
     s.set_boolean("use-theme-colors", False)
-    s.set_string("background-color", "#171717")
-    s.set_string("foreground-color", "#FFFFFF")
+    s.set_string("background-color", "#171717")  # bg-main
+    s.set_string("foreground-color", "#FFFFFF")  # fg-main
     s.set_strv("palette", [
-        "#171717",
-        "#FF8059",
-        "#44BC44",
-        "#D0BC00",
-        "#2FAFFF",
-        "#FEACD0",
-        "#00D3D0",
-        "#D0D0D0",
-        "#5E5E5E",
-        "#FE6060",
-        "#4FE42F",
-        "#F0DD60",
-        "#4FAFFF",
-        "#FF62D4",
-        "#3FDFD0",
-        "#FFFFFF",
+        "#171717",  # bg-main
+        "#FF5F59",  # red
+        "#44BC44",  # green
+        "#D0BC00",  # yellow
+        "#2FAFFF",  # blue
+        "#FEACD0",  # magenta
+        "#00D3D0",  # cyan
+        "#989898",  # fg-dim
+        "#5D5D5D",  # bg-active
+        "#FF5F5F",  # red-intense
+        "#44DF44",  # green-intense
+        "#EFEF00",  # yellow-intense
+        "#338FFF",  # blue-intense
+        "#FF66FF",  # magenta-intense
+        "#00EFF0",  # cyan-intense
+        "#FFFFFF",  # fg-main
     ])
     s.set_int("scrollback-lines", 100000)
 
