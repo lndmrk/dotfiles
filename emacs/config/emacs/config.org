@@ -248,8 +248,8 @@
 (use-package emacs
   :config
   (defun my-set-fill-column (n)
-    (setq fill-column n)
-    (setq whitespace-line-column fill-column)
+    (setq-local fill-column n)
+    (setq-local whitespace-line-column nil)
     (when (bound-and-true-p whitespace-mode)
       (whitespace-mode 0)
       (whitespace-mode 1))))
@@ -451,6 +451,7 @@
 #+begin_src emacs-lisp
 (use-package whitespace
   :custom
+  (whitespace-line-column nil)
   (whitespace-style '(face
                       trailing
                       lines-tail
