@@ -655,13 +655,14 @@
   (defun my-embark-target-current-buffer ()
     `(current-buffer ,(buffer-name)))
   (add-to-list 'embark-target-finders #'my-embark-target-current-buffer 'append)
-  (embark-define-keymap my-embark-current-buffer-map
-    "Keymap for Embark actions on current buffer."
-    ("c" clone-buffer)
-    ("f" my-format-buffer)
-    ("g" revert-buffer)
-    ("r" embark-rename-buffer)
-    ("|" embark-shell-command-on-buffer))
+  (defvar-keymap my-embark-current-buffer-map
+    :doc "Keymap for Embark actions on current buffer."
+    :parent embark-general-map
+    "c" #'clone-buffer
+    "f" #'my-format-buffer
+    "g" #'revert-buffer
+    "r" #'embark-rename-buffer
+    "|" #'embark-shell-command-on-buffer)
   (add-to-list 'embark-keymap-alist
                '(current-buffer . my-embark-current-buffer-map))
   (add-to-list 'embark-repeat-actions #'string-inflection-all-cycle)
