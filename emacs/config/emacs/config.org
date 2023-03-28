@@ -565,7 +565,6 @@
   :custom
   (corfu-cycle t)
   (corfu-echo-documentation t)
-  (corfu-popupinfo-delay t)
   :config
   (defun my-corfu-enable-in-minibuffer ()
     (when (where-is-internal #'completion-at-point (list (current-local-map)))
