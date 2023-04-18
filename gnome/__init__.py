@@ -151,6 +151,9 @@ def post_setup(**kwargs):
     s = Gio.Settings.new("org.gnome.shell")
     s.set_strv("favorite-apps", [])
 
+    s = Gio.Settings.new("org.gnome.shell.app-switcher")
+    s.set_boolean("current-workspace-only", True)
+
     s = Gio.Settings.new("org.gnome.shell.keybindings")
     s.set_strv("show-screen-recording-ui", [])
 
