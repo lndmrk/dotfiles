@@ -285,7 +285,9 @@
 
 #+begin_src emacs-lisp
 (use-package compile
-  :custom (compilation-scroll-output t))
+  :custom
+  (compilation-ask-about-save nil)
+  (compilation-scroll-output t))
 #+end_src
 
 *** dabbrev
