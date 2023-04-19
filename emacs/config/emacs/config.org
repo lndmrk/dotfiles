@@ -281,6 +281,13 @@
         (completion-at-point)))))
 #+end_src
 
+*** comp
+
+#+begin_src emacs-lisp
+(use-package comp
+  :custom (native-comp-async-report-warnings-errors 'silent))
+#+end_src
+
 *** compile
 
 #+begin_src emacs-lisp
