@@ -267,6 +267,29 @@
   :config (global-auto-revert-mode 1))
 #+end_src
 
+** project
+
+#+begin_src emacs-lisp
+(use-package project
+  :config
+  (cl-defmethod project-root ((project (head manual)))
+    (cdr project))
+  (defun my-project-file-name ()
+    (when-let ((root (my-project-root)))
+      (file-relative-name (buffer-file-name) root)))
+  (defun my-project-mode-line ()
+    (when-let ((root (my-project-root)))
+      (concat " P: " (file-name-nondirectory (directory-file-name root)))))
+  (add-to-list 'mode-line-misc-info '(:eval (my-project-mode-line)))
+  (defun my-project-root ()
+    (when-let ((project (project-current nil)))
+      (project-root project)))
+  (defun my-project-try-manual (dir)
+    (when-let ((root (locate-dominating-file dir ".project")))
+      (cons 'manual root)))
+  (add-hook 'project-find-functions #'my-project-try-manual))
+#+end_src
+
 *** cc-mode
 
 #+begin_src emacs-lisp
@@ -927,19 +950,6 @@ This is already ensured to be installed in =init.el=.
   (org-src-preserve-indentation t))
 #+end_src
 
-*** projectile
-
-#+begin_src emacs-lisp
-(use-package projectile
-  :ensure t
-  :custom
-  (projectile-mode-line-prefix " P")
-  :config
-  (add-to-list 'mode-line-misc-info `(projectile-mode projectile--mode-line))
-  :bind-keymap
-  ("C-c p" . projectile-command-map))
-#+end_src
-
 *** pyvenv
 
 #+begin_src emacs-lisp
@@ -1000,9 +1010,6 @@ This is already ensured to be installed in =init.el=.
     (if (derived-mode-p 'emacs-lisp-mode)
         ";; "
       comment-start))
-  (defun my-project-file-name ()
-    (file-relative-name
-     (buffer-file-name) (ignore-errors (projectile-project-root))))
   (defun my-tempel-setup-capf ()
     (setq-local completion-at-point-functions
                 (cons #'tempel-complete completion-at-point-functions)))
