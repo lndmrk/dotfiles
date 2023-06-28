@@ -29,18 +29,19 @@
 
 #+begin_src emacs-lisp
 (use-package files
-  :init
-  (let ((backup-directory
-         (file-name-as-directory (locate-user-emacs-file "backups"))))
-    (unless (file-directory-p backup-directory)
-      (make-directory backup-directory t))
-    (setq backup-directory-alist `((".*" . ,backup-directory))))
+  :preface
   (defun my-backup-enable-p (name)
     (when (normal-backup-enable-predicate name)
       (let ((backup-ignore-regexp-list '("\\.asc$" "\\.gpg$" "^/dev/shm"))
             (result t))
         (dolist (regexp backup-ignore-regexp-list result)
           (setq result (and result (not (string-match regexp name))))))))
+  :init
+  (let ((backup-directory
+         (file-name-as-directory (locate-user-emacs-file "backups"))))
+    (unless (file-directory-p backup-directory)
+      (make-directory backup-directory t))
+    (setq backup-directory-alist `((".*" . ,backup-directory))))
   (setq backup-enable-predicate #'my-backup-enable-p)
   :config
   (auto-save-visited-mode 1))
@@ -184,7 +185,7 @@
 
 #+begin_src emacs-lisp
 (use-package emacs
-  :config
+  :preface
   (defun my-config-find-file (filename)
     "Edit config file FILENAME."
     (interactive
@@ -211,7 +212,7 @@
 
 #+begin_src emacs-lisp
 (use-package emacs
-  :config
+  :preface
   (defun my-format-buffer (&optional buffer-or-name)
     "Format BUFFER-OR-NAME, or the current buffer if omitted."
     (interactive)
@@ -236,7 +237,7 @@
 
 #+begin_src emacs-lisp
 (use-package emacs
-  :config
+  :preface
   (defun my-message-compose-mode ()
     (my-set-fill-column 72)
     (auto-fill-mode 1)))
@@ -246,7 +247,7 @@
 
 #+begin_src emacs-lisp
 (use-package emacs
-  :config
+  :preface
   (defun my-set-fill-column (n)
     (setq-local fill-column n)
     (setq-local whitespace-line-column nil)
@@ -271,7 +272,7 @@
 
 #+begin_src emacs-lisp
 (use-package project
-  :config
+  :preface
   (cl-defmethod project-root ((project (head manual)))
     (cdr project))
   (defun my-project-file-name ()
@@ -280,14 +281,15 @@
   (defun my-project-mode-line ()
     (when-let ((root (my-project-root)))
       (concat " P: " (file-name-nondirectory (directory-file-name root)))))
-  (add-to-list 'mode-line-misc-info '(:eval (my-project-mode-line)))
   (defun my-project-root ()
     (when-let ((project (project-current nil)))
       (project-root project)))
   (defun my-project-try-manual (dir)
     (when-let ((root (locate-dominating-file dir ".project")))
       (cons 'manual root)))
-  (add-hook 'project-find-functions #'my-project-try-manual))
+  :config
+  (add-hook 'project-find-functions #'my-project-try-manual)
+  (add-to-list 'mode-line-misc-info '(:eval (my-project-mode-line))))
 #+end_src
 
 *** cc-mode
@@ -332,17 +334,17 @@
 
 #+begin_src emacs-lisp
 (use-package dired
-  :custom
-  (dired-dwim-target t)
-  (dired-kill-when-opening-new-dired-buffer t)
-  (dired-recursive-copies 'always)
-  (dired-recursive-deletes 'always)
-  :config
+  :preface
   (defun my-dired-xdg-open-file ()
     "Open file with preferred application using xdg-open."
     (interactive)
     (let ((file (dired-get-filename nil t)))
       (call-process "xdg-open" nil 0 nil file)))
+  :custom
+  (dired-dwim-target t)
+  (dired-kill-when-opening-new-dired-buffer t)
+  (dired-recursive-copies 'always)
+  (dired-recursive-deletes 'always)
   :bind
   (:map dired-mode-map
    ("C-<return>" . my-dired-xdg-open-file)))
@@ -483,6 +485,10 @@
 
 #+begin_src emacs-lisp
 (use-package whitespace
+  :preface
+  (defun my-whitespace-reload ()
+    (whitespace-turn-off)
+    (whitespace-turn-on-if-enabled))
   :custom
   (whitespace-line-column nil)
   (whitespace-style '(face
@@ -494,10 +500,6 @@
                       space-after-tab
                       space-before-tab
                       tab-mark))
-  :config
-  (defun my-whitespace-reload ()
-    (whitespace-turn-off)
-    (whitespace-turn-on-if-enabled))
   :hook
   ((find-file prog-mode text-mode) . whitespace-mode)
   (after-save . my-whitespace-reload))
@@ -602,13 +604,14 @@
 (use-package corfu
   :ensure t
   :demand t
+  :preface
+  (defun my-corfu-enable-in-minibuffer ()
+    (when (where-is-internal #'completion-at-point (list (current-local-map)))
+      (corfu-mode 1)))
   :custom
   (corfu-cycle t)
   (corfu-echo-documentation t)
   :config
-  (defun my-corfu-enable-in-minibuffer ()
-    (when (where-is-internal #'completion-at-point (list (current-local-map)))
-      (corfu-mode 1)))
   (add-hook 'minibuffer-setup-hook #'my-corfu-enable-in-minibuffer)
   (add-to-list 'savehist-additional-variables 'corfu-history)
   (corfu-history-mode 1)
@@ -624,10 +627,11 @@
 #+begin_src emacs-lisp
 (use-package corfu-terminal
   :ensure t
-  :init
+  :preface
   (defun my-corfu-terminal-mode (&optional frame)
     (unless (display-graphic-p frame)
       (corfu-terminal-mode 1)))
+  :init
   (add-hook 'after-init-hook #'my-corfu-terminal-mode)
   (add-hook 'after-make-frame-functions #'my-corfu-terminal-mode))
 #+end_src
@@ -646,8 +650,7 @@
   :ensure t
   :demand t
   :after (cape tempel)
-  :config
-  (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("clangd")))
+  :preface
   (defun my-eglot-ensure-python ()
     (when (my-pyvenv-p)
       (eglot-ensure)))
@@ -657,6 +660,8 @@
      (cons (cape-super-capf #'tempel-complete #'eglot-completion-at-point)
            completion-at-point-functions))
     (flycheck-mode -1))
+  :config
+  (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("clangd")))
   :hook
   ((c++-mode c-mode) . eglot-ensure)
   (eglot-managed-mode . my-eglot-managed-mode)
@@ -683,6 +688,9 @@
 #+begin_src emacs-lisp
 (use-package embark
   :ensure t
+  :preface
+  (defun my-embark-target-current-buffer ()
+    `(current-buffer ,(buffer-name)))
   :init
   (setq prefix-help-command #'embark-prefix-help-command)
   :custom
@@ -691,8 +699,6 @@
      embark-highlight-indicator
      embark-isearch-highlight-indicator))
   :config
-  (defun my-embark-target-current-buffer ()
-    `(current-buffer ,(buffer-name)))
   (add-to-list 'embark-target-finders #'my-embark-target-current-buffer 'append)
   (defvar-keymap my-embark-current-buffer-map
     :doc "Keymap for Embark actions on current buffer."
@@ -915,14 +921,7 @@ ratio.
 #+begin_src emacs-lisp
 (use-package orderless
   :ensure t
-  :custom
-  (completion-styles '(orderless basic))
-  (completion-category-overrides '((file (styles basic partial-completion))))
-  (orderless-style-dispatchers
-   '(my-orderless-flex
-     my-orderless-prefixes
-     my-orderless-without-literal))
-  :config
+  :preface
   (defun my-orderless-flex (pattern _index _total)
     (when (string-suffix-p "~" pattern)
       `(orderless-flex . ,(substring pattern 0 -1))))
@@ -934,7 +933,14 @@ ratio.
      ((equal "!" pattern)
       '(orderless-literal . ""))
      ((string-prefix-p "!" pattern)
-      `(orderless-without-literal . ,(substring pattern 1))))))
+      `(orderless-without-literal . ,(substring pattern 1)))))
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion))))
+  (orderless-style-dispatchers
+   '(my-orderless-flex
+     my-orderless-prefixes
+     my-orderless-without-literal)))
 #+end_src
 
 *** org
@@ -955,7 +961,7 @@ This is already ensured to be installed in =init.el=.
 #+begin_src emacs-lisp
 (use-package pyvenv
   :ensure t
-  :init
+  :preface
   (defun my-pyvenv-p ()
     (bound-and-true-p pyvenv-virtual-env))
   (defun my-pyvenv-install-packages ()
@@ -971,6 +977,7 @@ This is already ensured to be installed in =init.el=.
                  "pip" nil t t
                  "install" "--upgrade" "--upgrade-strategy" "eager"
                  packages)))))
+  :init
   (add-hook 'pyvenv-post-activate-hooks #'my-pyvenv-install-packages))
 #+end_src
 
@@ -1002,10 +1009,7 @@ This is already ensured to be installed in =init.el=.
 #+begin_src emacs-lisp
 (use-package tempel
   :ensure t
-  :custom
-  (tempel-path (expand-file-name (locate-user-emacs-file "templates/*.eld")))
-  (tempel-trigger-prefix "<")
-  :config
+  :preface
   (defun my-comment-start ()
     (if (derived-mode-p 'emacs-lisp-mode)
         ";; "
@@ -1013,6 +1017,9 @@ This is already ensured to be installed in =init.el=.
   (defun my-tempel-setup-capf ()
     (setq-local completion-at-point-functions
                 (cons #'tempel-complete completion-at-point-functions)))
+  :custom
+  (tempel-path (expand-file-name (locate-user-emacs-file "templates/*.eld")))
+  (tempel-trigger-prefix "<")
   :hook
   ((prog-mode text-mode) . my-tempel-setup-capf)
   :bind
