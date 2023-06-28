@@ -532,11 +532,15 @@
   :ensure t
   :custom
   (consult-narrow-key "<")
+  (register-preview-delay 0)
+  (register-preview-function #'consult-register-format)
   (xref-show-definitions-function #'consult-xref)
   (xref-show-xrefs-function #'consult-xref)
+  :config
+  (advice-add #'register-preview :override #'consult-register-window)
   :bind
   (("C-c g I" . consult-imenu-multi)
-   ("C-c g M" . consult-global)
+   ("C-c g SPC" . consult-global-mark)
    ("C-c g e" . consult-compile-error)
    ("C-c g f" . consult-flymake)
    ("C-c g i" . consult-imenu)
@@ -551,10 +555,13 @@
    ("C-c s l" . consult-line)
    ("C-c s u" . consult-focus-lines)
    ("C-c s v" . consult-git-grep)
+   ("C-c x m" . consult-kmacro)
+   ("C-c x r" . consult-register-store)
    ([remap bookmark-jump] . consult-bookmark)
    ([remap goto-line] . consult-goto-line)
    ([remap isearch-backward] . consult-line)
    ([remap isearch-forward] . consult-line)
+   ([remap jump-to-register] . consult-register)
    ([remap project-switch-to-buffer] . consult-project-buffer)
    ([remap repeat-complex-command] . consult-complex-command)
    ([remap switch-to-buffer-other-frame] . consult-buffer-other-frame)
