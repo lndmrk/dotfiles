@@ -528,6 +528,32 @@
    ("M-s-l" . windmove-right)))
 #+end_src
 
+*** window
+
+#+begin_src emacs-lisp
+(use-package window
+  :config
+  (add-to-list 'display-buffer-alist
+               `(,(rx (| "*Embark"
+                         "*Help*"
+                         "*Metahelp*"
+                         "*compilation*"
+                         "*info*"))
+                 display-buffer-in-side-window
+                 (side . right)
+                 (window-width . 0.33)
+                 (window-parameters . ((no-delete-other-windows . t)))))
+  (add-to-list 'display-buffer-alist
+               `(,(rx (| "*Python*"
+                         "*eshell*"
+                         "*shell*"))
+                 display-buffer-in-direction
+                 (direction . bottom)
+                 (window . root)
+                 (window-height . 0.25)))
+  :bind ("C-c q" . window-toggle-side-windows))
+#+end_src
+
 *** winner
 
 #+begin_src emacs-lisp
@@ -986,15 +1012,6 @@ This is already ensured to be installed in =init.el=.
                  packages)))))
   :init
   (add-hook 'pyvenv-post-activate-hooks #'my-pyvenv-install-packages))
-#+end_src
-
-*** shackle
-
-#+begin_src emacs-lisp
-(use-package shackle
-  :ensure t
-  :custom (shackle-default-rule '(:select t))
-  :config (shackle-mode 1))
 #+end_src
 
 *** string-inflection
