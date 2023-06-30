@@ -648,8 +648,6 @@
 #+begin_src emacs-lisp
 (use-package eglot
   :ensure t
-  :demand t
-  :after (cape tempel)
   :preface
   (defun my-eglot-ensure-python ()
     (when (my-pyvenv-p)
@@ -660,6 +658,8 @@
      (cons (cape-super-capf #'tempel-complete #'eglot-completion-at-point)
            completion-at-point-functions))
     (flycheck-mode -1))
+  :custom
+  (eglot-ignored-server-capabilities '(:inlayHintProvider))
   :config
   (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("clangd")))
   :hook
