@@ -279,8 +279,13 @@
     (when-let ((root (my-project-root)))
       (file-relative-name (buffer-file-name) root)))
   (defun my-project-mode-line ()
-    (when-let ((root (my-project-root)))
-      (concat " P: " (file-name-nondirectory (directory-file-name root)))))
+    (defvar my-project-mode-line--value nil)
+    (unless my-project-mode-line--value
+      (when-let ((root (my-project-root)))
+        (setq-local
+         my-project-mode-line--value
+         (concat " P: "(file-name-nondirectory (directory-file-name root))))))
+    my-project-mode-line--value)
   (defun my-project-root ()
     (when-let ((project (project-current nil)))
       (project-root project)))
