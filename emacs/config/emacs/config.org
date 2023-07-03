@@ -567,6 +567,7 @@
   (xref-show-definitions-function #'consult-xref)
   (xref-show-xrefs-function #'consult-xref)
   :config
+  (add-to-list 'consult-preview-excluded-files (rx any "." (| "asc" "gpg") eol))
   (advice-add #'register-preview :override #'consult-register-window)
   :bind
   (("C-c g I" . consult-imenu-multi)
