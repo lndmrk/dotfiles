@@ -269,6 +269,13 @@
   :config (global-auto-revert-mode 1))
 #+end_src
 
+*** bookmark
+
+#+begin_src emacs-lisp
+(use-package bookmark
+  :custom (bookmark-save-flag 1))
+#+end_src
+
 *** cc-mode
 
 #+begin_src emacs-lisp
