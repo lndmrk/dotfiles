@@ -269,35 +269,6 @@
   :config (global-auto-revert-mode 1))
 #+end_src
 
-** project
-
-#+begin_src emacs-lisp
-(use-package project
-  :preface
-  (cl-defmethod project-root ((project (head manual)))
-    (cdr project))
-  (defun my-project-file-name ()
-    (when-let ((root (my-project-root)))
-      (file-relative-name (buffer-file-name) root)))
-  (defun my-project-mode-line ()
-    (defvar my-project-mode-line--value nil)
-    (unless my-project-mode-line--value
-      (when-let ((root (my-project-root)))
-        (setq-local
-         my-project-mode-line--value
-         (concat " P: "(file-name-nondirectory (directory-file-name root))))))
-    my-project-mode-line--value)
-  (defun my-project-root ()
-    (when-let ((project (project-current nil)))
-      (project-root project)))
-  (defun my-project-try-manual (dir)
-    (when-let ((root (locate-dominating-file dir ".project")))
-      (cons 'manual root)))
-  :config
-  (add-hook 'project-find-functions #'my-project-try-manual)
-  (add-to-list 'mode-line-misc-info '(:eval (my-project-mode-line))))
-#+end_src
-
 *** cc-mode
 
 #+begin_src emacs-lisp
@@ -428,6 +399,35 @@
 #+begin_src emacs-lisp
 (use-package paren
   :custom (show-paren-delay 0))
+#+end_src
+
+*** project
+
+#+begin_src emacs-lisp
+(use-package project
+  :preface
+  (cl-defmethod project-root ((project (head manual)))
+    (cdr project))
+  (defun my-project-file-name ()
+    (when-let ((root (my-project-root)))
+      (file-relative-name (buffer-file-name) root)))
+  (defun my-project-mode-line ()
+    (defvar my-project-mode-line--value nil)
+    (unless my-project-mode-line--value
+      (when-let ((root (my-project-root)))
+        (setq-local
+         my-project-mode-line--value
+         (concat " P: "(file-name-nondirectory (directory-file-name root))))))
+    my-project-mode-line--value)
+  (defun my-project-root ()
+    (when-let ((project (project-current nil)))
+      (project-root project)))
+  (defun my-project-try-manual (dir)
+    (when-let ((root (locate-dominating-file dir ".project")))
+      (cons 'manual root)))
+  :config
+  (add-hook 'project-find-functions #'my-project-try-manual)
+  (add-to-list 'mode-line-misc-info '(:eval (my-project-mode-line))))
 #+end_src
 
 *** python
