@@ -353,7 +353,10 @@
 
 #+begin_src emacs-lisp
 (use-package ediff
-  :custom (ediff-window-setup-function #'ediff-setup-windows-plain))
+  :custom
+  (ediff-keep-variants nil)
+  (ediff-split-window-function #'split-window-horizontally)
+  (ediff-window-setup-function #'ediff-setup-windows-plain))
 #+end_src
 
 *** eldoc
