@@ -546,6 +546,7 @@
   (add-to-list 'display-buffer-alist
                `(,(rx (| "*Embark"
                          "*Help*"
+                         "*Man"
                          "*Metahelp*"
                          "*compilation*"
                          "*info*"))
