@@ -944,6 +944,16 @@ ratio.
   :config (mood-line-mode 1))
 #+end_src
 
+*** move-text
+
+#+begin_src emacs-lisp
+(use-package move-text
+  :ensure t
+  :bind
+  (("M-n" . move-text-down)
+   ("M-p" . move-text-up)))
+#+end_src
+
 *** multiple-cursors
 
 #+begin_src emacs-lisp
