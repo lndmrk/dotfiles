@@ -870,6 +870,7 @@ source of truth for environment variables.
   :custom
   (magit-define-global-key-bindings t)
   (magit-diff-refine-hunk 'all)
+  (magit-save-repository-buffers 'dontask)
   :hook
   (git-commit-mode . my-message-compose-mode))
 #+end_src
