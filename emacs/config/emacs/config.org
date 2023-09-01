@@ -112,6 +112,10 @@
 
 #+begin_src emacs-lisp
 (use-package emacs
+  :custom
+  (undo-limit 640000)
+  (undo-outer-limit 96000000)
+  (undo-strong-limit 960000)
   :config
   (unbind-key "C-S-<backspace>")
   (unbind-key "C-x C-z")
