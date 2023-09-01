@@ -735,6 +735,13 @@
   :preface
   (defun my-embark-target-current-buffer ()
     `(current-buffer ,(buffer-name)))
+  (defun my-embark-target-ietf-doc ()
+    (save-match-data
+      (when (thing-at-point-looking-at
+             (rx (| "RFC" "rfc") (opt space) (group (+ digit))))
+        `(url
+          ,(format "https://www.rfc-editor.org/rfc/rfc%s.txt" (match-string 1))
+          ,(match-beginning 0) . ,(match-end 0)))))
   :init
   (setq prefix-help-command #'embark-prefix-help-command)
   :custom
@@ -744,6 +751,7 @@
      embark-isearch-highlight-indicator))
   :config
   (add-to-list 'embark-target-finders #'my-embark-target-current-buffer 'append)
+  (add-to-list 'embark-target-finders #'my-embark-target-ietf-doc)
   (defvar-keymap my-embark-current-buffer-map
     :doc "Keymap for Embark actions on current buffer."
     :parent embark-general-map
