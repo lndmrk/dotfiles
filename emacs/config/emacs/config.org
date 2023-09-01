@@ -118,7 +118,7 @@
   (unbind-key "C-z")
   :bind
   (("C-S-k" . kill-whole-line)
-   ("M-o" . cycle-spacing)
+   ("M-SPC" . cycle-spacing)  ;; TODO: This is the default from Emacs 29.1.
    ([remap capitalize-word] . capitalize-dwim)
    ([remap delete-horizontal-space] . cycle-spacing)
    ([remap downcase-word] . downcase-dwim)
