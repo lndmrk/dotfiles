@@ -565,6 +565,7 @@
                          "Man"
                          "Metahelp"
                          "compilation"
+                         "envrc"
                          "info")
                       (* (or alnum "-")) "*")
                  display-buffer-in-side-window
@@ -798,6 +799,14 @@
 #+begin_src emacs-lisp
 (use-package embark-consult
   :ensure t)
+#+end_src
+
+*** envrc
+
+#+begin_src emacs-lisp
+(use-package envrc
+  :ensure t
+  :config (envrc-global-mode))
 #+end_src
 
 *** exec-path-from-shell
