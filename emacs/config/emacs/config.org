@@ -448,6 +448,8 @@
   (defun my-project-try-manual (dir)
     (when-let ((root (locate-dominating-file dir ".project")))
       (cons 'manual root)))
+  :custom
+  (project-compilation-buffer-name-function 'project-prefixed-buffer-name)
   :config
   (add-hook 'project-find-functions #'my-project-try-manual)
   (add-to-list 'mode-line-misc-info '(:eval (my-project-mode-line))))
@@ -557,12 +559,14 @@
 (use-package window
   :config
   (add-to-list 'display-buffer-alist
-               `(,(rx (| "*Embark"
-                         "*Help*"
-                         "*Man"
-                         "*Metahelp*"
-                         "*compilation*"
-                         "*info*"))
+               `(,(rx "*" (* (or alnum "-"))
+                      (| "Embark"
+                         "Help"
+                         "Man"
+                         "Metahelp"
+                         "compilation"
+                         "info")
+                      (* (or alnum "-")) "*")
                  display-buffer-in-side-window
                  (side . right)
                  (window-width . 0.33)
