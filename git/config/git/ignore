@@ -6,5 +6,7 @@
 *~
 .cache/
 .dir-locals.el
+.direnv/
+.envrc
 .project
 .venv/
