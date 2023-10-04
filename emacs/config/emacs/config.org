@@ -925,7 +925,8 @@ source of truth for environment variables.
   :custom
   (markdown-command "pandoc")
   (markdown-fontify-code-blocks-natively t)
-  (markdown-list-indent-width standard-indent))
+  (markdown-list-indent-width standard-indent)
+  (markdown-spaces-after-code-fence 0))
 #+end_src
 
 *** modus-theme
