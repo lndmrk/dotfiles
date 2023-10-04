@@ -459,7 +459,14 @@
 
 #+begin_src emacs-lisp
 (use-package python
-  :hook (python-mode . (lambda () (my-set-fill-column 88))))
+  :preface
+  (defun my-python-mode ()
+    (my-set-fill-column 88)
+    (setq-local tab-width python-indent-offset))
+  :custom
+  (python-indent-guess-indent-offset nil)
+  :hook
+  (python-mode . my-python-mode))
 #+end_src
 
 *** recentf
@@ -711,9 +718,6 @@
 (use-package eglot
   :ensure t
   :preface
-  (defun my-eglot-ensure-python ()
-    (when (my-pyvenv-p)
-      (eglot-ensure)))
   (defun my-eglot-managed-mode ()
     (setq-local
      completion-at-point-functions
@@ -724,9 +728,8 @@
   (eglot-events-buffer-size 0)
   (eglot-ignored-server-capabilities '(:inlayHintProvider))
   :hook
-  ((c++-mode c-mode) . eglot-ensure)
+  ((c++-mode c-mode python-mode) . eglot-ensure)
   (eglot-managed-mode . my-eglot-managed-mode)
-  (python-mode . my-eglot-ensure-python)
   :bind
   (:map eglot-mode-map
    ("C-c l a" . eglot-code-actions)
@@ -1030,31 +1033,6 @@ ratio.
    '(my-orderless-flex
      my-orderless-prefixes
      my-orderless-without-literal)))
-#+end_src
-
-*** pyvenv
-
-#+begin_src emacs-lisp
-(use-package pyvenv
-  :ensure t
-  :preface
-  (defun my-pyvenv-p ()
-    (bound-and-true-p pyvenv-virtual-env))
-  (defun my-pyvenv-install-packages ()
-    "Install desired packages in the virtual environment."
-    (interactive)
-    (let ((packages '("pylsp-mypy"
-                      "pylsp-rope"
-                      "python-lsp-black"
-                      "python-lsp-server")))
-      (when (my-pyvenv-p)
-        (with-current-buffer (get-buffer-create "*virtualenv-pip*")
-          (apply 'call-process
-                 "pip" nil t t
-                 "install" "--upgrade" "--upgrade-strategy" "eager"
-                 packages)))))
-  :init
-  (add-hook 'pyvenv-post-activate-hooks #'my-pyvenv-install-packages))
 #+end_src
 
 *** string-inflection
