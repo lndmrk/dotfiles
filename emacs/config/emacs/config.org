@@ -723,8 +723,6 @@
   :custom
   (eglot-events-buffer-size 0)
   (eglot-ignored-server-capabilities '(:inlayHintProvider))
-  :config
-  (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("clangd")))
   :hook
   ((c++-mode c-mode) . eglot-ensure)
   (eglot-managed-mode . my-eglot-managed-mode)
