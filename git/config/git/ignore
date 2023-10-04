@@ -10,3 +10,4 @@
 .envrc
 .project
 .venv/
+compile_commands.json
