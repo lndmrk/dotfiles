@@ -721,6 +721,7 @@
            completion-at-point-functions))
     (flycheck-mode -1))
   :custom
+  (eglot-events-buffer-size 0)
   (eglot-ignored-server-capabilities '(:inlayHintProvider))
   :config
   (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("clangd")))
