@@ -572,6 +572,7 @@
                          "Man"
                          "Metahelp"
                          "compilation"
+                         "eldoc"
                          "envrc"
                          "info")
                       (* (or alnum "-")) "*")
@@ -745,6 +746,15 @@
   :bind
   (:map eglot-mode-map
    ([remap xref-find-apropos] . consult-eglot-symbols)))
+#+end_src
+
+*** eldoc-box
+
+#+begin_src emacs-lisp
+(use-package eldoc-box
+  :ensure t
+  :custom (eldoc-box-clear-with-C-g t)
+  :bind ("C-c h" . eldoc-box-help-at-point))
 #+end_src
 
 *** embark
