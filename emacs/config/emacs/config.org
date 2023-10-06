@@ -737,7 +737,7 @@
   (eglot-events-buffer-size 0)
   (eglot-ignored-server-capabilities '(:inlayHintProvider))
   :hook
-  ((c++-mode c-mode python-mode) . eglot-ensure)
+  ((c++-mode c-mode python-mode rust-mode) . eglot-ensure)
   (eglot-managed-mode . my-eglot-managed-mode)
   :bind
   (:map eglot-mode-map
@@ -1051,6 +1051,13 @@ ratio.
    '(my-orderless-flex
      my-orderless-prefixes
      my-orderless-without-literal)))
+#+end_src
+
+*** rust-mode
+
+#+begin_src emacs-lisp
+(use-package rust-mode
+  :ensure t)
 #+end_src
 
 *** string-inflection
