@@ -564,6 +564,11 @@
 
 #+begin_src emacs-lisp
 (use-package window
+  :preface
+  (defun my-display-buffer-reuse-window (buffer alist)
+    (let ((alist
+           (seq-filter (lambda (x) (not (eq (car x) 'window-width))) alist)))
+      (display-buffer-reuse-window buffer alist)))
   :config
   (add-to-list 'display-buffer-alist
                `(,(rx "*" (* (or alnum "-"))
@@ -576,18 +581,21 @@
                          "envrc"
                          "info")
                       (* (or alnum "-")) "*")
-                 display-buffer-in-side-window
+                 (my-display-buffer-reuse-window display-buffer-in-side-window)
+                 (dedicated . t)
                  (side . right)
-                 (window-width . 0.33)
+                 (window-width . 80)
                  (window-parameters . ((no-delete-other-windows . t)))))
   (add-to-list 'display-buffer-alist
-               `(,(rx (| "*Python*"
-                         "*eshell*"
-                         "*shell*"))
-                 display-buffer-in-direction
+               `(,(rx "*" (* (or alnum "-"))
+                      (| "Python"
+                         "eshell"
+                         "shell")
+                      (* (or alnum "-")) "*")
+                 (display-buffer-reuse-window display-buffer-in-direction)
                  (direction . bottom)
                  (window . root)
-                 (window-height . 0.25)))
+                 (window-height . 24)))
   :bind ("C-c q" . window-toggle-side-windows))
 #+end_src
 
