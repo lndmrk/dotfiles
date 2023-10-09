@@ -27,6 +27,7 @@ def install_packages(**kwargs):
             "python3-pylsp",
             "python3-pylsp-black",
             "shellcheck",
+            "shfmt",
             "yamllint",
         ],
         "fedora": [
@@ -38,6 +39,7 @@ def install_packages(**kwargs):
             "python3-lsp-black",
             "python3-lsp-server",
             "ShellCheck",
+            "shfmt",
             "yamllint",
         ],
     }

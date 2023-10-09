@@ -227,10 +227,13 @@
     "Format the region between START and END."
     (interactive "r")
     (save-excursion
-      (if (and (fboundp #'eglot-managed-p) (eglot-managed-p))
-          (eglot-format start end)
-        (indent-region start end)
-        (whitespace-cleanup-region start end))))
+      (cond ((and (fboundp #'eglot-managed-p) (eglot-managed-p))
+             (eglot-format start end))
+            ((and (fboundp #'shfmt-region) (derived-mode-p 'sh-mode))
+             (shfmt-region start end))
+            (t
+             (indent-region start end)
+             (whitespace-cleanup-region start end)))))
   (defun my-sort-lines-fold-case ()
     "Wrapper around `sort-lines' with `sort-fold-case' set to t."
     (interactive)
@@ -1058,6 +1061,18 @@ ratio.
 #+begin_src emacs-lisp
 (use-package rust-mode
   :ensure t)
+#+end_src
+
+*** shfmt-mode
+
+#+begin_src emacs-lisp
+(use-package shfmt
+  :ensure t
+  :custom
+  (shfmt-arguments (list
+                    "--binary-next-line"
+                    "--case-indent"
+                    (format "--indent=%s" standard-indent))))
 #+end_src
 
 *** string-inflection
