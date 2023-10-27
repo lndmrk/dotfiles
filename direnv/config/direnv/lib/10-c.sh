@@ -6,6 +6,8 @@ layout_compilation_database() {
 
   if [ -f "${build_dir}/compile_commands.json" ]; then
     ln --symbolic --force "${build_dir}/compile_commands.json" .
+  elif [ -L compile_commands.json ]; then
+    rm compile_commands.json
   fi
 
   unset build_dir
