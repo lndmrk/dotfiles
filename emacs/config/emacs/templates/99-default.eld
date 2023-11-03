@@ -92,6 +92,14 @@ c++-mode
  n r n n
  "}  " (my-comment-start) "namespace " (s name) n)
 
+(operator-eq
+ > (p "friend ") (p "constexpr ") "bool operator==(const "
+ (p (string-inflection-pascal-case-function
+     (file-name-base (buffer-file-name)))
+    T)
+ "& " (p "lhs") ", const " (s T) "& " (p "rhs") ")"
+ (p " = default;") q n)
+
 (operator-ostream
  "std::ostream& operator<<(std::ostream& os, const "
  (p (string-inflection-pascal-case-function
@@ -100,6 +108,14 @@ c++-mode
  "& " (p "t" t) ") {" n
  > "return os << " (s t) "." q ";" n
  "}" n)
+
+(operator-three-way
+ > (p "friend ") (p "constexpr ") "auto operator<=>(const "
+ (p (string-inflection-pascal-case-function
+     (file-name-base (buffer-file-name)))
+    T)
+ "& " (p "lhs") ", const " (s T) "& " (p "rhs") ")"
+ (p " = default;") q n)
 
 (struct
  "struct "
