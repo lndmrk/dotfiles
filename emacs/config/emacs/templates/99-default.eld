@@ -41,6 +41,26 @@ c-mode c++-mode
 
 c++-mode
 
+(absl-hash
+ "template <typename H>" n
+ (p "friend ") (p "constexpr ") "auto AbslHashValue(H h, const "
+ (p (string-inflection-pascal-case-function
+     (file-name-base (buffer-file-name)))
+    T)
+ "& " (p "t" t) ") {" n
+ > "return H::combine(std::move(h), " (s t) "." q ");" n
+ "}" n)
+
+(absl-stringify
+ "template <typename Sink>" n
+ (p "friend ") (p "constexpr ") "void AbslStringify(Sink& sink, const "
+ (p (string-inflection-pascal-case-function
+     (file-name-base (buffer-file-name)))
+    T)
+ "& " (p "t" t) ") {" n
+ > "absl::Format(&sink, \"%v\", " (s t) ");" q n
+ "}" n)
+
 (begin-end
  (p "c" c) ".begin(), " (s c) ".end()")
 
