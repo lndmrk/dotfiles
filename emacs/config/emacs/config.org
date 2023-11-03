@@ -1099,10 +1099,15 @@ ratio.
     (if (derived-mode-p 'emacs-lisp-mode)
         ";; "
       comment-start))
+  (defun my-tempel-include (elt)
+    (when (eq (car-safe elt) 't)
+      (when-let (template (alist-get (cadr elt) (tempel--templates)))
+        (cons 'l template))))
   (defun my-tempel-setup-capf ()
     (setq-local completion-at-point-functions
                 (cons #'tempel-complete completion-at-point-functions)))
   :custom
+  (add-to-list 'tempel-user-elements #'my-tempel-include)
   (tempel-path (expand-file-name (locate-user-emacs-file "templates/*.eld")))
   (tempel-trigger-prefix "<")
   :hook

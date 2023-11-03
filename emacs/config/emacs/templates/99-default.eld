@@ -48,26 +48,26 @@ c++-mode
  "class "
  (p (string-inflection-pascal-case-function
      (file-name-base (buffer-file-name)))
-    name)
+    T)
  " {" n
  " public:" n
- > (s name) "() = " (p "default" ctor) ";" n
+ > (s T) "() = " (p "default" ctor) ";" n
  n
- > (s name) "(const " (s name) "&) = "  ";" n
- > (s name) "& operator=(const " (s name) "&) = " (s copy) ";" n
+ (t copy)
  n
- > (s name) "(" (s name) "&&) = " (p "default" move) ";" n
- > (s name) "& operator=(" (s name) "&&) = " (s move) ";" n
+ (t move)
  n
- > "~" (s name) "() = " (p "default" dtor) ";" n
+ > "~" (s T) "() = " (p "default" dtor) ";" n
  n
  > q n
  "};" n)
 
 (copy
- (p "Name: " name 'noinsert)
- > (s name) "(const " (s name) "&) = " (p "default" copy) ";" n
- > (s name) "& operator=(const " (s name) "&) = " (s copy) ";" n)
+ > (p (string-inflection-pascal-case-function
+       (file-name-base (buffer-file-name)))
+      T)
+ "(const " (s T) "&) = " (p "default" copy) ";" n
+ > (s T) "& operator=(const " (s T) "&) = " (s copy) ";" n)
 
 (iterator-if
  "if (auto it = " (p "c" c) "." p "; it != " (s c) ".end()) {" n
@@ -80,9 +80,11 @@ c++-mode
  "}" n)
 
 (move
- (p "Name: " name 'noinsert)
- > (s name) "(" (s name) "&&) = " (p "default" move) ";" n
- > (s name) "& operator=(" (s name) "&&) = " (s move) ";" n)
+ > (p (string-inflection-pascal-case-function
+       (file-name-base (buffer-file-name)))
+      T)
+ "(" (s T) "&&) = " (p "default" move) ";" n
+ > (s T) "& operator=(" (s T) "&&) = " (s move) ";" n)
 
 (namespace
  (p "Name: " name 'noinsert)
@@ -91,8 +93,12 @@ c++-mode
  "}  " (my-comment-start) "namespace " (s name) n)
 
 (operator-ostream
- "std::ostream& operator<<(std::ostream& os, const " p "& v) {" n
- > "return os << v." q ";" n
+ "std::ostream& operator<<(std::ostream& os, const "
+ (p (string-inflection-pascal-case-function
+     (file-name-base (buffer-file-name)))
+    T)
+ "& " (p "t" t) ") {" n
+ > "return os << " (s t) "." q ";" n
  "}" n)
 
 (struct
