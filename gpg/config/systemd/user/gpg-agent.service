@@ -1,6 +1,0 @@
-# SPDX-FileCopyrightText: 2023 Emil Lundmark <emil@lndmrk.se>
-# SPDX-License-Identifier: GPL-3.0-or-later
-
-[Service]
-ExecStart=/usr/bin/gpg-agent
-ExecReload=/usr/bin/gpgconf --reload gpg-agent
