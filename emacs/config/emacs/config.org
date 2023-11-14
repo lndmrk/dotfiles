@@ -43,6 +43,8 @@
       (make-directory backup-directory t))
     (setq backup-directory-alist `((".*" . ,backup-directory))))
   (setq backup-enable-predicate #'my-backup-enable-p)
+  :custom
+  (find-file-visit-truename t)
   :config
   (auto-save-visited-mode 1))
 #+end_src
