@@ -43,22 +43,22 @@ c++-mode
 
 (absl-hash
  "template <typename H>" n
- (p "friend ") (p "constexpr ") "auto AbslHashValue(H h, const "
+ "friend H AbslHashValue(H h, const "
  (p (string-inflection-pascal-case-function
      (file-name-base (buffer-file-name)))
     T)
- "& " (p "t" t) ") {" n
+ "& " (p "self" t) ") {" n
  > "return H::combine(std::move(h), " (s t) "." q ");" n
  "}" n)
 
 (absl-stringify
  "template <typename Sink>" n
- (p "friend ") (p "constexpr ") "void AbslStringify(Sink& sink, const "
+ "friend void AbslStringify(Sink& sink, const "
  (p (string-inflection-pascal-case-function
      (file-name-base (buffer-file-name)))
     T)
- "& " (p "t" t) ") {" n
- > "absl::Format(&sink, \"%v\", " (s t) ");" q n
+ "& " (p "self" t) ") {" n
+ > q n
  "}" n)
 
 (begin-end
@@ -74,8 +74,6 @@ c++-mode
  > (s T) "() = " (p "default" ctor) ";" n
  n
  (t copy)
- n
- (t move)
  n
  > "~" (s T) "() = " (p "default" dtor) ";" n
  n
@@ -107,13 +105,13 @@ c++-mode
  > (s T) "& operator=(" (s T) "&&) = " (s move) ";" n)
 
 (namespace
- (p "Name: " name 'noinsert)
+ (p "Namespace: " name 'noinsert)
  "namespace " (s name) " {" n
  n r n n
  "}  " (my-comment-start) "namespace " (s name) n)
 
 (operator-eq
- > (p "friend ") (p "constexpr ") "bool operator==(const "
+ > "friend bool operator==(const "
  (p (string-inflection-pascal-case-function
      (file-name-base (buffer-file-name)))
     T)
@@ -121,21 +119,20 @@ c++-mode
  (p " = default;") q n)
 
 (operator-ostream
- "std::ostream& operator<<(std::ostream& os, const "
+ "friend std::ostream& operator<<(std::ostream& os, const "
  (p (string-inflection-pascal-case-function
      (file-name-base (buffer-file-name)))
     T)
- "& " (p "t" t) ") {" n
+ "& " (p "self" t) ") {" n
  > "return os << " (s t) "." q ";" n
  "}" n)
 
 (operator-three-way
- > (p "friend ") (p "constexpr ") "auto operator<=>(const "
+ > "friend auto operator<=>(const "
  (p (string-inflection-pascal-case-function
      (file-name-base (buffer-file-name)))
     T)
- "& " (p "lhs") ", const " (s T) "& " (p "rhs") ")"
- (p " = default;") q n)
+ "& " (p "lhs") ", const " (s T) "& " (p "rhs") ")" (p " = default;") q n)
 
 (struct
  "struct "
