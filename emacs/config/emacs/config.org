@@ -1109,9 +1109,10 @@ ratio.
     (setq-local completion-at-point-functions
                 (cons #'tempel-complete completion-at-point-functions)))
   :custom
-  (add-to-list 'tempel-user-elements #'my-tempel-include)
   (tempel-path (expand-file-name (locate-user-emacs-file "templates/*.eld")))
   (tempel-trigger-prefix "<")
+  :config
+  (add-to-list 'tempel-user-elements #'my-tempel-include)
   :hook
   ((prog-mode text-mode) . my-tempel-setup-capf)
   :bind
