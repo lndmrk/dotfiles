@@ -66,7 +66,7 @@ def post_setup(**kwargs):
     if fdfind := shutil.which("fdfind"):
         fdfind = Path(fdfind)
         fd = home_dir.joinpath(".local/bin/fd")
-        if fd.resolve() == fdfind:
+        if fd.resolve() == fdfind.resolve():
             return
         fd.parent.mkdir(parents=True, exist_ok=True)
         fd.symlink_to(fdfind)
