@@ -20,6 +20,7 @@ def install_packages(**kwargs):
             "clang-format",
             "clang-tidy",
             "clang-tools",
+            "clangd",
             "emacs",
             "pandoc",
             "python3",
