@@ -875,6 +875,7 @@ source of truth for environment variables.
 
 #+begin_src emacs-lisp
 (use-package gtk-variant
+  :if (eq window-system 'x)
   :ensure t
   :hook ((server-after-make-frame window-setup) . gtk-variant-set-frame))
 #+end_src
