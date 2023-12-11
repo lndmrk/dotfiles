@@ -735,7 +735,7 @@
   (defun my-eglot-managed-mode ()
     (setq-local
      completion-at-point-functions
-     (cons (cape-super-capf #'tempel-complete #'eglot-completion-at-point)
+     (cons (cape-capf-super #'tempel-complete #'eglot-completion-at-point)
            completion-at-point-functions))
     (flycheck-mode -1))
   :custom
