@@ -41,6 +41,8 @@ def post_setup(**kwargs):
     s.set_strv("www", ["<Super>b"])
 
     # Terminal
+    s = Gio.Settings.new("org.gnome.Terminal.Legacy.Settings")
+    s.set_string("theme-variant", "dark")
     s = Gio.Settings.new("org.gnome.Terminal.ProfilesList")
     default_profile = s.get_string("default")
     s = Gio.Settings.new_with_path(
