@@ -6,3 +6,4 @@ export LESS="--quit-if-one-screen \
              --LONG-PROMPT \
              --RAW-CONTROL-CHARS \
              --chop-long-lines"
+export SYSTEMD_LESS="${LESS}"
