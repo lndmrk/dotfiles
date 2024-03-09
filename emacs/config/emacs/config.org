@@ -403,7 +403,11 @@
 
 #+begin_src emacs-lisp
 (use-package hl-line
-  :config (global-hl-line-mode 1))
+  :preface
+  (defun my-inhibit-global-hl-line-mode ()
+    (setq-local global-hl-line-mode nil))
+  :config
+  (global-hl-line-mode 1))
 #+end_src
 
 *** js
@@ -595,7 +599,8 @@
                `(,(rx "*" (* (or alnum "-"))
                       (| "Python"
                          "eshell"
-                         "shell")
+                         "shell"
+                         "vterm")
                       (* (or alnum "-")) "*")
                  (display-buffer-reuse-window display-buffer-in-direction)
                  (direction . bottom)
@@ -1135,6 +1140,20 @@ ratio.
   (:map vertico-map
    ("C-M-n" . vertico-next-group)
    ("C-M-p" . vertico-previous-group)))
+#+end_src
+
+*** vterm
+
+#+begin_src emacs-lisp
+(use-package vterm
+  :ensure t
+  :custom
+  (vterm-max-scrollback 100000)
+  :config
+  (add-hook 'vterm-mode-hook #'my-inhibit-global-hl-line-mode)
+  :bind
+  (("C-c <return>" . vterm)
+   ("C-c RET" . vterm)))
 #+end_src
 
 *** wgrep
