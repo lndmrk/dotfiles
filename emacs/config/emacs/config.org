@@ -788,7 +788,8 @@
       (when (thing-at-point-looking-at
              (rx (| "RFC" "rfc") (opt space) (group (+ digit))))
         `(url
-          ,(format "https://www.rfc-editor.org/rfc/rfc%s.txt" (match-string 1))
+          ,(format "https://datatracker.ietf.org/doc/html/rfc%s"
+                   (match-string 1))
           ,(match-beginning 0) . ,(match-end 0)))))
   :init
   (setq prefix-help-command #'embark-prefix-help-command)
