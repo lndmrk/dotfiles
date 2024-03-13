@@ -578,6 +578,18 @@
     (let ((alist
            (seq-filter (lambda (x) (not (eq (car x) 'window-width))) alist)))
       (display-buffer-reuse-window buffer alist)))
+  (defun my-fit-window-to-fill-column ()
+    "Fit the currently selected window with respect to `fill-column'."
+    (interactive)
+    (let ((fit-window-to-buffer-horizontally 'only)
+          (width (+ fill-column 1)))
+      (when (bound-and-true-p display-line-numbers-mode)
+        (setq width (+ width (truncate (line-number-display-width 'columns)))))
+      (unless (display-graphic-p (selected-frame))
+        (setq width (+ width 1)))
+      (fit-window-to-buffer nil nil nil width width)))
+  :custom
+  (hscroll-margin 1)
   :config
   (add-to-list 'display-buffer-alist
                `(,(rx "*" (* (or alnum "-"))
@@ -606,7 +618,9 @@
                  (direction . bottom)
                  (window . root)
                  (window-height . 24)))
-  :bind ("C-c q" . window-toggle-side-windows))
+  :bind
+  (("C-c q" . window-toggle-side-windows)
+   ("C-c w f" . my-fit-window-to-fill-column)))
 #+end_src
 
 *** winner
