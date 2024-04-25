@@ -1071,12 +1071,15 @@ ratio.
      ((string-prefix-p "!" pattern)
       `(orderless-without-literal . ,(substring pattern 1)))))
   :custom
-  (completion-styles '(orderless basic))
+  (completion-styles '(tab orderless basic))
   (completion-category-overrides '((file (styles basic partial-completion))))
   (orderless-style-dispatchers
    '(my-orderless-flex
      my-orderless-prefixes
-     my-orderless-without-literal)))
+     my-orderless-without-literal))
+  :config
+  (add-to-list 'completion-styles-alist
+               '(tab completion-basic-try-completion ignore)))
 #+end_src
 
 *** rust-mode
