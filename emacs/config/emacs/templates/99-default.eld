@@ -87,6 +87,18 @@ c++-mode
  "(const " (s T) "&) = " (p "default" copy) ";" n
  > (s T) "& operator=(const " (s T) "&) = " (s copy) ";" n)
 
+(interface
+ "class "
+ (p (string-inflection-pascal-case-function
+     (file-name-base (buffer-file-name)))
+    T)
+ " {" n
+ " public:" n
+ > "virtual ~" (s T) "() = default;" n
+ n
+ > q n
+ "};" n)
+
 (iterator-if
  "if (auto it = " (p "c" c) "." p "; it != " (s c) ".end()) {" n
  > q n
