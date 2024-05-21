@@ -1093,6 +1093,16 @@ ratio.
   :ensure t)
 #+end_src
 
+*** substitute
+
+#+begin_src emacs-lisp
+(use-package substitute
+  :ensure t
+  :bind
+  (("C-c r r" . substitute-target-in-buffer)
+   ("C-c r f" . substitute-target-in-defun)))
+#+end_src
+
 *** systemd
 
 #+begin_src emacs-lisp
