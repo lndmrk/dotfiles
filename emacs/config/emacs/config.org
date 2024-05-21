@@ -334,10 +334,12 @@
     (let ((file (dired-get-filename nil t)))
       (call-process "xdg-open" nil 0 nil file)))
   :custom
+  (dired-do-revert-buffer t)
   (dired-dwim-target t)
   (dired-kill-when-opening-new-dired-buffer t)
   (dired-recursive-copies 'always)
   (dired-recursive-deletes 'always)
+  (dired-vc-rename-file t)
   :bind
   (:map dired-mode-map
    ("C-<return>" . my-dired-xdg-open-file)))
