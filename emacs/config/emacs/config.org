@@ -650,7 +650,7 @@
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-file)
   :bind
-  ("C-." . cape-file))
+  ("C-c TAB" . cape-prefix-map))
 #+end_src
 
 *** consult
