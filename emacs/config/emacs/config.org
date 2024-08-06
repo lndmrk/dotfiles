@@ -708,15 +708,10 @@
 (use-package corfu
   :ensure t
   :demand t
-  :preface
-  (defun my-corfu-enable-in-minibuffer ()
-    (when (where-is-internal #'completion-at-point (list (current-local-map)))
-      (corfu-mode 1)))
   :custom
   (corfu-cycle t)
   (corfu-echo-documentation t)
   :config
-  (add-hook 'minibuffer-setup-hook #'my-corfu-enable-in-minibuffer)
   (add-to-list 'savehist-additional-variables 'corfu-history)
   (corfu-history-mode 1)
   (corfu-popupinfo-mode 1)
