@@ -274,8 +274,11 @@
 
 #+begin_src emacs-lisp
 (use-package autorevert
-  :custom (global-auto-revert-non-file-buffers t)
-  :config (global-auto-revert-mode 1))
+  :custom
+  (global-auto-revert-non-file-buffers t)
+  :config
+  (add-to-list 'global-auto-revert-ignore-modes 'Buffer-menu-mode)
+  (global-auto-revert-mode 1))
 #+end_src
 
 *** bookmark
