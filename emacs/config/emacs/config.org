@@ -445,31 +445,55 @@
 #+begin_src emacs-lisp
 (use-package project
   :preface
-  (cl-defmethod project-root ((project (head manual)))
-    (cdr project))
+  (cl-defgeneric my-project-compile-dir (project)
+    (defvar my-project-compile-dir nil)
+    (or my-project-compile-dir (my-project-workspace-dir project)))
+  (defun my-project-compile-advice (fn &rest args)
+    (let* ((project (project-current t))
+           (name (project-name project))
+           (compile (my-project-compile-dir project))
+           (root (project-root project)))
+      (cl-letf (((symbol-function 'project-remember-project) #'ignore)
+                ((symbol-function 'project-current)
+                 (lambda (&rest _) project))
+                ((symbol-function 'project-root)
+                 (lambda (&rest _) (or compile root))))
+        (apply fn args))))
+  (cl-defgeneric my-project-workspace-dir (project)
+    (defvar my-project-workspace-dir nil)
+    (or my-project-workspace-dir (project-root project)))
   (defun my-project-file-name ()
     (when-let ((name (buffer-file-name))
-               (project (project-current nil)))
-      (file-relative-name name (project-root project))))
+               (project (project-current)))
+      (file-relative-name name (my-project-workspace project))))
   (defun my-project-mode-line ()
     (defvar my-project-mode-line--value nil)
     (unless my-project-mode-line--value
-      (when-let ((project (project-current nil)))
+      (when-let ((project (project-current)))
         (setq-local
          my-project-mode-line--value
          (concat " P:" (project-name project)))))
     my-project-mode-line--value)
+  (defun my-project-prefixed-buffer-name (mode)
+    (concat "*"
+            (or name (project-name (project-current)))
+            "-"
+            (downcase mode)
+            "*"))
+  (cl-defmethod project-root ((project (head manual)))
+    (cdr project))
   (defun my-project-try-manual (dir)
     (when-let ((root (locate-dominating-file dir ".project")))
       (cons 'manual root)))
   :custom
-  (project-compilation-buffer-name-function 'project-prefixed-buffer-name)
+  (project-compilation-buffer-name-function #'my-project-prefixed-buffer-name)
   (project-switch-commands
    '((project-dired "Dired")
      (project-shell "Shell")))
   :config
   (add-hook 'project-find-functions #'my-project-try-manual)
-  (add-to-list 'mode-line-misc-info '(:eval (my-project-mode-line))))
+  (add-to-list 'mode-line-misc-info '(:eval (my-project-mode-line)))
+  (advice-add 'project-compile :around #'my-project-compile-advice))
 #+end_src
 
 *** python
