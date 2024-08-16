@@ -431,7 +431,12 @@
   (org-adapt-indentation nil)
   (org-catch-invisible-edits 'error)
   (org-edit-src-content-indentation 0)
-  (org-src-preserve-indentation t))
+  (org-src-preserve-indentation t)
+  :config
+  (unbind-key "C-c '" 'org-src-mode-map)
+  :bind
+  (:map org-src-mode-map
+   ("C-c C-c" . org-edit-src-exit)))
 #+end_src
 
 *** paren
