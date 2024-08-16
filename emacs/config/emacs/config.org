@@ -464,6 +464,9 @@
       (cons 'manual root)))
   :custom
   (project-compilation-buffer-name-function 'project-prefixed-buffer-name)
+  (project-switch-commands
+   '((project-dired "Dired")
+     (project-shell "Shell")))
   :config
   (add-hook 'project-find-functions #'my-project-try-manual)
   (add-to-list 'mode-line-misc-info '(:eval (my-project-mode-line))))
@@ -947,6 +950,9 @@ source of truth for environment variables.
 #+begin_src emacs-lisp
 (use-package magit
   :ensure t
+  :init
+  (add-to-list
+   'project-switch-commands '(magit-project-status "Magit" "g") 'append)
   :custom
   (magit-define-global-key-bindings 'recommended)
   (magit-diff-refine-hunk 'all)
@@ -1158,6 +1164,16 @@ ratio.
 #+begin_src emacs-lisp
 (use-package vterm
   :ensure t
+  :preface
+  (defun my-project-vterm ()
+    (interactive)
+    (let* ((default-directory (project-root (project-current t)))
+           (current-prefix-arg (project-prefixed-buffer-name "vterm"))
+           (buffer (get-buffer current-prefix-arg)))
+      (call-interactively #'vterm)))
+  :init
+  (add-to-list
+   'project-switch-commands '(my-project-vterm "Vterm" "RET") 'append)
   :custom
   (vterm-max-scrollback 100000)
   :config
