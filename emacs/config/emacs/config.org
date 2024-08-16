@@ -1104,7 +1104,12 @@ ratio.
 
 #+begin_src emacs-lisp
 (use-package rust-mode
-  :ensure t)
+  :ensure t
+  :config
+  (defun my-rust-mode ()
+    (my-set-fill-column 100))
+  :hook
+  (rust-mode . my-rust-mode))
 #+end_src
 
 *** shfmt-mode
