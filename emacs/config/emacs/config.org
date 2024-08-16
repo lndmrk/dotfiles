@@ -315,7 +315,8 @@
 (use-package compile
   :custom
   (compilation-ask-about-save nil)
-  (compilation-scroll-output t))
+  (compilation-scroll-output t)
+  (compile-command nil))
 #+end_src
 
 *** dabbrev
