@@ -523,6 +523,13 @@
   :config (recentf-mode 1))
 #+end_src
 
+*** repeat
+
+#+begin_src emacs-lisp
+(use-package repeat
+  :config (repeat-mode 1))
+#+end_src
+
 *** savehist
 
 #+begin_src emacs-lisp
@@ -548,7 +555,16 @@
 
 #+begin_src emacs-lisp
 (use-package smerge-mode
-  :custom (smerge-command-prefix (kbd "C-c v")))
+  :custom
+  (smerge-command-prefix (kbd "C-c v"))
+  :bind
+  (:repeat-map my-smerge-repeat-map
+   ("a" . smerge-keep-all)
+   ("b" . smerge-keep-base)
+   ("l" . smerge-keep-lower)
+   ("n" . smerge-next)
+   ("p" . smerge-prev)
+   ("u" . smerge-keep-upper)))
 #+end_src
 
 *** so-long
@@ -665,12 +681,17 @@
 #+begin_src emacs-lisp
 (use-package winner
   :config
+  (unbind-key "<left>"  winner-repeat-map)
+  (unbind-key "<right>" winner-repeat-map)
   (unbind-key "C-c <left>")
   (unbind-key "C-c <right>")
   (winner-mode 1)
   :bind
-  (("C-c w C-/" . winner-undo)
-   ("C-c w C-?" . winner-redo)))
+  (:repeat-map winner-repeat-map
+   ("n" . winner-redo)
+   ("p" . winner-undo))
+  :bind-keymap
+  ("C-c w" . winner-repeat-map))
 #+end_src
 
 ** External
@@ -1078,13 +1099,17 @@ ratio.
   :ensure t
   :bind
   (("C-c m a" . mc/mark-all-like-this)
-   ("C-c m c" . mc/edit-lines)
    ("C-c m d" . mc/mark-all-dwim)
    ("C-c m M-n" . mc/skip-to-next-like-this)
    ("C-c m M-p" . mc/skip-to-previous-like-this)
    ("C-c m n" . mc/mark-next-like-this)
    ("C-c m p" . mc/mark-previous-like-this)
-   ("C-c m r" . set-rectangular-region-anchor)))
+   ("C-c m r" . mc/mark-all-in-region)
+   (:repeat-map my-multiple-cursors-repeat-map
+    ("M-n" . mc/skip-to-next-like-this)
+    ("M-p" . mc/skip-to-previous-like-this)
+    ("n" . mc/mark-next-like-this)
+    ("p" . mc/mark-previous-like-this))))
 #+end_src
 
 *** orderless
@@ -1128,7 +1153,12 @@ ratio.
 
 #+begin_src emacs-lisp
 (use-package string-inflection
-  :ensure t)
+  :ensure t
+  :bind
+  (("C-c S-c" . string-inflection-all-cycle)
+   (:repeat-map my-string-inflection-repeat-map
+   ("C" . string-inflection-all-cycle)
+   ("c" . string-inflection-all-cycle))))
 #+end_src
 
 *** substitute
