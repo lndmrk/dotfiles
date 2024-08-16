@@ -447,7 +447,11 @@
   :preface
   (cl-defgeneric my-project-compile-dir (project)
     (defvar my-project-compile-dir nil)
-    (or my-project-compile-dir (my-project-workspace-dir project)))
+    (cond
+     (my-project-compile-dir)
+     ((when-let ((dir (getenv "BUILD_DIR")))
+        (expand-file-name dir (project-root project))))
+     ((my-project-workspace-dir project))))
   (defun my-project-compile-advice (fn &rest args)
     (let* ((project (project-current t))
            (name (project-name project))
