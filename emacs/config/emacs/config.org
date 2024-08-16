@@ -315,7 +315,7 @@
 (use-package compile
   :custom
   (compilation-ask-about-save nil)
-  (compilation-scroll-output t)
+  (compilation-scroll-output 'first-error)
   (compile-command nil))
 #+end_src
 
