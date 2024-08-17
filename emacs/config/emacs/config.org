@@ -1235,6 +1235,7 @@ ratio.
   :ensure t
   :preface
   (defun my-project-vterm ()
+    "Open a Vterm buffer in project."
     (interactive)
     (let* ((default-directory (project-root (project-current t)))
            (current-prefix-arg (project-prefixed-buffer-name "vterm"))
