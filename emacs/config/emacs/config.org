@@ -686,17 +686,15 @@
 #+begin_src emacs-lisp
 (use-package winner
   :config
-  (unbind-key "<left>"  winner-repeat-map)
-  (unbind-key "<right>" winner-repeat-map)
   (unbind-key "C-c <left>")
   (unbind-key "C-c <right>")
   (winner-mode 1)
   :bind
-  (:repeat-map winner-repeat-map
-   ("n" . winner-redo)
-   ("p" . winner-undo))
-  :bind-keymap
-  ("C-c w" . winner-repeat-map))
+  (("C-c w n" . winner-redo)
+   ("C-c w p" . winner-undo)
+   (:repeat-map winner-repeat-map
+    ("n" . winner-redo)
+    ("p" . winner-undo))))
 #+end_src
 
 ** External
