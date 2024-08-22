@@ -1143,7 +1143,7 @@ ratio.
 #+begin_src emacs-lisp
 (use-package rust-mode
   :ensure t
-  :config
+  :preface
   (defun my-rust-mode ()
     (my-set-fill-column 100))
   :hook
