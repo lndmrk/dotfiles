@@ -316,7 +316,9 @@
   :custom
   (compilation-ask-about-save nil)
   (compilation-scroll-output 'first-error)
-  (compile-command nil))
+  (compile-command nil)
+  :bind
+  ("C-c c c" . recompile))
 #+end_src
 
 *** dabbrev
