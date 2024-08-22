@@ -400,6 +400,13 @@
   (text-mode . flyspell-mode))
 #+end_src
 
+*** help-at-point
+
+#+begin_src emacs-lisp
+(use-package help-at-point
+  :bind ("C-c h" . display-local-help))
+#+end_src
+
 *** hideshow
 
 #+begin_src emacs-lisp
@@ -634,10 +641,6 @@
 #+begin_src emacs-lisp
 (use-package window
   :preface
-  (defun my-display-buffer-reuse-window (buffer alist)
-    (let ((alist
-           (seq-filter (lambda (x) (not (eq (car x) 'window-width))) alist)))
-      (display-buffer-reuse-window buffer alist)))
   (defun my-fit-window-to-fill-column ()
     "Fit the currently selected window with respect to `fill-column'."
     (interactive)
@@ -648,6 +651,24 @@
       (unless (display-graphic-p)
         (setq width (+1 width)))
       (fit-window-to-buffer nil nil nil width width)))
+  (defun my-split-window-sensibly (&optional window)
+    (let* ((root (window-main-window))
+           (root-width (window-total-width root))
+           (num-h (1+ (window-combinations root :horizontal)))
+           (min-width (/ split-width-threshold 2))
+           (root-height (window-total-height root))
+           (num-v (1+ (window-combinations root)))
+           (min-height (/ split-height-threshold 2)))
+      (cond
+       ((< (* num-h min-width) root-width)
+        (message "right")
+        (split-window-right nil window))
+       ((< (* num-v min-height) root-height)
+        (message "below")
+        (split-window-below nil window))
+       (t
+        (message "default")
+        (split-window-sensibly window)))))
   (defun my-window-dedicated-mode-line ()
     (when (window-dedicated-p)
       " D"))
@@ -657,35 +678,49 @@
     (when-let ((window (get-buffer-window)))
       (set-window-dedicated-p window (not (window-dedicated-p)))))
   :custom
+  (fit-window-to-buffer-horizontally t)
   (hscroll-margin 1)
+  (split-height-threshold (* 2 24))
+  (split-width-threshold (* 2 80))
+  (split-window-preferred-function #'my-split-window-sensibly)
+  (window-combination-resize t)
   :config
+  (setq my-side-window-action-alist
+        '((window-width . fit-window-to-buffer)
+          (window-parameters . ((no-delete-other-windows . t)))))
   (add-to-list 'display-buffer-alist
-               `(,(rx "*" (* (or alnum "-"))
-                      (| "Embark"
-                         "Help"
+               `(,(rx "*" (* nonl)
+                      (| "Help"
                          "Man"
                          "Metahelp"
-                         "compilation"
                          "eldoc"
-                         "envrc"
                          "info")
-                      (* (or alnum "-")) "*")
-                 (my-display-buffer-reuse-window display-buffer-in-side-window)
-                 (dedicated . t)
+                      (* nonl) "*")
+                 (display-buffer-reuse-window display-buffer-in-side-window)
                  (side . right)
-                 (window-width . 80)
-                 (window-parameters . ((no-delete-other-windows . t)))))
+                 (slot . 0)
+                 ,@my-side-window-action-alist))
   (add-to-list 'display-buffer-alist
-               `(,(rx "*" (* (or alnum "-"))
+               `(,(rx "*" (* nonl)
+                      (| "Embark"
+                         "Occur"
+                         "compilation"
+                         "envrc")
+                      (* nonl) "*")
+                 (display-buffer-reuse-window display-buffer-in-side-window)
+                 (side . right)
+                 (slot . 1)
+                 ,@my-side-window-action-alist))
+  (add-to-list 'display-buffer-alist
+               `(,(rx "*" (* nonl)
                       (| "Python"
                          "eshell"
                          "shell"
                          "vterm")
-                      (* (or alnum "-")) "*")
+                      (* nonl) "*")
                  (display-buffer-reuse-window display-buffer-in-direction)
                  (direction . bottom)
-                 (window . root)
-                 (window-height . 24)))
+                 (window-height . 0.25)))
   (add-to-list 'mode-line-misc-info '(:eval (my-window-dedicated-mode-line)))
   :bind
   (("C-c q" . window-toggle-side-windows)
@@ -846,15 +881,6 @@
   :bind
   (:map eglot-mode-map
    ([remap xref-find-apropos] . consult-eglot-symbols)))
-#+end_src
-
-*** eldoc-box
-
-#+begin_src emacs-lisp
-(use-package eldoc-box
-  :ensure t
-  :custom (eldoc-box-clear-with-C-g t)
-  :bind ("C-c h" . eldoc-box-help-at-point))
 #+end_src
 
 *** embark
