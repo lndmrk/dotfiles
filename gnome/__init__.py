@@ -5,7 +5,10 @@
 def install_packages(**kwargs):
     return {
         "debian": ["python3-gi"],
-        "fedora": ["python3-gobject"],
+        "fedora": [
+            "gnome-themes-extra",
+            "python3-gobject",
+        ],
     }
 
 
@@ -89,6 +92,7 @@ def post_setup(**kwargs):
     s = Gio.Settings.new("org.gnome.desktop.interface")
     s.set_boolean("clock-show-date", True)
     s.set_boolean("gtk-enable-primary-paste", False)
+    s.set_string("gtk-theme", "Adwaita-dark")
 
     s = Gio.Settings.new("org.gnome.desktop.notifications")
     s.set_boolean("show-in-lock-screen", False)
