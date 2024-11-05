@@ -484,7 +484,7 @@
   (defun my-project-file-name ()
     (when-let ((name (buffer-file-name))
                (project (project-current)))
-      (file-relative-name name (my-project-workspace project))))
+      (file-relative-name name (my-project-workspace-dir project))))
   (defun my-project-mode-line ()
     (defvar my-project-mode-line--value nil)
     (unless my-project-mode-line--value
