@@ -775,6 +775,7 @@
   (advice-add #'register-preview :override #'consult-register-window)
   :bind
   (("C-c b I" . consult-imenu-multi)
+   ("C-c b M" . consult-man)
    ("C-c b SPC" . consult-global-mark)
    ("C-c b e" . consult-compile-error)
    ("C-c b f" . consult-flymake)
