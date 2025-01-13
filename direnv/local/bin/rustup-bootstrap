@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+#
+# SPDX-FileCopyrightText: 2025 Emil Lundmark <emil@lndmrk.se>
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+set -e
+set -u
+
+main() {
+  rustup toolchain install stable
+  rustup component add \
+         cargo \
+         clippy \
+         rust-analyzer \
+         rust-docs \
+         rust-std \
+         rustc \
+         rust-src \
+         rustfmt
+
+  rustup toolchain install nightly
+  rustup +nightly component add \
+         miri
+}
+
+main "${@}"
