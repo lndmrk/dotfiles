@@ -6,6 +6,8 @@ def install_packages(**kwargs):
     return {
         "debian": ["python3-gi"],
         "fedora": [
+            "gnome-shell",
+            "gnome-terminal",
             "gnome-themes-extra",
             "python3-gobject",
         ],
