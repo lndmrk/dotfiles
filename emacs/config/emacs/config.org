@@ -317,6 +317,8 @@
   (compilation-ask-about-save nil)
   (compilation-scroll-output 'first-error)
   (compile-command nil)
+  :config
+  (add-hook 'compilation-filter-hook #'ansi-color-compilation-filter)
   :bind
   ("C-c c c" . recompile))
 #+end_src
