@@ -674,11 +674,6 @@
   (defun my-window-dedicated-mode-line ()
     (when (window-dedicated-p)
       " D"))
-  (defun my-window-toggle-dedicated ()
-    "Toggle if currently selected window is dedicated to its buffer."
-    (interactive)
-    (when-let ((window (get-buffer-window)))
-      (set-window-dedicated-p window (not (window-dedicated-p)))))
   :custom
   (fit-window-to-buffer-horizontally t)
   (hscroll-margin 1)
@@ -726,8 +721,19 @@
   (add-to-list 'mode-line-misc-info '(:eval (my-window-dedicated-mode-line)))
   :bind
   (("C-c q" . window-toggle-side-windows)
-   ("C-c w d" . my-window-toggle-dedicated)
    ("C-c w f" . my-fit-window-to-fill-column)))
+#+end_src
+
+#+begin_src emacs-lisp
+(when (< emacs-major-version 30)
+  (use-package window
+    :preface
+    (defun my-window-toggle-dedicated ()
+      "Toggle if currently selected window is dedicated to its buffer."
+      (interactive)
+      (when-let ((window (get-buffer-window)))))
+    :bind
+    ("C-c w d" . my-window-toggle-dedicated)))
 #+end_src
 
 *** winner
