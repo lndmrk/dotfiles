@@ -680,6 +680,7 @@
   (split-height-threshold (* 2 24))
   (split-width-threshold (* 2 80))
   (split-window-preferred-function #'my-split-window-sensibly)
+  (switch-to-buffer-obey-display-actions t)
   (window-combination-resize t)
   :config
   (setq my-side-window-action-alist
