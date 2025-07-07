@@ -834,8 +834,8 @@
    ("m" . consult-kmacro)
    ("r" . consult-register-store)
    :map minibuffer-local-map
-   ("M-s" . consult-history)
-   ("M-r" . consult-history)))
+   ([remap next-matching-history-element] . consult-history)
+   ([remap previous-matching-history-element] . consult-history)))
 #+end_src
 
 *** corfu
