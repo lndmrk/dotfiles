@@ -995,6 +995,58 @@ source of truth for environment variables.
   :bind ([remap ispell-word] . flyspell-correct-wrapper))
 #+end_src
 
+*** gptel
+
+#+begin_src emacs-lisp
+(use-package gptel
+  :ensure t
+  :preface
+  (defun my-gptel ()
+    "If a gptel buffer already exists, switch to it. Otherwise, call `gptel'."
+    (interactive)
+    (let ((gptel-buffers (seq-filter
+                          (lambda (b) (with-current-buffer b
+                                        (bound-and-true-p gptel-mode)))
+                          (buffer-list))))
+      (if (= (length gptel-buffers) 1)
+          (pop-to-buffer (car gptel-buffers))
+        (call-interactively #'gptel))))
+  (defun my-gptel-abort ()
+    "Abort gptel and then call `keyboard-quit'."
+    (interactive)
+    (call-interactively #'gptel-abort)
+    (call-interactively #'keyboard-quit))
+  (defun my-gptel-mode ()
+    (set-fill-column -1)
+    (setq-local truncate-lines nil))
+  :init
+  (setq gptel--openai nil)
+  (setq gptel-backend nil)
+  (setq gptel-model nil)
+  :custom
+  (gptel-default-mode 'org-mode)
+  :hook
+  ((gptel-mode . my-gptel-mode)
+   (gptel-post-stream . gptel-auto-scroll)
+   (gptel-post-response . gptel-end-of-response))
+  :bind
+  (("C-c i c" . gptel-context-add)
+   ("C-c i g" . gptel-abort)
+   ("C-c i i" . my-gptel)
+   ("C-c i m" . gptel-menu)
+   ("C-c i r" . gptel-rewrite)
+   ("C-c i u" . gptel-context-remove-all)
+   :map gptel-mode-map
+   ("<S-return>" . newline)
+   ("<return>" . gptel-send)
+   ("C-g" . my-gptel-abort)))
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package gptel-context
+  :after gptel)
+#+end_src
+
 *** gtk-variant
 
 #+begin_src emacs-lisp
