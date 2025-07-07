@@ -216,8 +216,10 @@
     (interactive)
     (load user-init-file))
   :bind
-  (("C-c d f" . my-config-find-file)
-   ("C-c d r" . my-config-reload)))
+  (:prefix-map my-config-prefix-map
+   :prefix "C-c d"
+   ("f" . my-config-find-file)
+   ("r" . my-config-reload)))
 #+end_src
 
 ** Formatting
@@ -325,7 +327,9 @@
   :config
   (add-hook 'compilation-filter-hook #'ansi-color-compilation-filter)
   :bind
-  ("C-c c c" . recompile))
+  (:prefix-map my-compile-prefix-map
+   :prefix "C-c c"
+   ("c" . recompile)))
 #+end_src
 
 *** dabbrev
@@ -727,7 +731,9 @@
   (add-to-list 'mode-line-misc-info '(:eval (my-window-dedicated-mode-line)))
   :bind
   (("C-c q" . window-toggle-side-windows)
-   ("C-c w f" . my-fit-window-to-fill-column)))
+   :prefix-map my-window-prefix-map
+   :prefix "C-c w"
+   ("f" . my-fit-window-to-fill-column)))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -739,23 +745,26 @@
       (interactive)
       (when-let ((window (get-buffer-window)))))
     :bind
-    ("C-c w d" . my-window-toggle-dedicated)))
+    (:map my-window-prefix-map
+     ("d" . my-window-toggle-dedicated))))
 #+end_src
 
 *** winner
 
 #+begin_src emacs-lisp
 (use-package winner
+  :after window
   :config
   (unbind-key "C-c <left>")
   (unbind-key "C-c <right>")
   (winner-mode 1)
   :bind
-  (("C-c w n" . winner-redo)
-   ("C-c w p" . winner-undo)
-   (:repeat-map winner-repeat-map
-    ("n" . winner-redo)
-    ("p" . winner-undo))))
+  (:map my-window-prefix-map
+   ("n" . winner-redo)
+   ("p" . winner-undo)
+   :repeat-map winner-repeat-map
+   ("n" . winner-redo)
+   ("p" . winner-undo)))
 #+end_src
 
 ** External
@@ -788,26 +797,7 @@
   (add-to-list 'consult-preview-excluded-files (rx any "." (| "asc" "gpg") eol))
   (advice-add #'register-preview :override #'consult-register-window)
   :bind
-  (("C-c b I" . consult-imenu-multi)
-   ("C-c b M" . consult-man)
-   ("C-c b SPC" . consult-global-mark)
-   ("C-c b e" . consult-compile-error)
-   ("C-c b f" . consult-flymake)
-   ("C-c b i" . consult-imenu)
-   ("C-c b m" . consult-mark)
-   ("C-c b o" . consult-outline)
-   ("C-c s F" . consult-find)
-   ("C-c s G" . consult-grep)
-   ("C-c s L" . consult-line-multi)
-   ("C-c s f" . consult-fd)
-   ("C-c s g" . consult-ripgrep)
-   ("C-c s k" . consult-keep-lines)
-   ("C-c s l" . consult-line)
-   ("C-c s u" . consult-focus-lines)
-   ("C-c s v" . consult-git-grep)
-   ("C-c x m" . consult-kmacro)
-   ("C-c x r" . consult-register-store)
-   ([remap bookmark-jump] . consult-bookmark)
+  (([remap bookmark-jump] . consult-bookmark)
    ([remap goto-line] . consult-goto-line)
    ([remap isearch-backward] . consult-line)
    ([remap isearch-forward] . consult-line)
@@ -818,6 +808,31 @@
    ([remap switch-to-buffer-other-window] . consult-buffer-other-window)
    ([remap switch-to-buffer] . consult-buffer)
    ([remap yank-pop] . consult-yank-pop)
+   :prefix-map my-buffer-prefix-map
+   :prefix "C-c b"
+   ("I" . consult-imenu-multi)
+   ("M" . consult-man)
+   ("SPC" . consult-global-mark)
+   ("e" . consult-compile-error)
+   ("f" . consult-flymake)
+   ("i" . consult-imenu)
+   ("m" . consult-mark)
+   ("o" . consult-outline)
+   :prefix-map my-search-prefix-map
+   :prefix "C-c s"
+   ("F" . consult-find)
+   ("G" . consult-grep)
+   ("L" . consult-line-multi)
+   ("f" . consult-fd)
+   ("g" . consult-ripgrep)
+   ("k" . consult-keep-lines)
+   ("l" . consult-line)
+   ("u" . consult-focus-lines)
+   ("v" . consult-git-grep)
+   :prefix-map my-macro-prefix-map
+   :prefix "C-c x"
+   ("m" . consult-kmacro)
+   ("r" . consult-register-store)
    :map minibuffer-local-map
    ("M-s" . consult-history)
    ("M-r" . consult-history)))
@@ -883,10 +898,12 @@
   (eglot-managed-mode . my-eglot-managed-mode)
   :bind
   (:map eglot-mode-map
-   ("C-c l a" . eglot-code-actions)
-   ("C-c l d" . eglot-find-declaration)
-   ("C-c l f" . eglot-format-buffer)
-   ("C-c l r" . eglot-rename)))
+   :prefix-map my-eglot-prefix-map
+   :prefix "C-c l"
+   ("a" . eglot-code-actions)
+   ("d" . eglot-find-declaration)
+   ("f" . eglot-format-buffer)
+   ("r" . eglot-rename)))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -988,7 +1005,9 @@ source of truth for environment variables.
 #+begin_src emacs-lisp
 (use-package consult-flycheck
   :ensure t
-  :bind ("C-c b F" . consult-flycheck))
+  :bind
+  (:map my-buffer-prefix-map
+   ("F" . consult-flycheck)))
 #+end_src
 
 *** flyspell-correct
@@ -1035,12 +1054,14 @@ source of truth for environment variables.
    (gptel-post-stream . gptel-auto-scroll)
    (gptel-post-response . gptel-end-of-response))
   :bind
-  (("C-c i c" . gptel-context-add)
-   ("C-c i g" . gptel-abort)
-   ("C-c i i" . my-gptel)
-   ("C-c i m" . gptel-menu)
-   ("C-c i r" . gptel-rewrite)
-   ("C-c i u" . gptel-context-remove-all)
+  (:prefix-map my-gptel-prefix-map
+   :prefix "C-c i"
+   ("c" . gptel-context-add)
+   ("g" . gptel-abort)
+   ("i" . my-gptel)
+   ("m" . gptel-menu)
+   ("r" . gptel-rewrite)
+   ("u" . gptel-context-remove-all)
    :map gptel-mode-map
    ("<S-return>" . newline)
    ("<return>" . gptel-send)
@@ -1209,18 +1230,20 @@ ratio.
 (use-package multiple-cursors
   :ensure t
   :bind
-  (("C-c m a" . mc/mark-all-like-this)
-   ("C-c m d" . mc/mark-all-dwim)
-   ("C-c m M-n" . mc/skip-to-next-like-this)
-   ("C-c m M-p" . mc/skip-to-previous-like-this)
-   ("C-c m n" . mc/mark-next-like-this)
-   ("C-c m p" . mc/mark-previous-like-this)
-   ("C-c m r" . mc/mark-all-in-region)
-   (:repeat-map my-multiple-cursors-repeat-map
-    ("M-n" . mc/skip-to-next-like-this)
-    ("M-p" . mc/skip-to-previous-like-this)
-    ("n" . mc/mark-next-like-this)
-    ("p" . mc/mark-previous-like-this))))
+  (:prefix-map my-multiple-cursors-prefix-map
+   :prefix "C-c m"
+   ("a" . mc/mark-all-like-this)
+   ("d" . mc/mark-all-dwim)
+   ("M-n" . mc/skip-to-next-like-this)
+   ("M-p" . mc/skip-to-previous-like-this)
+   ("n" . mc/mark-next-like-this)
+   ("p" . mc/mark-previous-like-this)
+   ("r" . mc/mark-all-in-region)
+   :repeat-map my-multiple-cursors-repeat-map
+   ("M-n" . mc/skip-to-next-like-this)
+   ("M-p" . mc/skip-to-previous-like-this)
+   ("n" . mc/mark-next-like-this)
+   ("p" . mc/mark-previous-like-this)))
 #+end_src
 
 *** orderless
@@ -1267,9 +1290,9 @@ ratio.
   :ensure t
   :bind
   (("C-c S-c" . string-inflection-all-cycle)
-   (:repeat-map my-string-inflection-repeat-map
+   :repeat-map my-string-inflection-repeat-map
    ("C" . string-inflection-all-cycle)
-   ("c" . string-inflection-all-cycle))))
+   ("c" . string-inflection-all-cycle)))
 #+end_src
 
 *** substitute
@@ -1278,8 +1301,10 @@ ratio.
 (use-package substitute
   :ensure t
   :bind
-  (("C-c r r" . substitute-target-in-buffer)
-   ("C-c r f" . substitute-target-in-defun)))
+  (:prefix-map my-rewrite-map
+   :prefix "C-c r"
+   ("r" . substitute-target-in-buffer)
+   ("f" . substitute-target-in-defun)))
 #+end_src
 
 *** systemd
@@ -1316,7 +1341,9 @@ ratio.
   :hook
   ((prog-mode text-mode) . my-tempel-setup-capf)
   :bind
-  ("C-c l t" . tempel-insert))
+  (:prefix-map my-prog-prefix-map
+   :prefix "C-c l"
+   ("t" . tempel-insert)))
 #+end_src
 
 *** vertico
