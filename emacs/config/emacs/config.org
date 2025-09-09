@@ -41,7 +41,7 @@
          (file-name-as-directory (locate-user-emacs-file "backups"))))
     (unless (file-directory-p backup-directory)
       (make-directory backup-directory t))
-    (setq backup-directory-alist `((".*" . ,backup-directory))))
+    (setopt backup-directory-alist `((".*" . ,backup-directory))))
   (setq backup-enable-predicate #'my-backup-enable-p)
   :custom
   (find-file-visit-truename t)
@@ -1044,9 +1044,9 @@ source of truth for environment variables.
     (set-fill-column -1)
     (setq-local truncate-lines nil))
   :init
+  (setopt gptel-backend nil)
+  (setopt gptel-model nil)
   (setq gptel--openai nil)
-  (setq gptel-backend nil)
-  (setq gptel-model nil)
   :custom
   (gptel-default-mode 'org-mode)
   :hook
