@@ -1395,6 +1395,14 @@ ratio.
   :ensure t)
 #+end_src
 
+*** whole-line-or-region
+
+#+begin_src emacs-lisp
+(use-package whole-line-or-region
+  :ensure t
+  :config (whole-line-or-region-global-mode 1))
+#+end_src
+
 *** yaml-mode
 
 #+begin_src emacs-lisp
