@@ -383,6 +383,13 @@
   ((prog-mode text-mode) . my-display-line-numbers-mode))
 #+end_src
 
+*** doc-view
+
+#+begin_src emacs-lisp
+(use-package doc-view
+  :custom (doc-view-continuous t))
+#+end_src
+
 *** ediff
 
 #+begin_src emacs-lisp
