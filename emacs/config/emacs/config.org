@@ -373,8 +373,14 @@
 
 #+begin_src emacs-lisp
 (use-package display-line-numbers
-  :custom (display-line-numbers-widen t)
-  :hook (find-file . display-line-numbers-mode))
+  :preface
+  (defun my-display-line-numbers-mode ()
+    (when (buffer-file-name)
+      (display-line-numbers-mode 1)))
+  :custom
+  (display-line-numbers-widen t)
+  :hook
+  ((prog-mode text-mode) . my-display-line-numbers-mode))
 #+end_src
 
 *** ediff
