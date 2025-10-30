@@ -1245,18 +1245,22 @@ ratio.
   :bind
   (:prefix-map my-multiple-cursors-prefix-map
    :prefix "C-c m"
-   ("a" . mc/mark-all-like-this)
-   ("d" . mc/mark-all-dwim)
+   ("a" . mc/mark-all-like-this-dwim)
+   ("d" . mc/insert-numbers)
+   ("f" . mc/mark-all-like-this-in-defun)
+   ("l" . mc/insert-letters)
+   ("m" . mc/edit-lines)
    ("M-n" . mc/skip-to-next-like-this)
    ("M-p" . mc/skip-to-previous-like-this)
    ("n" . mc/mark-next-like-this)
    ("p" . mc/mark-previous-like-this)
-   ("r" . mc/mark-all-in-region)
+   ("u" . mc/unmark-next-like-this)
    :repeat-map my-multiple-cursors-repeat-map
    ("M-n" . mc/skip-to-next-like-this)
    ("M-p" . mc/skip-to-previous-like-this)
    ("n" . mc/mark-next-like-this)
-   ("p" . mc/mark-previous-like-this)))
+   ("p" . mc/mark-previous-like-this)
+   ("u" . mc/unmark-next-like-this)))
 #+end_src
 
 *** orderless
