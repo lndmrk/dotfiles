@@ -1,0 +1,113 @@
+# SPDX-FileCopyrightText: 2025 Emil Lundmark <emil@lndmrk.se>
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+[Palette]
+Name=Modus
+
+[Dark]
+# bg-main
+Color0=#171717
+# red
+Color1=#FF5F59
+# green
+Color2=#44BC44
+# yellow
+Color3=#D0BC00
+# blue
+Color4=#2FAFFF
+# magenta
+Color5=#FEACD0
+# cyan
+Color6=#00D3D0
+# fg-dim
+Color7=#989898
+# bg-active
+Color8=#5D5D5D
+# red-intense
+Color9=#FF5F5F
+# green-intense
+Color10=#44DF44
+# yellow-intense
+Color11=#EFEF00
+# blue-intense
+Color12=#338FFF
+# magenta-intense
+Color13=#FF66FF
+# cyan-intense
+Color14=#00EFF0
+# fg-main
+Color15=#FFFFFF
+
+# bg-main
+Background=#171717
+# fg-main
+Foreground=#FFFFFF
+
+# yellow-faint
+BellBackground=#D2B580
+# fg-main
+BellForeground=#FFFFFF
+
+# blue-faint
+RemoteBackground=#82B0EC
+# fg-main
+RemoteForeground=#FFFFFF
+
+# red
+SuperuserBackground=#FF9580
+# fg-main
+SuperuserForeground=#FFFFFF
+
+[Light]
+# bg-main
+Color0=#EDEDED
+# red
+Color1=#A60000
+# green
+Color2=#006800
+# yellow
+Color3=#6F5500
+# blue
+Color4=#0031A9
+# magenta
+Color5=#721045
+# cyan
+Color6=#005E8B
+# fg-dim
+Color7=#595959
+# bg-active
+Color8=#B5B5B5
+# red-intense
+Color9=#D00000
+# green-intense
+Color10=#008900
+# yellow-intense
+Color11=#808000
+# blue-intense
+Color12=#0000FF
+# magenta-intense
+Color13=#DD22DD
+# cyan-intense
+Color14=#008899
+# fg-main
+Color15=#000000
+
+# bg-main
+Background=#EDEDED
+# fg-main
+Foreground=#000000
+
+# yellow-faint
+BellBackground=#624416
+# fg-main
+BellForeground=#000000
+
+# blue-faint
+RemoteBackground=#003497
+# fg-main
+RemoteForeground=#000000
+
+# red
+SuperuserBackground=#A60000
+# fg-main
+SuperuserForeground=#000000

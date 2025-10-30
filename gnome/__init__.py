@@ -4,11 +4,14 @@
 
 def install_packages(**kwargs):
     return {
-        "debian": ["python3-gi"],
+        "debian": [
+            "ptyxis",
+            "python3-gi",
+        ],
         "fedora": [
             "gnome-shell",
-            "gnome-terminal",
             "gnome-themes-extra",
+            "ptyxis",
             "python3-gobject",
         ],
     }
@@ -24,7 +27,7 @@ def post_setup(**kwargs):
     bindings = [{
         "name": "Terminal",
         "binding": "<Super>Return",
-        "command": "gnome-terminal",
+        "command": "ptyxis --new-window",
     }]
     paths = []
     for i, binding in enumerate(bindings):
@@ -46,39 +49,15 @@ def post_setup(**kwargs):
     s.set_strv("www", ["<Super>b"])
 
     # Terminal
-    s = Gio.Settings.new("org.gnome.Terminal.Legacy.Settings")
-    s.set_string("theme-variant", "dark")
-    s = Gio.Settings.new("org.gnome.Terminal.ProfilesList")
-    default_profile = s.get_string("default")
-    s = Gio.Settings.new_with_path(
-        "org.gnome.Terminal.Legacy.Profile",
-        f"/org/gnome/terminal/legacy/profiles:/:{default_profile}/")
-    s.set_string("visible-name", "Modus Vivendi")
+    s = Gio.Settings.new("org.gnome.Ptyxis")
     s.set_boolean("audible-bell", False)
-    s.set_boolean("bold-color-same-as-fg", True)
-    s.set_boolean("bold-is-bright", False)
-    s.set_boolean("use-theme-colors", False)
-    s.set_string("background-color", "#171717")  # bg-main
-    s.set_string("foreground-color", "#FFFFFF")  # fg-main
-    s.set_strv("palette", [
-        "#171717",  # bg-main
-        "#FF5F59",  # red
-        "#44BC44",  # green
-        "#D0BC00",  # yellow
-        "#2FAFFF",  # blue
-        "#FEACD0",  # magenta
-        "#00D3D0",  # cyan
-        "#989898",  # fg-dim
-        "#5D5D5D",  # bg-active
-        "#FF5F5F",  # red-intense
-        "#44DF44",  # green-intense
-        "#EFEF00",  # yellow-intense
-        "#338FFF",  # blue-intense
-        "#FF66FF",  # magenta-intense
-        "#00EFF0",  # cyan-intense
-        "#FFFFFF",  # fg-main
-    ])
-    s.set_int("scrollback-lines", 100000)
+    s.set_string("interface-style", "dark")
+    for uuid in s.get_strv('profile-uuids'):
+        s = Gio.Settings.new_with_path("org.gnome.Ptyxis.Profile",
+                                       f"/org/gnome/Ptyxis/Profiles/{uuid}/")
+        s.set_boolean("bold-is-bright", False)
+        s.set_int("scrollback-lines", 100_000)
+        s.set_string("palette", "modus")
 
     s = Gio.Settings.new("org.gnome.desktop.calendar")
     s.set_boolean("show-weekdate", True)
