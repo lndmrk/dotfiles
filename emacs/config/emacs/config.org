@@ -1191,6 +1191,12 @@ source of truth for environment variables.
      (fg-line-number-active fg-main)
      (fg-line-number-inactive fg-dim)
      (fg-region unspecified)))
+  (modus-operandi-palette-overrides
+   '((bg-main "#EDEDED")
+     (bg-dim "#FAFAFA")
+     (bg-active"#B5B5B5")
+     (bg-inactive "#CFCFCF")
+     (border "#929292")))
   (modus-vivendi-palette-overrides
    '((bg-main "#171717")
      (bg-dim "#2A2A2A")
@@ -1204,6 +1210,19 @@ source of truth for environment variables.
 The =bg-main= color have been overridden to match my terminal background color.
 Other background colors have been adjusted accordingly to retain the contrast
 ratio.
+
+| bg-main     |         | #FFFFFF | #EDEDED |
+|-------------+---------+---------+---------|
+| bg-dim      | #F2F2F2 |    1.12 |         |
+| bg-active   | #C4C4C4 |    1.74 |         |
+| bg-inactive | #E0E0E0 |    1.32 |         |
+| border      | #9F9F9F |    2.65 |         |
+|-------------+---------+---------+---------|
+| bg-dim      | #FAFAFA |         |    1.12 |
+| bg-active   | #B5B5B5 |         |    1.75 |
+| bg-inactive | #CFCFCF |         |    1.33 |
+| border      | #929292 |         |    2.66 |
+#+tblfm: @2$3..@5$3='(modus-themes-contrast @1$3 $2);%0.2f::@6$4..@9$4='(modus-themes-contrast @1$4 $2);%0.2f
 
 | bg-main     |         | #000000 | #171717 |
 |-------------+---------+---------+---------|
