@@ -1436,7 +1436,14 @@ ratio.
 #+begin_src emacs-lisp
 (use-package whole-line-or-region
   :ensure t
-  :config (whole-line-or-region-global-mode 1))
+  :after embark
+  :preface
+  (defun my-embark-inhibit-wlr-advice (fn &rest args)
+    (let ((whole-line-or-region-local-mode nil))
+      (apply fn args)))
+  :config
+  (advice-add 'embark-act :around #'my-embark-inhibit-wlr-advice)
+  (whole-line-or-region-global-mode 1))
 #+end_src
 
 *** yaml-mode
