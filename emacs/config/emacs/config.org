@@ -1339,8 +1339,12 @@ ratio.
   :bind
   (:prefix-map my-rewrite-map
    :prefix "C-c r"
-   ("r" . substitute-target-in-buffer)
-   ("f" . substitute-target-in-defun)))
+   ("F" . substitute-target-in-defun)
+   ("f" . substitute-target-in-defun-and-below)
+   ("n" . substitute-target-below-point)
+   ("o" . substitute-target-in-outline)
+   ("p" . substitute-target-above-point)
+   ("r" . substitute-target-in-buffer)))
 #+end_src
 
 *** systemd
