@@ -128,6 +128,33 @@
    ([remap zap-to-char] . zap-up-to-char)))
 #+end_src
 
+*** Prefix maps
+
+#+begin_src emacs-lisp
+(use-package bind-key
+  :config
+  (bind-keys :prefix-map my-buffer-prefix-map
+             :prefix "C-c b")
+  (bind-keys :prefix-map my-compile-prefix-map
+             :prefix "C-c c")
+  (bind-keys :prefix-map my-config-prefix-map
+             :prefix "C-c d")
+  (bind-keys :prefix-map my-gptel-prefix-map
+             :prefix "C-c i")
+  (bind-keys :prefix-map my-macro-prefix-map
+             :prefix "C-c x")
+  (bind-keys :prefix-map my-multiple-cursors-prefix-map
+             :prefix "C-c m")
+  (bind-keys :prefix-map my-prog-prefix-map
+             :prefix "C-c l")
+  (bind-keys :prefix-map my-rewrite-map
+             :prefix "C-c r")
+  (bind-keys :prefix-map my-search-prefix-map
+             :prefix "C-c s")
+  (bind-keys :prefix-map my-window-prefix-map
+             :prefix "C-c w"))
+#+end_src
+
 ** Text
 
 #+begin_src emacs-lisp
@@ -209,8 +236,7 @@
     (interactive)
     (load user-init-file))
   :bind
-  (:prefix-map my-config-prefix-map
-   :prefix "C-c d"
+  (:map my-config-prefix-map
    ("f" . my-config-find-file)
    ("r" . my-config-reload)))
 #+end_src
@@ -320,8 +346,7 @@
   :config
   (add-hook 'compilation-filter-hook #'ansi-color-compilation-filter)
   :bind
-  (:prefix-map my-compile-prefix-map
-   :prefix "C-c c"
+  (:map my-compile-prefix-map
    ("c" . recompile)))
 #+end_src
 
@@ -737,8 +762,7 @@
   (add-to-list 'mode-line-misc-info '(:eval (my-window-dedicated-mode-line)))
   :bind
   (("C-c q" . window-toggle-side-windows)
-   :prefix-map my-window-prefix-map
-   :prefix "C-c w"
+   :map my-window-prefix-map
    ("f" . my-fit-window-to-fill-column)))
 #+end_src
 
@@ -801,8 +825,10 @@
    ([remap switch-to-buffer-other-window] . consult-buffer-other-window)
    ([remap switch-to-buffer] . consult-buffer)
    ([remap yank-pop] . consult-yank-pop)
-   :prefix-map my-buffer-prefix-map
-   :prefix "C-c b"
+   :map minibuffer-local-map
+   ([remap next-matching-history-element] . consult-history)
+   ([remap previous-matching-history-element] . consult-history)
+   :map my-buffer-prefix-map
    ("I" . consult-imenu-multi)
    ("M" . consult-man)
    ("SPC" . consult-global-mark)
@@ -811,8 +837,7 @@
    ("i" . consult-imenu)
    ("m" . consult-mark)
    ("o" . consult-outline)
-   :prefix-map my-search-prefix-map
-   :prefix "C-c s"
+   :map my-search-prefix-map
    ("F" . consult-find)
    ("G" . consult-grep)
    ("L" . consult-line-multi)
@@ -822,13 +847,9 @@
    ("l" . consult-line)
    ("u" . consult-focus-lines)
    ("v" . consult-git-grep)
-   :prefix-map my-macro-prefix-map
-   :prefix "C-c x"
+   :map my-macro-prefix-map
    ("m" . consult-kmacro)
-   ("r" . consult-register-store)
-   :map minibuffer-local-map
-   ([remap next-matching-history-element] . consult-history)
-   ([remap previous-matching-history-element] . consult-history)))
+   ("r" . consult-register-store)))
 #+end_src
 
 *** corfu
@@ -1046,18 +1067,17 @@ source of truth for environment variables.
    (gptel-post-stream . gptel-auto-scroll)
    (gptel-post-response . gptel-end-of-response))
   :bind
-  (:prefix-map my-gptel-prefix-map
-   :prefix "C-c i"
+  (:map gptel-mode-map
+   ("<S-return>" . newline)
+   ("<return>" . gptel-send)
+   ("C-g" . my-gptel-abort)
+   :map my-gptel-prefix-map
    ("c" . gptel-context-add)
    ("g" . gptel-abort)
    ("i" . my-gptel)
    ("m" . gptel-menu)
    ("r" . gptel-rewrite)
-   ("u" . gptel-context-remove-all)
-   :map gptel-mode-map
-   ("<S-return>" . newline)
-   ("<return>" . gptel-send)
-   ("C-g" . my-gptel-abort)))
+   ("u" . gptel-context-remove-all)))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1241,8 +1261,7 @@ ratio.
 (use-package multiple-cursors
   :ensure t
   :bind
-  (:prefix-map my-multiple-cursors-prefix-map
-   :prefix "C-c m"
+  (:map my-multiple-cursors-prefix-map
    ("a" . mc/mark-all-like-this-dwim)
    ("d" . mc/insert-numbers)
    ("f" . mc/mark-all-like-this-in-defun)
@@ -1316,8 +1335,7 @@ ratio.
 (use-package substitute
   :ensure t
   :bind
-  (:prefix-map my-rewrite-map
-   :prefix "C-c r"
+  (:map my-rewrite-map
    ("F" . substitute-target-in-defun)
    ("f" . substitute-target-in-defun-and-below)
    ("n" . substitute-target-below-point)
@@ -1360,8 +1378,7 @@ ratio.
   :hook
   ((prog-mode text-mode) . my-tempel-setup-capf)
   :bind
-  (:prefix-map my-prog-prefix-map
-   :prefix "C-c l"
+  (:map my-prog-prefix-map
    ("t" . tempel-insert)))
 #+end_src
 
