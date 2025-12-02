@@ -433,6 +433,16 @@
   (emacs-lisp-mode . (lambda () (setq-local sentence-end-double-space t))))
 #+end_src
 
+*** find-file
+
+#+begin_src emacs-lisp
+(use-package find-file
+  :bind
+  (:map my-prog-prefix-map
+   ("o" . ff-find-other-file)
+   ("O" . ff-find-other-file-other-window)))
+#+end_src
+
 *** flyspell
 
 #+begin_src emacs-lisp
