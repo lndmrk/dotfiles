@@ -132,12 +132,6 @@
    ([remap zap-to-char] . zap-up-to-char)))
 #+end_src
 
-#+begin_src emacs-lisp
-(when (< emacs-major-version 29)
-  (use-package emacs
-    :bind ("M-SPC" . cycle-spacing)))
-#+end_src
-
 ** Text
 
 #+begin_src emacs-lisp
@@ -747,19 +741,6 @@
    :prefix-map my-window-prefix-map
    :prefix "C-c w"
    ("f" . my-fit-window-to-fill-column)))
-#+end_src
-
-#+begin_src emacs-lisp
-(when (< emacs-major-version 30)
-  (use-package window
-    :preface
-    (defun my-window-toggle-dedicated ()
-      "Toggle if currently selected window is dedicated to its buffer."
-      (interactive)
-      (when-let ((window (get-buffer-window)))))
-    :bind
-    (:map my-window-prefix-map
-     ("d" . my-window-toggle-dedicated))))
 #+end_src
 
 *** winner

@@ -8,7 +8,4 @@
 (eval-when-compile
   (require 'package)
   (setq package-quickstart t)
-  (when (< emacs-major-version 28)
-    (add-to-list 'package-archives
-                 '("nongnu" . "https://elpa.nongnu.org/nongnu/") t))
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t))
