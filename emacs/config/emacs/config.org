@@ -1141,12 +1141,8 @@ source of truth for environment variables.
 (use-package kind-icon
   :ensure t
   :after corfu
-  :custom
-  (kind-icon-blend-frac 0)
-  (kind-icon-default-face 'corfu-default)
-  (kind-icon-use-icons nil)
-  :config
-  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+  :custom (kind-icon-use-icons nil)
+  :config (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 #+end_src
 
 *** magit
