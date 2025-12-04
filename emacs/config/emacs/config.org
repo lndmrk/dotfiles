@@ -350,14 +350,6 @@
    ("c" . recompile)))
 #+end_src
 
-*** dabbrev
-
-#+begin_src emacs-lisp
-(use-package dabbrev
-  :bind*
-  ("C-M-i" . dabbrev-completion))
-#+end_src
-
 *** dired
 
 #+begin_src emacs-lisp
@@ -802,11 +794,8 @@
 (use-package cape
   :ensure t
   :demand t
-  :config
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  (add-to-list 'completion-at-point-functions #'cape-file)
-  :bind-keymap
-  ("C-c TAB" . cape-prefix-map))
+  :init (add-hook 'completion-at-point-functions #'cape-file)
+  :bind-keymap ("C-c TAB" . cape-prefix-map))
 #+end_src
 
 *** consult
