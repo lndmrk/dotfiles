@@ -796,7 +796,6 @@
 #+begin_src emacs-lisp
 (use-package cape
   :ensure t
-  :demand t
   :init (add-hook 'completion-at-point-functions #'cape-file)
   :bind-keymap ("C-c TAB" . cape-prefix-map))
 #+end_src
@@ -859,7 +858,8 @@
 #+begin_src emacs-lisp
 (use-package corfu
   :ensure t
-  :demand t
+  :init
+  (global-corfu-mode 1)
   :custom
   (corfu-cycle t)
   (corfu-echo-documentation t)
@@ -867,7 +867,6 @@
   (add-to-list 'savehist-additional-variables 'corfu-history)
   (corfu-history-mode 1)
   (corfu-popupinfo-mode 1)
-  (global-corfu-mode 1)
   :bind
   (:map corfu-map
    ("SPC" . corfu-insert-separator)))
@@ -1385,11 +1384,11 @@ ratio.
 #+begin_src emacs-lisp
 (use-package vertico
   :ensure t
-  :demand t
+  :init
+  (vertico-mode 1)
   :custom
   (vertico-cycle t)
   :config
-  (vertico-mode 1)
   (vertico-multiform-mode 1)
   :bind
   (:map vertico-map
