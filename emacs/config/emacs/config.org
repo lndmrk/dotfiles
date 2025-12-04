@@ -1361,8 +1361,6 @@ ratio.
       (when-let (template (alist-get (cadr elt) (tempel--templates)))
         (cons 'l template))))
   (defun my-tempel-setup-capf ()
-    (require 'project)
-    (require 'string-inflection)
     (setq-local completion-at-point-functions
                 (cons #'tempel-complete completion-at-point-functions)))
   :custom
@@ -1370,6 +1368,8 @@ ratio.
   (tempel-trigger-prefix "<")
   :config
   (add-to-list 'tempel-user-elements #'my-tempel-include)
+  (require 'project)
+  (require 'string-inflection)
   :hook
   ((prog-mode text-mode) . my-tempel-setup-capf)
   :bind

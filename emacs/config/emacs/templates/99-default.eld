@@ -19,7 +19,10 @@ c-mode c++-mode
 
 (include-guard
  "#ifndef " (p (concat (upcase (replace-regexp-in-string
-                                "[^[:alnum:]]" "_" (my-project-file-name))) "_")
+                                (rx (not alnum))
+                                "_"
+                                (or (my-project-file-name) (buffer-file-name))))
+                       "_")
                guard) n
  "#define " (s guard) n
  n r n n
@@ -28,8 +31,10 @@ c-mode c++-mode
 (include-main
  "#include \""
  (p (concat (replace-regexp-in-string
-             "\\([-_]\\(test\\|unittest\\)\\)?$" ""
-             (file-name-sans-extension (my-project-file-name)))
+             (rx (| "-" "_") (| "test" "unittest") eol)
+             ""
+             (file-name-sans-extension
+              (or (my-project-file-name) (buffer-file-name))))
             ".h"))
  "\"" n)
 
