@@ -313,6 +313,13 @@
   (global-auto-revert-mode 1))
 #+end_src
 
+*** text-mode
+
+#+begin_src emacs-lisp
+(use-package text-mode
+  :custom (text-mode-ispell-word-completion nil))
+#+end_src
+
 *** bookmark
 
 #+begin_src emacs-lisp
@@ -796,8 +803,12 @@
 #+begin_src emacs-lisp
 (use-package cape
   :ensure t
-  :init (add-hook 'completion-at-point-functions #'cape-file)
-  :bind-keymap ("C-c TAB" . cape-prefix-map))
+  :init
+  (add-hook 'completion-at-point-functions #'cape-keyword)
+  (add-hook 'completion-at-point-functions #'cape-file)
+  (add-hook 'completion-at-point-functions #'cape-emoji)
+  :bind-keymap
+  ("C-c TAB" . cape-prefix-map))
 #+end_src
 
 *** consult
@@ -858,18 +869,28 @@
 #+begin_src emacs-lisp
 (use-package corfu
   :ensure t
+  :preface
+  (defun my-corfu-move-to-minibuffer ()
+    "Move the completions to the minibuffer."
+    (interactive)
+    (pcase completion-in-region--data
+      (`(,beg ,end ,table ,pred ,extras)
+       (let ((completion-cycle-threshold completion-cycling)
+             (completion-extra-properties extras))
+         (consult-completion-in-region beg end table pred)))))
   :init
   (global-corfu-mode 1)
   :custom
   (corfu-cycle t)
   (corfu-echo-documentation t)
   :config
+  (add-to-list 'corfu-continue-commands #'my-corfu-move-to-minibuffer)
   (add-to-list 'savehist-additional-variables 'corfu-history)
   (corfu-history-mode 1)
   (corfu-popupinfo-mode 1)
   :bind
   (:map corfu-map
-   ("SPC" . corfu-insert-separator)))
+   ("M-m" . my-corfu-move-to-minibuffer)))
 #+end_src
 
 *** corfu-terminal
@@ -900,10 +921,6 @@
   :ensure t
   :preface
   (defun my-eglot-managed-mode ()
-    (setq-local
-     completion-at-point-functions
-     (cons (cape-capf-super #'tempel-complete #'eglot-completion-at-point)
-           completion-at-point-functions))
     (flycheck-mode -1))
   :custom
   (eglot-events-buffer-size 0)
@@ -1283,11 +1300,9 @@ ratio.
 (use-package orderless
   :ensure t
   :custom
-  (completion-styles '(tab orderless basic))
-  (completion-category-overrides '((file (styles basic partial-completion))))
-  :config
-  (add-to-list 'completion-styles-alist
-               '(tab completion-basic-try-completion ignore)))
+  (completion-category-defaults nil)
+  (completion-category-overrides '((file (styles partial-completion))))
+  (completion-styles '(orderless basic)))
 #+end_src
 
 *** rust-mode
@@ -1362,18 +1377,12 @@ ratio.
     (when (eq (car-safe elt) 't)
       (when-let (template (alist-get (cadr elt) (tempel--templates)))
         (cons 'l template))))
-  (defun my-tempel-setup-capf ()
-    (setq-local completion-at-point-functions
-                (cons #'tempel-complete completion-at-point-functions)))
   :custom
   (tempel-path (expand-file-name (locate-user-emacs-file "templates/*.eld")))
-  (tempel-trigger-prefix "<")
   :config
   (add-to-list 'tempel-user-elements #'my-tempel-include)
   (require 'project)
   (require 'string-inflection)
-  :hook
-  ((prog-mode text-mode) . my-tempel-setup-capf)
   :bind
   (:map my-prog-prefix-map
    ("t" . tempel-insert)))
