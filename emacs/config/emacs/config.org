@@ -159,6 +159,12 @@
 
 #+begin_src emacs-lisp
 (use-package emacs
+  :preface
+  (defun my-tab-always-indent-complete-advice (fn &rest args)
+    (let ((saved-point (point)))
+      (apply fn args)
+      (when (= saved-point (point))
+        (completion-at-point))))
   :custom
   (colon-double-space nil)
   (fill-column 80)
@@ -321,11 +327,8 @@
   :custom
   (c-basic-offset standard-indent)
   :config
-  (define-advice c-indent-line-or-region (:around (f &rest args) complete)
-    (let ((saved-point (point)))
-      (apply f args)
-      (when (= saved-point (point))
-        (completion-at-point)))))
+  (advice-add 'c-indent-line-or-region
+              :around #'my-tab-always-indent-complete-advice))
 #+end_src
 
 *** comp
@@ -811,7 +814,7 @@
   (xref-show-xrefs-function #'consult-xref)
   :config
   (add-to-list 'consult-preview-excluded-files (rx any "." (| "asc" "gpg") eol))
-  (advice-add #'register-preview :override #'consult-register-window)
+  (advice-add 'register-preview :override #'consult-register-window)
   :bind
   (([remap bookmark-jump] . consult-bookmark)
    ([remap goto-line] . consult-goto-line)
