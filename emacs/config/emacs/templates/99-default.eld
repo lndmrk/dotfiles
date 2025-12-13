@@ -5,6 +5,17 @@ fundamental-mode
 
 (today (format-time-string "%Y-%m-%d"))
 
+conf-mode prog-mode
+
+;; REUSE-IgnoreStart
+(licence
+ (my-comment-start) "SPDX-FileCopyrightText: "
+ (format-time-string "%Y") " " (user-full-name) " <" user-mail-address ">" n
+ (my-comment-start) "SPDX-License-Identifier: " p n)
+;; REUSE-IgnoreEnd
+
+(todo (my-comment-start) "TODO: " n)
+
 c-mode c++-mode
 
 (for
@@ -194,17 +205,6 @@ org-mode
 (title
  "#+title: " p n
  "#+author: " (user-full-name) n)
-
-prog-mode
-
-;; REUSE-IgnoreStart
-(licence
- (my-comment-start) "SPDX-FileCopyrightText: "
- (format-time-string "%Y") " " (user-full-name) " <" user-mail-address ">" n
- (my-comment-start) "SPDX-License-Identifier: " p n)
-;; REUSE-IgnoreEnd
-
-(todo (my-comment-start) "TODO: " n)
 
 python-mode
 
