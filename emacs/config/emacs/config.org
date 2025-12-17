@@ -1294,6 +1294,32 @@ ratio.
    ("u" . mc/unmark-next-like-this)))
 #+end_src
 
+*** nhexl-mode
+
+#+begin_src emacs-lisp
+(use-package nhexl-mode
+  :ensure t
+  :preface
+  (defun my-buffer-binary-p ()
+    (with-current-buffer (current-buffer)
+      (save-excursion
+        (goto-char (point-min))
+        (search-forward-regexp
+         ;; Any ASCII control character except HT, LF, VT or CR.
+         (rx (any (?\x00 . ?\x08) "\f" (?\x0e . ?\x1f) "\x7f"))
+         4096 'noerror 1))))
+  (defun my-nhexl-mode ()
+    (nhexl-nibble-edit-mode 1)
+    (setq-local require-final-newline nil))
+  :init
+  ;; Cannot use :magic-fallback since it assumes CAR is a regexp string.
+  (add-to-list 'magic-fallback-mode-alist '(my-buffer-binary-p . nhexl-mode))
+  :custom
+  (nhexl-silently-convert-to-unibyte t)
+  :hook
+  (nhexl-mode . my-nhexl-mode))
+#+end_src
+
 *** orderless
 
 #+begin_src emacs-lisp
