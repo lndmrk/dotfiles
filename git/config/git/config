@@ -30,6 +30,7 @@
 	textconv = ansible-vault view
 	cachetextconv = false
 [fetch]
+	all = true
 	prune = true
 [merge]
 	conflictstyle = diff3
@@ -38,6 +39,8 @@
 	oneline-short = format:%C(blue)%h%d %C(reset)%s %C(white dim)(%cr, %an)
 [pull]
 	rebase = true
+[push]
+	autoSetupRemote = true
 [user]
 	name = Emil Lundmark
 	email = emil@lndmrk.se
