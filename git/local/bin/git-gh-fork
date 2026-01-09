@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+#
+# SPDX-FileCopyrightText: 2026 Emil Lundmark <emil@lndmrk.se>
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+: "${GH_USERNAME=lndmrk}"
+
+main() {
+  if [ "${#}" -lt 1 ]; then
+    echo >&2 "${0}: No upstream repository provided"
+    return 1
+  fi
+
+  local optional=("${@:1:$#-1}")
+  local upstream="${!#}"
+  local name="${upstream##*/}"
+  name="${name%.git}"
+  local fork="git@github.com:${GH_USERNAME}/${name}.git"
+
+  exec git clone \
+           --origin upstream \
+           --config remote.pushDefault=origin \
+           --config remote.origin.url="${fork}" \
+           --config remote.origin.fetch='+refs/heads/*:refs/remotes/origin/*' \
+           --config remote.origin.fetch='^refs/heads/main' \
+           "${optional[@]}" \
+           "${upstream}"
+}
+
+main "${@}"
