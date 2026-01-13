@@ -45,5 +45,8 @@
 	name = Emil Lundmark
 	email = emil@lndmrk.se
 
+[github]
+	user = lndmrk
+
 [include]
 	path = ~/.config/git/private
