@@ -1051,6 +1051,14 @@ source of truth for environment variables.
   :bind ([remap ispell-word] . flyspell-correct-wrapper))
 #+end_src
 
+*** forge
+
+#+begin_src emacs-lisp
+(use-package forge
+  :ensure t
+  :after magit)
+#+end_src
+
 *** gptel
 
 #+begin_src emacs-lisp
