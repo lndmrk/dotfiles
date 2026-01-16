@@ -666,10 +666,6 @@
 
 #+begin_src emacs-lisp
 (use-package whitespace
-  :preface
-  (defun my-whitespace-reload ()
-    (whitespace-turn-off)
-    (whitespace-turn-on-if-enabled))
   :custom
   (whitespace-line-column nil)
   (whitespace-style '(face
@@ -682,8 +678,7 @@
                       space-before-tab
                       tab-mark))
   :hook
-  ((find-file prog-mode text-mode) . whitespace-mode)
-  (after-save . my-whitespace-reload))
+  ((find-file prog-mode text-mode) . whitespace-mode))
 #+end_src
 
 *** windmove
