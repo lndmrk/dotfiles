@@ -285,6 +285,19 @@
     (auto-fill-mode 1)))
 #+end_src
 
+** Prose
+
+#+begin_src emacs-lisp
+(use-package emacs
+  :preface
+  (defun my-prose-mode ()
+    "Mode suitable for writing prose."
+    (interactive)
+    (display-line-numbers-mode 0)
+    (my-set-fill-column most-positive-fixnum)
+    (visual-line-mode 1)))
+#+end_src
+
 ** Text
 
 #+begin_src emacs-lisp
