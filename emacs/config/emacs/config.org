@@ -723,13 +723,10 @@
            (min-height (/ split-height-threshold 2)))
       (cond
        ((< (* num-h min-width) root-width)
-        (message "right")
         (split-window-right nil window))
        ((< (* num-v min-height) root-height)
-        (message "below")
         (split-window-below nil window))
        (t
-        (message "default")
         (split-window-sensibly window)))))
   (defun my-window-dedicated-mode-line ()
     (when (window-dedicated-p)
