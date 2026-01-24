@@ -1413,9 +1413,9 @@ ratio.
         ";; "
       comment-start))
   (defun my-tempel-include (elt)
-    (when (eq (car-safe elt) 't)
-      (when-let (template (alist-get (cadr elt) (tempel--templates)))
-        (cons 'l template))))
+    (pcase-let ((`(i ,name) elt))
+      (when-let ((template (alist-get name (tempel--templates))))
+        `(l ,@template))))
   :custom
   (tempel-path (expand-file-name (locate-user-emacs-file "templates/*.eld")))
   :config
