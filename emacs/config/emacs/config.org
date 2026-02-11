@@ -328,13 +328,6 @@
   (global-auto-revert-mode 1))
 #+end_src
 
-*** text-mode
-
-#+begin_src emacs-lisp
-(use-package text-mode
-  :custom (text-mode-ispell-word-completion nil))
-#+end_src
-
 *** bookmark
 
 #+begin_src emacs-lisp
@@ -670,6 +663,13 @@
 #+begin_src emacs-lisp
 (use-package subword
   :hook ((conf-mode prog-mode) . subword-mode))
+#+end_src
+
+*** text-mode
+
+#+begin_src emacs-lisp
+(use-package text-mode
+  :custom (text-mode-ispell-word-completion nil))
 #+end_src
 
 *** whitespace
