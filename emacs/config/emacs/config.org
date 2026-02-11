@@ -141,6 +141,8 @@
              :prefix "C-c d")
   (bind-keys :prefix-map my-gptel-prefix-map
              :prefix "C-c i")
+  (bind-keys :prefix-map my-hs-prefix-map
+             :prefix "C-c t")
   (bind-keys :prefix-map my-macro-prefix-map
              :prefix "C-c x")
   (bind-keys :prefix-map my-multiple-cursors-prefix-map
@@ -478,7 +480,13 @@
 
 #+begin_src emacs-lisp
 (use-package hideshow
-  :hook (prog-mode . hs-minor-mode))
+  :hook
+  (prog-mode . hs-minor-mode)
+  :bind
+  (:map my-hs-prefix-map
+   ("h" . hs-hide-all)
+   ("s" . hs-show-all)
+   ("t" . hs-toggle-hiding)))
 #+end_src
 
 *** hl-line
