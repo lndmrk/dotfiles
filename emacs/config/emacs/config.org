@@ -502,6 +502,13 @@
   :custom (js-indent-level standard-indent))
 #+end_src
 
+*** misc
+
+#+begin_src emacs-lisp
+(use-package misc
+  :bind ("C-c y" . duplicate-dwim))
+#+end_src
+
 *** org
 
 #+begin_src emacs-lisp
