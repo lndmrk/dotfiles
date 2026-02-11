@@ -401,7 +401,9 @@
 
 #+begin_src emacs-lisp
 (use-package display-fill-column-indicator
-  :hook ((find-file prog-mode text-mode) . display-fill-column-indicator-mode))
+  :hook
+  ((find-file conf-mode prog-mode text-mode) .
+   display-fill-column-indicator-mode))
 #+end_src
 
 *** display-line-numbers
@@ -415,7 +417,7 @@
   :custom
   (display-line-numbers-widen t)
   :hook
-  ((prog-mode text-mode) . my-display-line-numbers-mode))
+  ((conf-mode prog-mode text-mode) . my-display-line-numbers-mode))
 #+end_src
 
 *** doc-view
@@ -465,7 +467,7 @@
 #+begin_src emacs-lisp
 (use-package flyspell
   :hook
-  (prog-mode . flyspell-prog-mode)
+  ((conf-mode prog-mode) . flyspell-prog-mode)
   (text-mode . flyspell-mode))
 #+end_src
 
@@ -481,7 +483,7 @@
 #+begin_src emacs-lisp
 (use-package hideshow
   :hook
-  (prog-mode . hs-minor-mode)
+  ((conf-mode prog-mode) . hs-minor-mode)
   :bind
   (:map my-hs-prefix-map
    ("h" . hs-hide-all)
@@ -667,7 +669,7 @@
 
 #+begin_src emacs-lisp
 (use-package subword
-  :hook (prog-mode . subword-mode))
+  :hook ((conf-mode prog-mode) . subword-mode))
 #+end_src
 
 *** whitespace
@@ -686,7 +688,7 @@
                       space-before-tab
                       tab-mark))
   :hook
-  ((find-file prog-mode text-mode) . whitespace-mode))
+  ((find-file conf-mode prog-mode text-mode) . whitespace-mode))
 #+end_src
 
 *** windmove
