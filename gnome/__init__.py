@@ -58,6 +58,12 @@ def post_setup(**kwargs):
         s.set_boolean("bold-is-bright", False)
         s.set_int("scrollback-lines", 100_000)
         s.set_string("palette", "modus")
+    s = Gio.Settings.new("org.gnome.Ptyxis.Shortcuts")
+    s.set_string("detach-tab", "<Shift><Control>space")
+    s.set_string("move-next-tab", "<Control>Tab")
+    s.set_string("move-previous-tab", "<Shift><Control>Tab")
+    s.set_string("move-tab-left", "<Shift><Control>Left")
+    s.set_string("move-tab-right", "<Shift><Control>Right")
 
     s = Gio.Settings.new("org.gnome.desktop.calendar")
     s.set_boolean("show-weekdate", True)
