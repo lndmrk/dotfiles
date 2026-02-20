@@ -1160,6 +1160,16 @@ source of truth for environment variables.
   :ensure t)
 #+end_src
 
+*** just-mode
+
+#+begin_src emacs-lisp
+(use-package just-mode
+  :ensure t
+  :bind
+  (:map just-mode-map
+   ("C-c l f" . just-format-buffer)))
+#+end_src
+
 *** keyfreq
 
 #+begin_src emacs-lisp
