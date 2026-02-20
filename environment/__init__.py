@@ -17,6 +17,7 @@ def install_packages(**kwargs):
         "debian": [
             "coreutils",
             "fd-find",
+            "just",
             "libnotify-bin",
             "locales",
             "ripgrep",
@@ -25,6 +26,7 @@ def install_packages(**kwargs):
         "fedora": [
             "coreutils",
             "fd-find",
+            "just",
             "langpacks-en",
             "langpacks-sv",
             "libnotify",
