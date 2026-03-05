@@ -1047,6 +1047,19 @@ source of truth for environment variables.
     (exec-path-from-shell-initialize)))
 #+end_src
 
+*** expreg
+
+#+begin_src emacs-lisp
+(use-package expreg
+  :ensure t
+  :bind
+  (("C-c E" . expreg-contract)
+   ("C-c e" . expreg-expand)
+   :repeat-map my-expreg-repeat-map
+   ("E" . expreg-contract)
+   ("e" . expreg-expand)))
+#+end_src
+
 *** flycheck
 
 #+begin_src emacs-lisp
