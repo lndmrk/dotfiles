@@ -602,6 +602,8 @@
     (setq-local tab-width python-indent-offset))
   :custom
   (python-indent-guess-indent-offset nil)
+  :interpreter
+  ((rx "uv" (opt " " (* nonl))) . python-mode)
   :hook
   (python-mode . my-python-mode))
 #+end_src
