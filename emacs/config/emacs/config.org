@@ -1410,6 +1410,14 @@ ratio.
                     (format "--indent=%s" standard-indent))))
 #+end_src
 
+*** sops
+
+#+begin_src emacs-lisp
+(use-package sops
+  :ensure t
+  :init (global-sops-mode 1))
+#+end_src
+
 *** string-inflection
 
 #+begin_src emacs-lisp
