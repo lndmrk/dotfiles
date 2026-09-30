@@ -1375,6 +1375,20 @@ ratio.
   (nhexl-mode . my-nhexl-mode))
 #+end_src
 
+*** nix-mode
+
+#+begin_src emacs-lisp
+(use-package nix-mode
+  :ensure t
+  :mode
+  (rx ".nix" eos)
+  :preface
+  (defun my-nix-mode ()
+    (my-set-fill-column 100))
+  :hook
+  (nix-mode . my-nix-mode))
+#+end_src
+
 *** orderless
 
 #+begin_src emacs-lisp
