@@ -949,8 +949,10 @@
   :custom
   (eglot-events-buffer-size 0)
   (eglot-ignored-server-capabilities '(:inlayHintProvider))
+  :config
+  (add-to-list 'eglot-server-programs '(nix-mode . ("nixd")))
   :hook
-  ((c++-mode c-mode python-mode rust-mode) . eglot-ensure)
+  ((c++-mode c-mode nix-mode python-mode rust-mode) . eglot-ensure)
   (eglot-managed-mode . my-eglot-managed-mode)
   :bind
   (:map eglot-mode-map
