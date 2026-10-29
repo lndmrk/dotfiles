@@ -5,23 +5,46 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 # lndmrk's dotfiles
 
-These are my personal dotfiles organized into *bundles*. A bundle is essentially
-a Python module and a collection of dotfiles without the initial dot in the
-name; it's implied.
+These are my personal dotfiles. They're self-contained and may be used on their
+own, but are best used as
+[Home Manager](https://github.com/nix-community/home-manager) modules.
 
 ## Usage
 
-The `dotfiles` program is used to orchestrate everything. It can be installed by
-running
+Below is an example of how to use them as Home Manager modules.
 
-```
-$ ./dotfiles install
-```
+```nix
+{
+  inputs = {
+    dotfiles = {
+      url = "<repo>";
+      flake = false;
+    };
+    # [...]
+  };
 
-The program will find any bundles relative to this directory. It will also
-handle any inner Git repositories along with its bundles.
+  outputs =
+    {
+      dotfiles,
+      home-manager,
+      ...
+    }:
+    {
+      homeConfigurations.user = home-manager.lib.homeManagerConfiguration {
+        modules =
+          map (m: "${dotfiles}/${m}") [
+            "lib.nix"
+            "git"
+            # [...]
+          ]
+          # Optionally configure additional settings.
+          ++ [ { dotfiles.live = true; } ];
+      };
+    };
+}
+```
 
 ## License
 
-This project is [REUSE](https://reuse.software/) compliant. The copyright and
-license information for all files are specified using SPDX tags.
+This project is [REUSE](https://reuse.software/) compliant. Copyright and
+license information for every file is specified using SPDX tags.
