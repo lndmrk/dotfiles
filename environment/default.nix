@@ -16,23 +16,8 @@ in
     packages = with pkgs; [
       fd
       just
-      libnotify
       ripgrep
     ];
-  };
-
-  systemd.user.services."notify-error@" = {
-    Unit.Description = "Send error desktop notification";
-    Service = {
-      Type = "oneshot";
-      ExecStart = ''
-        ${pkgs.libnotify}/bin/notify-send \
-          --urgency=critical \
-          --icon=dialog-error-symbolic \
-          "%i.service failed" \
-          "Run `systemctl --user status %i.service` for details."
-      '';
-    };
   };
 
   xdg = {
