@@ -29,6 +29,9 @@
 [diff "ansible-vault"]
 	textconv = ansible-vault view
 	cachetextconv = false
+[diff "sops"]
+	textconv = sops decrypt
+	cachetextconv = false
 [fetch]
 	all = true
 	prune = true
