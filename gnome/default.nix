@@ -1,15 +1,13 @@
 # SPDX-FileCopyrightText: 2026 Emil Lundmark <emil@lndmrk.se>
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 let
   ln = config.dotfiles.ln;
 in
 {
   home.activation.loadGnomeSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    if command -v dconf >/dev/null; then
-      run dconf load / < ${./gnome.ini}
-    fi
+    run ${pkgs.dconf}/bin/dconf load / < ${./gnome.ini}
   '';
 
   xdg.dataFile."org.gnome.Ptyxis/palettes/modus.palette".source =
